@@ -1,0 +1,7 @@
+{
+  "include": ["tailwind.config.js"],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true
+  }
+}

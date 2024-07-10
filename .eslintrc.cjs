@@ -2,7 +2,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
+    project: [
+      "./tsconfig.json",
+      "./tsconfig.node.json",
+      "./tsconfig.eslint.json",
+    ],
     tsconfigRootDir: __dirname,
   },
   root: true,
@@ -14,7 +18,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "postcss.config.js"],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh"],
   rules: {
