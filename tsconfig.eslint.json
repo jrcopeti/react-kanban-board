@@ -1,5 +1,5 @@
 {
-  "include": ["tailwind.config.js"],
+  "include": ["tailwind.config.js", "src/**/*"],
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true
