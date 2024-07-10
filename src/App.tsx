@@ -1,7 +1,12 @@
-import "./App.css";
+import TaskList from "./components/TaskList";
 
 function App() {
-  return <div className='text-red-500 text-xl'>APP RUNNING</div>;
+  return (
+
+    <div>
+      <TaskList />
+    </div>
+  );
 }
 
 export default App;
