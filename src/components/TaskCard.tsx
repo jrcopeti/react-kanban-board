@@ -4,13 +4,12 @@ function TaskCard({ task }: { task: Task }) {
   const { id, title, assignee, description, status, createdDate, dueDate } =
     task;
 
-
-
   return (
     <div className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5">
       <section className="py-2 text-3xl font-semibold">
         <h2>{title}</h2>
       </section>
+
       <section className="py-2 text-2xl text-gray-700">
         <p>{description}</p>
       </section>
