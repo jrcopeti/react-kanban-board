@@ -1,17 +1,29 @@
 import tasks from "../assets/data.json";
 import TaskCard from "./TaskCard";
+import { tasksStatus } from "../utils";
 
 function TaskList() {
-  console.log(tasks);
+  const columns = tasksStatus.map((status) => {
+    const tasksInColumn = tasks.filter((task) => task.status === status);
+    return {
+      status,
+      tasks: tasksInColumn,
+    };
+  });
+
+  console.log(columns);
 
   return (
-    <ul>
-      {tasks.map((task) => (
-        <li key={task.id}>
-          <TaskCard task={task} />
-        </li>
+    <div className='flex divide-x '  >
+      {columns.map((column) => (
+        <div className="w-80" key={column.status}>
+          <h1>{column.status}</h1>
+          {column.tasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
 
