@@ -6,8 +6,10 @@ function AppLayout() {
   return (
     <>
       <Navbar />
-      <Outlet />
-      <Footer/>
+      <div className="h-screen p-4">
+        <Outlet />
+        <Footer />
+      </div>
     </>
   );
 }

@@ -1,5 +1,5 @@
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Link } from "react-router-dom";
-import logo from "../assets/images/microchip-icon.png"
 
 function Navbar() {
   const routes = [
@@ -9,8 +9,10 @@ function Navbar() {
   ];
 
   return (
-    <nav className='flex items-center justify-between text-lg font-semibold px-3 py-2'>
-      <img src={logo} alt="logo" className='h-10 w-10' />
+    <nav className="flex items-center justify-between py-3 px-12 text-lg font-semibold bg-gray-100 sticky top-0 z-50">
+      <Link to="/">
+        <MdOutlineSpaceDashboard size={50} className="cursor-pointer" />
+      </Link>
       {routes.map((route) => (
         <Link to={route.to} key={route.to}>
           {route.label}
