@@ -1,4 +1,5 @@
 const tasksStatus = ["To Do", "In Progress", "Done"];
+const taskPriorities = ["Low", "Medium", "High"];
 
 const routes = [
   { to: "/", label: "Home" },
@@ -6,4 +7,4 @@ const routes = [
   { to: "/about", label: "About" },
 ];
 
-export { tasksStatus, routes };
+export { tasksStatus, taskPriorities, routes };
