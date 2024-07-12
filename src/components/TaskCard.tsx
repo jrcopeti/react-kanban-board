@@ -1,18 +1,18 @@
-import { Task } from "./types";
+import { TaskCardProps } from "../types";
 import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
 import { RiEqualLine } from "react-icons/ri";
 
-function TaskCard({ task }: { task: Task }) {
+function TaskCard({ task, updateTaskPoints }: TaskCardProps) {
   const {
-    id,
     title,
     assignee,
     description,
-    status,
     createdDate,
     dueDate,
     priority,
+    points,
   } = task;
+  console.log(points)
 
   return (
     <div className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5">
@@ -35,12 +35,21 @@ function TaskCard({ task }: { task: Task }) {
           <strong>Due Date:</strong> {dueDate}
         </p>
       </section>
-      <section className="flex justify-between gap-4 py-2 text-2xl">
-        <p>{id}</p>
-        <p>{status}</p>
-        {priority === "Low" && <HiOutlineChevronDown color="green" />}
-        {priority === "Medium" && <RiEqualLine color="orange" />}
-        {priority === "High" && <HiOutlineChevronDoubleUp color="red" />}
+      <section className="flex items-center justify-between px-4 py-2 text-2xl">
+        <div className="flex items-center justify-start gap-5">
+          <button onClick={() => updateTaskPoints(task, (points || 0) - 1)}>
+            -
+          </button>
+          <p>{points}</p>
+          <button onClick={() => updateTaskPoints(task, (points || 0) + 1)}>
+            +
+          </button>
+        </div>
+        <div>
+          {priority === "Low" && <HiOutlineChevronDown color="green" />}
+          {priority === "Medium" && <RiEqualLine color="orange" />}
+          {priority === "High" && <HiOutlineChevronDoubleUp color="red" />}
+        </div>
       </section>
     </div>
   );

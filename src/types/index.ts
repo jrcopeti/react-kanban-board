@@ -5,8 +5,14 @@ type Task = {
   description: string;
   status: string;
   priority: string;
+  points?: number;
   createdDate: string;
   dueDate: string;
 };
 
-export type { Task };
+type TaskCardProps = {
+  task: Task;
+  updateTaskPoints: (task: Task, points: number) => void;
+};
+
+export type { Task, TaskCardProps };

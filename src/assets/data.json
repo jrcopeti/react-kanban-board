@@ -6,6 +6,7 @@
     "assignee": "Mary Davis",
     "status": "To Do",
     "priority": "High",
+    "points": 5,
     "createdDate": "2023-09-15",
     "dueDate": "2023-09-30"
   },
@@ -16,6 +17,7 @@
     "assignee": "Jane Smith",
     "status": "In Progress",
     "priority": "Medium",
+    "points": 10,
     "createdDate": "2023-09-16",
     "dueDate": "2023-10-10"
   },
@@ -26,6 +28,7 @@
     "assignee": "Mark Johnson",
     "status": "In Progress",
     "priority": "High",
+    "points": 8,
     "createdDate": "2023-09-17",
     "dueDate": "2023-09-25"
   },
@@ -36,6 +39,7 @@
     "assignee": "Sarah Brown",
     "status": "To Do",
     "priority": "High",
+    "points": 15,
     "createdDate": "2023-09-18",
     "dueDate": "2023-10-05"
   },
@@ -46,6 +50,7 @@
     "assignee": "David Wilson",
     "status": "Done",
     "priority": "Low",
+    "points": 3,
     "createdDate": "2023-09-19",
     "dueDate": "2023-09-30"
   }
