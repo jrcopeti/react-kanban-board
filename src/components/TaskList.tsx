@@ -22,6 +22,13 @@ function TaskList() {
     setTasks(updatedTasks);
   };
 
+  const updateTaskTitle = (task: Task, title: string) => {
+    const updatedTasks = tasks.map((t) => {
+      return t.id === task.id ? { ...t, title } : t;
+    });
+    setTasks(updatedTasks);
+  };
+
   return (
     <div className="flex divide-x">
       {columns.map((column) => {
@@ -29,16 +36,19 @@ function TaskList() {
           (total, task) => total + (task?.points || 0),
           0,
         );
-        console.log("total points", totalPoints)
+        console.log("total points", totalPoints);
         return (
           <div className="w-80 p-2 text-3xl" key={column.status}>
             <h2 className="ml-3 font-bold text-gray-500">{column.status}</h2>
-            <p className="ml-3 text-2xl font-semibold">Total Points: {totalPoints}</p>
+            <p className="ml-3 text-2xl font-semibold">
+              Total Points: {totalPoints}
+            </p>
             {column.tasks.map((task) => (
               <TaskCard
                 key={task.id}
                 task={task}
                 updateTaskPoints={updateTaskPoints}
+                updateTaskTitle={updateTaskTitle}
               />
             ))}
           </div>

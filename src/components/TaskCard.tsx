@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { TaskCardProps } from "../types";
 import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
 import { RiEqualLine } from "react-icons/ri";
 
-function TaskCard({ task, updateTaskPoints }: TaskCardProps) {
+function TaskCard({ task, updateTaskPoints, updateTaskTitle }: TaskCardProps) {
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+
   const {
     title,
     assignee,
@@ -24,11 +27,40 @@ function TaskCard({ task, updateTaskPoints }: TaskCardProps) {
     }
   };
 
+  const handleTitleClick = () => {
+    setIsEditingTitle(true);
+  };
+
+  const handleTitleBlur = () => {
+    setIsEditingTitle(false);
+  };
+
+  const handleTitleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsEditingTitle(false);
+  };
+
   return (
     <div className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5">
-      <section className="py-2 text-3xl font-semibold">
-        <h2>{title}</h2>
-      </section>
+      {isEditingTitle ? (
+        <form onSubmit={handleTitleSubmit}>
+          <input
+            autoFocus
+            type="text"
+            className="w-full py-2 text-3xl"
+            onBlur={handleTitleBlur}
+            value={task.title}
+            onChange={(e) => updateTaskTitle(task, e.target.value)}
+          />
+        </form>
+      ) : (
+        <section
+          className="py-2 text-3xl font-semibold"
+          onClick={handleTitleClick}
+        >
+          <h2>{title}</h2>
+        </section>
+      )}
 
       <section className="py-2 text-2xl text-gray-700">
         <p>{description}</p>

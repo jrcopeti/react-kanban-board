@@ -13,6 +13,7 @@ type Task = {
 type TaskCardProps = {
   task: Task;
   updateTaskPoints: (task: Task, points: number) => void;
+  updateTaskTitle: (task: Task, title: string) => void;
 };
 
 export type { Task, TaskCardProps };
