@@ -6,6 +6,7 @@ import { Task } from "../types";
 
 function TaskList() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks as Task[]);
+
   const columns = tasksStatus.map((status) => {
     const tasksInColumn = tasks.filter((task) => task.status === status);
     return {
@@ -14,19 +15,19 @@ function TaskList() {
     };
   });
 
-  const updateTaskPoints = (task: Task, points: number) => {
+  const updateTask = (task: Task) => {
     const updatedTasks = tasks.map((t) => {
-      return t.id === task.id ? { ...t, points } : t;
+      return t.id === task.id ? task : t;
     });
-    console.log("update task", updatedTasks);
     setTasks(updatedTasks);
   };
 
+  const updateTaskPoints = (task: Task, points: number) => {
+    updateTask({ ...task, points });
+  };
+
   const updateTaskTitle = (task: Task, title: string) => {
-    const updatedTasks = tasks.map((t) => {
-      return t.id === task.id ? { ...t, title } : t;
-    });
-    setTasks(updatedTasks);
+    updateTask({ ...task, title });
   };
 
   return (
@@ -44,12 +45,7 @@ function TaskList() {
               Total Points: {totalPoints}
             </p>
             {column.tasks.map((task) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                updateTaskPoints={updateTaskPoints}
-                updateTaskTitle={updateTaskTitle}
-              />
+              <TaskCard key={task.id} task={task} updateTask={updateTask} />
             ))}
           </div>
         );

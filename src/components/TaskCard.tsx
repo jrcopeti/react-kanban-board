@@ -3,7 +3,7 @@ import { TaskCardProps } from "../types";
 import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
 import { RiEqualLine } from "react-icons/ri";
 
-function TaskCard({ task, updateTaskPoints, updateTaskTitle }: TaskCardProps) {
+function TaskCard({ task, updateTask }: TaskCardProps) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
 
   const {
@@ -23,7 +23,7 @@ function TaskCard({ task, updateTaskPoints, updateTaskTitle }: TaskCardProps) {
     const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
     const newPoints = fib[nextIndex];
     if (newPoints) {
-      updateTaskPoints(task, newPoints);
+      updateTask({ ...task, points: newPoints });
     }
   };
 
@@ -33,6 +33,10 @@ function TaskCard({ task, updateTaskPoints, updateTaskTitle }: TaskCardProps) {
 
   const handleTitleBlur = () => {
     setIsEditingTitle(false);
+  };
+
+  const handleTitleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateTask({ ...task, title: e.target.value });
   };
 
   const handleTitleSubmit = (e: React.FormEvent) => {
@@ -50,7 +54,7 @@ function TaskCard({ task, updateTaskPoints, updateTaskTitle }: TaskCardProps) {
             className="w-full py-2 text-3xl"
             onBlur={handleTitleBlur}
             value={task.title}
-            onChange={(e) => updateTaskTitle(task, e.target.value)}
+            onChange={handleTitleOnChange}
           />
         </form>
       ) : (
