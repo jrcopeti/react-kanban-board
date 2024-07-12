@@ -8,6 +8,7 @@ import {
   DndContext,
   DragEndEvent,
   KeyboardSensor,
+  MouseSensor,
   PointerSensor,
   TouchSensor,
   useSensor,
@@ -32,6 +33,7 @@ function TaskList() {
   });
 
   const updateTask = (task: Task) => {
+    console.log("function updateTask");
     const updatedTasks = tasks.map((t) => {
       return t.id === task.id ? task : t;
     });
@@ -42,15 +44,11 @@ function TaskList() {
 
   const getTaskPosition = (id: number) => {
     const index = tasks.findIndex((task) => task.id === id);
-    if (index === -1) {
-      throw new Error(`Task with id ${id} not found`);
-    }
     return index;
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    console.log("active", active);
 
     if (active.id === over?.id) {
       return;
@@ -64,11 +62,16 @@ function TaskList() {
   };
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
+    useSensor(MouseSensor),
   );
 
   return (

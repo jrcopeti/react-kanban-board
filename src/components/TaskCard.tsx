@@ -20,7 +20,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+    useSortable({ id, disabled: isEditingTitle });
 
   const style = {
     transition,
@@ -28,6 +28,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   };
 
   const updatePoints = (direction: "up" | "down") => {
+    console.log("Inside updatePoints");
     const fib = [0, 1, 2, 3, 5, 8, 13];
     const currentIndex = fib.indexOf(points ?? -1);
     const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
@@ -38,6 +39,8 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   };
 
   const handleTitleClick = () => {
+    console.log("handleTitleClick");
+    console.log("isEditingTitle", isEditingTitle);
     setIsEditingTitle(true);
   };
 
@@ -99,9 +102,13 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
       </section>
       <section className="flex items-center justify-between px-4 py-2 text-2xl">
         <div className="flex items-center justify-start gap-5">
-          <button onClick={() => updatePoints("down")}>-</button>
+          <button  onClick={() => updatePoints("down")}>
+            -
+          </button>
           <p>{points}</p>
-          <button onClick={() => updatePoints("up")}>+</button>
+          <button  onClick={() => updatePoints("up")}>
+            +
+          </button>
         </div>
         <div>
           {priority === "Low" && <HiOutlineChevronDown color="green" />}
