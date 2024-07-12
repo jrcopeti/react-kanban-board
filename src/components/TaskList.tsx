@@ -3,6 +3,12 @@ import TaskCard from "./TaskCard";
 import { tasksStatus } from "../utils";
 import { useState } from "react";
 import { Task } from "../types";
+import { closestCorners, DndContext, DragEndEvent } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 function TaskList() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks as Task[]);
@@ -22,12 +28,30 @@ function TaskList() {
     setTasks(updatedTasks);
   };
 
-  const updateTaskPoints = (task: Task, points: number) => {
-    updateTask({ ...task, points });
+  const getTaskPosition = (id: number) => {
+    const index = tasks.findIndex((task) => task.id === id);
+    if (index === -1) {
+      throw new Error(`Task with id ${id} not found`);
+    }
+    return index;
   };
 
-  const updateTaskTitle = (task: Task, title: string) => {
-    updateTask({ ...task, title });
+  const taskposition = getTaskPosition(1);
+  console.log("task position", taskposition);
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    console.log("active", active);
+
+    if (active.id === over?.id) {
+      return;
+    }
+    setTasks((tasks) => {
+      const originalPosition = getTaskPosition(+active.id);
+      const newPosition = over ? getTaskPosition(+over.id) : -1;
+
+      return arrayMove(tasks, originalPosition, newPosition);
+    });
   };
 
   return (
@@ -39,15 +63,26 @@ function TaskList() {
         );
         console.log("total points", totalPoints);
         return (
-          <div className="w-80 p-2 text-3xl" key={column.status}>
-            <h2 className="ml-3 font-bold text-gray-500">{column.status}</h2>
-            <p className="ml-3 text-2xl font-semibold">
-              Total Points: {totalPoints}
-            </p>
-            {column.tasks.map((task) => (
-              <TaskCard key={task.id} task={task} updateTask={updateTask} />
-            ))}
-          </div>
+          <DndContext
+            onDragEnd={handleDragEnd}
+            collisionDetection={closestCorners}
+            key={column.status}
+          >
+            <div className="w-80 p-2 text-3xl">
+              <h2 className="ml-3 font-bold text-gray-500">{column.status}</h2>
+              <p className="ml-3 text-2xl font-semibold">
+                Total Points: {totalPoints}
+              </p>
+              <SortableContext
+                items={column.tasks}
+                strategy={verticalListSortingStrategy}
+              >
+                {column.tasks.map((task) => (
+                  <TaskCard key={task.id} task={task} updateTask={updateTask} />
+                ))}
+              </SortableContext>
+            </div>
+          </DndContext>
         );
       })}
     </div>

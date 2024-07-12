@@ -2,10 +2,10 @@ import { useState } from "react";
 import { TaskCardProps } from "../types";
 import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
 import { RiEqualLine } from "react-icons/ri";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 function TaskCard({ task, updateTask }: TaskCardProps) {
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-
   const {
     title,
     assignee,
@@ -14,7 +14,21 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
     dueDate,
     priority,
     points,
+    id,
   } = task;
+
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
+
+
   console.log(points);
 
   const updatePoints = (direction: "up" | "down") => {
@@ -45,7 +59,13 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   };
 
   return (
-    <div className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5">
+    <div
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={style}
+      className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5"
+    >
       {isEditingTitle ? (
         <form onSubmit={handleTitleSubmit}>
           <input
