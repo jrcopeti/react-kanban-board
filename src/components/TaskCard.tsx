@@ -22,8 +22,11 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id, disabled: isEditingTitle });
 
+  console.log("transform", transform);
+  console.log("transition", transition);
+
   const style = {
-    transition,
+    transition: transition,
     transform: CSS.Transform.toString(transform),
   };
 
@@ -39,8 +42,6 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   };
 
   const handleTitleClick = () => {
-    console.log("handleTitleClick");
-    console.log("isEditingTitle", isEditingTitle);
     setIsEditingTitle(true);
   };
 
@@ -63,7 +64,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
       {...attributes}
       {...listeners}
       style={style}
-      className="m-2 touch-none rounded-lg border bg-gray-50 px-2 py-0.5"
+      className="m-2 box-border h-[250px] touch-none overflow-auto rounded-lg border bg-gray-50 px-2 py-0.5 shadow-md"
     >
       {isEditingTitle ? (
         <form onSubmit={handleTitleSubmit}>
@@ -78,7 +79,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
         </form>
       ) : (
         <section
-          className="py-2 text-3xl font-semibold"
+          className="break-words py-2 text-3xl font-semibold"
           onClick={handleTitleClick}
         >
           <h2>{title}</h2>
@@ -89,7 +90,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
         <p>{description}</p>
       </section>
 
-      <section className="flex flex-col gap-1 text-lg">
+      {/* <section className="flex flex-col gap-1 text-lg">
         <p>
           <strong>Assignee:</strong> {assignee}
         </p>
@@ -99,16 +100,12 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
         <p>
           <strong>Due Date:</strong> {dueDate}
         </p>
-      </section>
+      </section> */}
       <section className="flex items-center justify-between px-4 py-2 text-2xl">
         <div className="flex items-center justify-start gap-5">
-          <button  onClick={() => updatePoints("down")}>
-            -
-          </button>
+          <button onClick={() => updatePoints("down")}>-</button>
           <p>{points}</p>
-          <button  onClick={() => updatePoints("up")}>
-            +
-          </button>
+          <button onClick={() => updatePoints("up")}>+</button>
         </div>
         <div>
           {priority === "Low" && <HiOutlineChevronDown color="green" />}
