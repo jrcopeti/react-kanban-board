@@ -12,7 +12,17 @@ function TaskCard({ task, updateTaskPoints }: TaskCardProps) {
     priority,
     points,
   } = task;
-  console.log(points)
+  console.log(points);
+
+  const updatePoints = (direction: "up" | "down") => {
+    const fib = [0, 1, 2, 3, 5, 8, 13];
+    const currentIndex = fib.indexOf(points ?? -1);
+    const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
+    const newPoints = fib[nextIndex];
+    if (newPoints) {
+      updateTaskPoints(task, newPoints);
+    }
+  };
 
   return (
     <div className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5">
@@ -37,13 +47,9 @@ function TaskCard({ task, updateTaskPoints }: TaskCardProps) {
       </section>
       <section className="flex items-center justify-between px-4 py-2 text-2xl">
         <div className="flex items-center justify-start gap-5">
-          <button onClick={() => updateTaskPoints(task, (points || 0) - 1)}>
-            -
-          </button>
+          <button onClick={() => updatePoints("down")}>-</button>
           <p>{points}</p>
-          <button onClick={() => updateTaskPoints(task, (points || 0) + 1)}>
-            +
-          </button>
+          <button onClick={() => updatePoints("up")}>+</button>
         </div>
         <div>
           {priority === "Low" && <HiOutlineChevronDown color="green" />}
