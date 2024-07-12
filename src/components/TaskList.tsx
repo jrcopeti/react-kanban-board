@@ -3,10 +3,20 @@ import TaskCard from "./TaskCard";
 import { tasksStatus } from "../utils";
 import { useState } from "react";
 import { Task } from "../types";
-import { closestCorners, DndContext, DragEndEvent } from "@dnd-kit/core";
+import {
+  closestCorners,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
+  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
@@ -28,6 +38,8 @@ function TaskList() {
     setTasks(updatedTasks);
   };
 
+  // Library DND Kit
+
   const getTaskPosition = (id: number) => {
     const index = tasks.findIndex((task) => task.id === id);
     if (index === -1) {
@@ -35,9 +47,6 @@ function TaskList() {
     }
     return index;
   };
-
-  const taskposition = getTaskPosition(1);
-  console.log("task position", taskposition);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -54,6 +63,14 @@ function TaskList() {
     });
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
   return (
     <div className="flex divide-x">
       {columns.map((column) => {
@@ -61,9 +78,9 @@ function TaskList() {
           (total, task) => total + (task?.points || 0),
           0,
         );
-        console.log("total points", totalPoints);
         return (
           <DndContext
+            sensors={sensors}
             onDragEnd={handleDragEnd}
             collisionDetection={closestCorners}
             key={column.status}

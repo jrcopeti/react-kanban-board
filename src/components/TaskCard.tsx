@@ -27,10 +27,6 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
     transform: CSS.Transform.toString(transform),
   };
 
-
-
-  console.log(points);
-
   const updatePoints = (direction: "up" | "down") => {
     const fib = [0, 1, 2, 3, 5, 8, 13];
     const currentIndex = fib.indexOf(points ?? -1);
@@ -64,7 +60,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
       {...attributes}
       {...listeners}
       style={style}
-      className="m-2 rounded-lg border bg-gray-50 px-2 py-0.5"
+      className="m-2 touch-none rounded-lg border bg-gray-50 px-2 py-0.5"
     >
       {isEditingTitle ? (
         <form onSubmit={handleTitleSubmit}>
