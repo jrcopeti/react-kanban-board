@@ -5,6 +5,12 @@ import { RiEqualLine } from "react-icons/ri";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Input from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { HiMiniQueueList, HiOutlinePencilSquare } from "react-icons/hi2";
 
 function TaskCard({ task, updateTask }: TaskCardProps) {
   const {
@@ -19,6 +25,8 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
   } = task;
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id, disabled: isEditingTitle });
@@ -56,7 +64,26 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
 
   const handleTitleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsEditingTitle(false);
+    setIsEditingDescription(false);
+  };
+
+  const handleDescriptionClick = () => {
+    setIsEditingDescription(true);
+  };
+
+  const handleDescriptionBlur = () => {
+    setIsEditingDescription(false);
+  };
+
+  const handleDescriptionOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    updateTask({ ...task, description: e.target.value });
+  };
+
+  const handleDescriptionSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsEditingDescription(false);
   };
 
   return (
@@ -87,21 +114,45 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
         </section>
       )}
 
-      <section className="py-2 text-2xl text-gray-700">
-        <p>{description}</p>
-      </section>
+      <Popover>
+        <PopoverTrigger>
+          <HiOutlinePencilSquare />
+        </PopoverTrigger>
+        <PopoverContent sideOffset={5} side="right">
+          {isEditingDescription ? (
+            <form onSubmit={handleDescriptionSubmit}>
+              <Input
+                autoFocus
+                type="text"
+                className="w-full py-2 text-3xl"
+                onBlur={handleDescriptionBlur}
+                value={description}
+                onChange={handleDescriptionOnChange}
+              />
+            </form>
+          ) : (
+            <section
+              className="py-2 text-2xl text-gray-700"
+              onClick={handleDescriptionClick}
+            >
+              <p>{description}</p>
+            </section>
+          )}
 
-      {/* <section className="flex flex-col gap-1 text-lg">
-        <p>
-          <strong>Assignee:</strong> {assignee}
-        </p>
-        <p>
-          <strong>Created Date:</strong> {createdDate}
-        </p>
-        <p>
-          <strong>Due Date:</strong> {dueDate}
-        </p>
-      </section> */}
+          <section className="flex h-full w-full flex-col gap-1 text-lg">
+            <p>
+              <strong>Assignee:</strong> {assignee}
+            </p>
+            <p>
+              <strong>Created Date:</strong> {createdDate}
+            </p>
+            <p>
+              <strong>Due Date:</strong> {dueDate}
+            </p>
+          </section>
+        </PopoverContent>
+      </Popover>
+
       <section className="flex items-center justify-between px-4 py-2 text-2xl">
         <div className="flex items-center justify-start gap-5">
           <button onClick={() => updatePoints("down")}>-</button>
