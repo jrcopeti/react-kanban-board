@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { HiMiniQueueList, HiOutlinePencilSquare } from "react-icons/hi2";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { taskPriorities } from "../utils";
@@ -38,7 +38,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
   const [isEditingPriority, setIsEditingPriority] = useState(false);
-  const [priorityState, setPriorityState] = useState<string>(priority);
+  const [, setPriorityState] = useState<string>(priority);
 
   const [MouseIsOver, setMouseIsOver] = useState(false);
 
@@ -88,19 +88,6 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     updateTask({ ...task, priority: newPriority });
   };
 
-  // const setPriorityIcon = (priority: string) => {
-  //   switch (priority) {
-  //     case "low":
-  //       return <HiOutlineChevronDown color="green" />;
-  //     case "medium":
-  //       return <RiEqualLine color="orange" />;
-  //     case "high":
-  //       return <HiOutlineChevronDoubleUp color="red" />;
-  //     default:
-  //       return null;
-  //   }
-  // };
-
   const handleToggleIsEditing = (
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => {
@@ -146,8 +133,44 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     setMouseIsOver(false);
   };
 
+  // DND Kit
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: id,
+    disabled: isEditingPopOver || isEditingTitle,
+    data: {
+      type: "task",
+      task,
+    },
+  });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
+  if (isDragging) {
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-rose-500 bg-gray-50 px-2 py-0.5 opacity-50 shadow-md"
+      ></div>
+    );
+  }
+
   return (
     <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
       className="relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg border bg-gray-50 px-2 py-0.5 shadow-md"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -173,127 +196,6 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           <h2>{title}</h2>
         </section>
       )}
-
-      <Popover>
-        <PopoverTrigger>
-          <HiOutlinePencilSquare />
-        </PopoverTrigger>
-        <PopoverContent className="h-[400px]" sideOffset={5} side="right">
-          {isEditingPopOver ? (
-            <form onSubmit={handleSubmit}>
-              <Label htmlFor="description" className="text-sm text-gray-400">
-                Description
-              </Label>
-              <Input
-                type="text"
-                className="w-full py-2 text-xl"
-                value={description}
-                onChange={(e) =>
-                  handleFieldChange("description", e.target.value as string)
-                }
-                ref={descriptionRef}
-              />
-
-              <Label htmlFor="assignee" className="text-sm text-gray-400">
-                Assignee
-              </Label>
-              <Input
-                type="text"
-                className="w-full py-2 text-xl"
-                value={assignee}
-                onChange={(e) =>
-                  handleFieldChange("assignee", e.target.value as string)
-                }
-                ref={assigneeRef}
-              />
-
-              <Label htmlFor="createdDate" className="text-sm text-gray-400">
-                Created Date
-              </Label>
-              <Input
-                type="text"
-                className="w-full py-2 text-xl"
-                value={createdDate}
-                onChange={(e) =>
-                  handleFieldChange("createdDate", e.target.value as string)
-                }
-                ref={createdDateRef}
-              />
-
-              <Label htmlFor="due Date" className="text-sm text-gray-400">
-                Created Date
-              </Label>
-              <Input
-                type="text"
-                className="w-full py-2 text-xl"
-                value={dueDate}
-                onChange={(e) =>
-                  handleFieldChange("dueDate", e.target.value as string)
-                }
-                ref={dueDateRef}
-              />
-
-              <section className="flex">
-                <Button type="submit">Save</Button>
-              </section>
-            </form>
-          ) : (
-            <div>
-              <section
-                onClick={() => {
-                  handleToggleIsEditing(setIsEditingPopOver);
-                  setIsEditingDescription(true);
-                }}
-                className="text-xl text-gray-700"
-              >
-                <Label htmlFor="description" className="text-sm text-gray-400">
-                  Description
-                </Label>
-                <p>{description}</p>
-              </section>
-
-              <section
-                onClick={() => {
-                  handleToggleIsEditing(setIsEditingPopOver);
-                  setIsEditingAssignee(true);
-                }}
-                className="flex h-full w-full flex-col gap-1 text-lg"
-              >
-                <Label htmlFor="assignee" className="text-sm text-gray-400">
-                  Assignee
-                </Label>
-                <p>{assignee} JUBILEUdfklnrkfgn.jktrgnf</p>
-              </section>
-
-              <section
-                onClick={() => {
-                  handleToggleIsEditing(setIsEditingPopOver);
-                  setIsEditingCreatedDate(true);
-                }}
-                className="flex h-full w-full flex-col gap-1 text-lg"
-              >
-                <Label htmlFor="createdDate" className="text-sm text-gray-400">
-                  Created Date
-                </Label>
-                <p>{createdDate}</p>
-              </section>
-
-              <section
-                onClick={() => {
-                  handleToggleIsEditing(setIsEditingPopOver);
-                  setIsEditingDueDate(true);
-                }}
-                className="flex h-full w-full flex-col gap-1 text-lg"
-              >
-                <Label htmlFor="Due Date" className="text-sm text-gray-400">
-                  Due Date
-                </Label>
-                <p>{dueDate}</p>
-              </section>
-            </div>
-          )}
-        </PopoverContent>
-      </Popover>
 
       <section className="flex items-center justify-between px-4 py-2 text-2xl">
         <div className="flex items-center justify-start gap-5">
@@ -329,6 +231,133 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
             {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
           </div>
         )}
+
+        <Popover>
+          <PopoverTrigger>
+            <HiOutlinePencilSquare />
+          </PopoverTrigger>
+          <PopoverContent className="h-[400px]" sideOffset={5} side="right">
+            {isEditingPopOver ? (
+              <form onSubmit={handleSubmit}>
+                <Label htmlFor="description" className="text-sm text-gray-400">
+                  Description
+                </Label>
+                <Input
+                  type="text"
+                  className="w-full py-2 text-xl"
+                  value={description}
+                  onChange={(e) =>
+                    handleFieldChange("description", e.target.value as string)
+                  }
+                  ref={descriptionRef}
+                />
+
+                <Label htmlFor="assignee" className="text-sm text-gray-400">
+                  Assignee
+                </Label>
+                <Input
+                  type="text"
+                  className="w-full py-2 text-xl"
+                  value={assignee}
+                  onChange={(e) =>
+                    handleFieldChange("assignee", e.target.value as string)
+                  }
+                  ref={assigneeRef}
+                />
+
+                <Label htmlFor="createdDate" className="text-sm text-gray-400">
+                  Created Date
+                </Label>
+                <Input
+                  type="text"
+                  className="w-full py-2 text-xl"
+                  value={createdDate}
+                  onChange={(e) =>
+                    handleFieldChange("createdDate", e.target.value as string)
+                  }
+                  ref={createdDateRef}
+                />
+
+                <Label htmlFor="due Date" className="text-sm text-gray-400">
+                  Created Date
+                </Label>
+                <Input
+                  type="text"
+                  className="w-full py-2 text-xl"
+                  value={dueDate}
+                  onChange={(e) =>
+                    handleFieldChange("dueDate", e.target.value as string)
+                  }
+                  ref={dueDateRef}
+                />
+
+                <section className="flex">
+                  <Button type="submit">Save</Button>
+                </section>
+              </form>
+            ) : (
+              <div>
+                <section
+                  onClick={() => {
+                    handleToggleIsEditing(setIsEditingPopOver);
+                    setIsEditingDescription(true);
+                  }}
+                  className="text-xl text-gray-700"
+                >
+                  <Label
+                    htmlFor="description"
+                    className="text-sm text-gray-400"
+                  >
+                    Description
+                  </Label>
+                  <p>{description}</p>
+                </section>
+
+                <section
+                  onClick={() => {
+                    handleToggleIsEditing(setIsEditingPopOver);
+                    setIsEditingAssignee(true);
+                  }}
+                  className="flex h-full w-full flex-col gap-1 text-lg"
+                >
+                  <Label htmlFor="assignee" className="text-sm text-gray-400">
+                    Assignee
+                  </Label>
+                  <p>{assignee} JUBILEUdfklnrkfgn.jktrgnf</p>
+                </section>
+
+                <section
+                  onClick={() => {
+                    handleToggleIsEditing(setIsEditingPopOver);
+                    setIsEditingCreatedDate(true);
+                  }}
+                  className="flex h-full w-full flex-col gap-1 text-lg"
+                >
+                  <Label
+                    htmlFor="createdDate"
+                    className="text-sm text-gray-400"
+                  >
+                    Created Date
+                  </Label>
+                  <p>{createdDate}</p>
+                </section>
+
+                <section
+                  onClick={() => {
+                    handleToggleIsEditing(setIsEditingPopOver);
+                    setIsEditingDueDate(true);
+                  }}
+                  className="flex h-full w-full flex-col gap-1 text-lg"
+                >
+                  <Label htmlFor="Due Date" className="text-sm text-gray-400">
+                    Due Date
+                  </Label>
+                  <p>{dueDate}</p>
+                </section>
+              </div>
+            )}
+          </PopoverContent>
+        </Popover>
 
         {MouseIsOver && (
           <Button

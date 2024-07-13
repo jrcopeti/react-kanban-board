@@ -3,30 +3,13 @@ import type { ColumnContainerProps } from "../types";
 import { HiOutlineTrash } from "react-icons/hi";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Input from "@/components/ui/input";
-import initialTasks from "../assets/data.json";
-import { Task } from "../types";
+
 import TaskCard from "./TaskCard";
 import { FiPlusCircle } from "react-icons/fi";
 
-import {
-  closestCorners,
-  DndContext,
-  DragEndEvent,
-  KeyboardSensor,
-  MouseSensor,
-  PointerSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { SortableContext } from "@dnd-kit/sortable";
 
 function ColumnContainer({
   column,
@@ -59,6 +42,12 @@ function ColumnContainer({
     setIsEditing(false);
   };
 
+  // Library DND Kit
+
+  const tasksIds = useMemo(() => {
+    return tasks.map((task) => task.id);
+  }, [tasks]);
+
   const {
     setNodeRef,
     attributes,
@@ -80,38 +69,6 @@ function ColumnContainer({
     transform: CSS.Transform.toString(transform),
   };
 
-  const getTaskPosition = (id: number) => {
-    const index = tasks.findIndex((task) => task.id === id);
-    return index;
-  };
-
-  // const handleDragEnd = (event: DragEndEvent) => {
-  //   const { active, over } = event;
-
-  //   if (active.id === over?.id) {
-  //     return;
-  //   }
-  //   setTasks((tasks) => {
-  //     const originalPosition = getTaskPosition(+active.id);
-  //     const newPosition = over ? getTaskPosition(+over.id) : -1;
-
-  //     return arrayMove(tasks, originalPosition, newPosition);
-  //   });
-  // };
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5,
-      },
-    }),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-    useSensor(MouseSensor),
-  );
-
   if (isDragging) {
     return (
       <div
@@ -128,7 +85,7 @@ function ColumnContainer({
       style={style}
       {...attributes}
       {...listeners}
-      className="flex h-full w-[350px] flex-col rounded-md bg-gray-300 overflow-auto"
+      className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-gray-300"
     >
       <section className="text-md flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-gray-200 p-3 font-bold">
         <div className="flex gap-2">
@@ -168,15 +125,18 @@ function ColumnContainer({
         <p className="ml-3 text-2xl font-semibold">
           Total Points: {totalPoints}
         </p>
-        {tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            deleteTask={deleteTask}
-            updateTask={updateTask}
-          
-          />
-        ))}
+
+        <SortableContext items={tasksIds}>
+          {tasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+              totalPoints={totalPoints}
+            />
+          ))}
+        </SortableContext>
       </section>
 
       {/* Footer */}
