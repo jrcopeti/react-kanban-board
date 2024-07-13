@@ -1,11 +1,4 @@
-import {
-  useState,
-  Dispatch,
-  SetStateAction,
-  useRef,
-  RefObject,
-  useEffect,
-} from "react";
+import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
 import { Task, TaskCardProps } from "../types";
 import {
   HiOutlineChevronDoubleUp,
@@ -24,6 +17,7 @@ import {
 import { HiMiniQueueList, HiOutlinePencilSquare } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { taskPriorities } from "../utils";
 
 function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
@@ -43,6 +37,9 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
   const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
+  const [isEditingPriority, setIsEditingPriority] = useState(false);
+  const [priorityState, setPriorityState] = useState<string>(priority);
+
   const [MouseIsOver, setMouseIsOver] = useState(false);
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -85,6 +82,25 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
       updateTask({ ...task, points: newPoints });
     }
   };
+
+  const updatePriority = (newPriority: string) => {
+    setPriorityState(newPriority);
+    updateTask({ ...task, priority: newPriority });
+  };
+
+  // const setPriorityIcon = (priority: string) => {
+  //   switch (priority) {
+  //     case "low":
+  //       return <HiOutlineChevronDown color="green" />;
+  //     case "medium":
+  //       return <RiEqualLine color="orange" />;
+  //     case "high":
+  //       return <HiOutlineChevronDoubleUp color="red" />;
+  //     default:
+  //       return null;
+  //   }
+  // };
+
   const handleToggleIsEditing = (
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => {
@@ -217,7 +233,9 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                 ref={dueDateRef}
               />
 
-              <Button type="submit">Save</Button>
+              <section className="flex">
+                <Button type="submit">Save</Button>
+              </section>
             </form>
           ) : (
             <div>
@@ -283,11 +301,34 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           <p>{points}</p>
           <button onClick={() => updatePoints("up")}>+</button>
         </div>
-        <div className="w-[24px]">
-          {priority === "low" && <HiOutlineChevronDown color="green" />}
-          {priority === "medium" && <RiEqualLine color="orange" />}
-          {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
-        </div>
+
+        {isEditingPriority ? (
+          <>
+            <Label htmlFor="due Date" className="text-sm text-gray-400">
+              Priority
+            </Label>
+            <select
+              value={priority}
+              onChange={(e) => updatePriority(e.target.value)}
+              onBlur={() => handleBlur(setIsEditingPriority)}
+            >
+              {taskPriorities.map((p) => (
+                <option key={p} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <div
+            autoFocus
+            onClick={() => handleToggleIsEditing(setIsEditingPriority)}
+          >
+            {priority === "low" && <HiOutlineChevronDown color="green" />}
+            {priority === "medium" && <RiEqualLine color="orange" />}
+            {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
+          </div>
+        )}
 
         {MouseIsOver && (
           <Button

@@ -1,5 +1,5 @@
 const tasksStatus = ["To Do", "In Progress", "Done"];
-const taskPriorities = ["Low", "Medium", "High"];
+const taskPriorities = ["low", "medium", "high"];
 
 const routes = [
   { to: "/", label: "Home" },
