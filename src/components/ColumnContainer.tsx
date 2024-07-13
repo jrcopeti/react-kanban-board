@@ -5,13 +5,39 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import Input from "@/components/ui/input";
+import initialTasks from "../assets/data.json";
+import { Task } from "../types";
+import TaskCard from "./TaskCard";
+import { FiPlusCircle } from "react-icons/fi";
+
+import {
+  closestCorners,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  MouseSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 function ColumnContainer({
   column,
   updateColumn,
   deleteColumn,
+  createTask,
+  deleteTask,
+  tasks,
 }: ColumnContainerProps) {
   const { id, title } = column;
+
   const [isEditing, setIsEditing] = useState(false);
 
   const handleClick = () => {
@@ -30,6 +56,19 @@ function ColumnContainer({
     if (e.key !== "Enter") return;
     setIsEditing(false);
   };
+
+  // const updateTask = (task: Task) => {
+  //   console.log("function updateTask");
+  //   const updatedTasks = tasks.map((t) => {
+  //     return t.id === task.id ? task : t;
+  //   });
+  //   setTasks(updatedTasks);
+  // };
+
+  // const totalPoints = tasks.reduce(
+  //   (total, task) => total + (task?.points || 0),
+  //   0,
+  // );
 
   const {
     setNodeRef,
@@ -52,6 +91,38 @@ function ColumnContainer({
     transform: CSS.Transform.toString(transform),
   };
 
+  const getTaskPosition = (id: number) => {
+    const index = tasks.findIndex((task) => task.id === id);
+    return index;
+  };
+
+  // const handleDragEnd = (event: DragEndEvent) => {
+  //   const { active, over } = event;
+
+  //   if (active.id === over?.id) {
+  //     return;
+  //   }
+  //   setTasks((tasks) => {
+  //     const originalPosition = getTaskPosition(+active.id);
+  //     const newPosition = over ? getTaskPosition(+over.id) : -1;
+
+  //     return arrayMove(tasks, originalPosition, newPosition);
+  //   });
+  // };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+    useSensor(MouseSensor),
+  );
+
   if (isDragging) {
     return (
       <div
@@ -68,8 +139,7 @@ function ColumnContainer({
       style={style}
       {...attributes}
       {...listeners}
-      onClick={handleClick}
-      className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md bg-gray-300"
+      className="flex h-full w-[350px] flex-col rounded-md bg-gray-300"
     >
       <section className="text-md flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-gray-200 p-3 font-bold">
         <div className="flex gap-2">
@@ -87,7 +157,12 @@ function ColumnContainer({
               onKeyDown={handleKeyDown}
             />
           ) : (
-            <p className="text-md font-bold">{title}</p>
+            <p
+              onClick={handleClick}
+              className="p-2 text-xl font-bold text-gray-500"
+            >
+              {title}
+            </p>
           )}
         </div>
         <Button
@@ -98,8 +173,24 @@ function ColumnContainer({
         </Button>
       </section>
 
-      <section className="flex flex-grow">Content</section>
-      <footer>Footer</footer>
+      {/* Content */}
+
+      <section className="flex flex-grow flex-col gap-4 p-4">
+        {/* <p className="ml-3 text-2xl font-semibold">
+          Total Points: {totalPoints}
+        </p> */}
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
+        ))}
+      </section>
+
+      {/* Footer */}
+      <Button
+        onClick={() => createTask(id)}
+        className="hover:bg:gray-500 flex items-center gap-2 rounded-md border-2 border-x-gray-500 border-b-gray-200 p-4 hover:text-rose-500 active:bg-black"
+      >
+        <FiPlusCircle size={20} /> Add Task
+      </Button>
     </div>
   );
 }

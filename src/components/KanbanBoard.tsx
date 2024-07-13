@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
-import type { Column } from "../types";
+import type { Column, Task } from "../types";
 import { generateId } from "../utils";
 import ColumnContainer from "./ColumnContainer";
 import {
@@ -22,9 +22,11 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
+import type { Id } from "../types";
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
@@ -38,19 +40,46 @@ function KanbanBoard() {
     setColumns([...columns, columnToAdd]);
   };
 
-  const updateColumn = (id: string | number, title: string) => {
+  const updateColumn = (id: Id, title: string) => {
     const updatedColumns = columns.map((col) => {
       return col.id === id ? { ...col, title } : col;
     });
     setColumns(updatedColumns);
   };
 
-  const deleteColumn = (id: string | number) => {
+  const deleteColumn = (id: Id) => {
     const filteredColumn = columns.filter((col) => col.id !== id);
     setColumns(filteredColumn);
   };
 
-  const getColumnPosition = (id: string | number) => {
+  const taskInColumn = (columnId: Id) => {
+    return tasks.filter((task) => task.columnId === columnId);
+  };
+
+  const createTask = (columnId: Id) => {
+    const newTask = {
+      id: generateId(),
+      columnId,
+      title: `Task ${tasks.length + 1}`,
+      assignee: "",
+      description: "",
+      status: "todo",
+      priority: "low",
+      points: 1,
+      createdDate: new Date().toISOString(),
+      dueDate: new Date().toISOString(),
+    };
+    setTasks([...tasks, newTask]);
+  };
+
+  const deleteTask = (id: Id) => {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks(filteredTasks);
+  };
+
+  // Library DND Kit
+
+  const getColumnPosition = (id: Id) => {
     const index = columns.findIndex((col) => col.id === id);
     return index;
   };
@@ -107,6 +136,9 @@ function KanbanBoard() {
                   column={col}
                   updateColumn={updateColumn}
                   deleteColumn={deleteColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  tasks={taskInColumn(col.id)}
                 />
               ))}
             </SortableContext>
@@ -125,6 +157,9 @@ function KanbanBoard() {
               <ColumnContainer
                 column={activeColumn}
                 deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                tasks={taskInColumn(activeColumn.id)}
               />
             )}
           </DragOverlay>,

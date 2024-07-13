@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { TaskCardProps } from "../types";
-import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
+import {
+  HiOutlineChevronDoubleUp,
+  HiOutlineChevronDown,
+  HiOutlineTrash,
+} from "react-icons/hi";
 import { RiEqualLine } from "react-icons/ri";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -11,8 +15,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { HiMiniQueueList, HiOutlinePencilSquare } from "react-icons/hi2";
+import { Button } from "@/components/ui/button";
 
-function TaskCard({ task, updateTask }: TaskCardProps) {
+function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
     title,
     assignee,
@@ -28,11 +33,10 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
 
   const [isEditingDescription, setIsEditingDescription] = useState(false);
 
+  const [MouseIsOver, setMouseIsOver] = useState(false);
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id, disabled: isEditingTitle });
-
-  console.log("transform", transform);
-  console.log("transition", transition);
 
   const style = {
     transition: transition,
@@ -62,11 +66,10 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
     updateTask({ ...task, title: e.target.value });
   };
 
-  const handleTitleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsEditingDescription(false);
+  const handleTitleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter") return;
+    setIsEditingTitle(false);
   };
-
   const handleDescriptionClick = () => {
     setIsEditingDescription(true);
   };
@@ -81,30 +84,37 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
     updateTask({ ...task, description: e.target.value });
   };
 
-  const handleDescriptionSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsEditingDescription(false);
+  const handleDescriptionKeydown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key !== "Enter") return;
+    setIsEditingDescription;
+  };
+
+  const handleMouseEnter = () => {
+    setMouseIsOver(true);
+  };
+
+  const handleMouseLeave = () => {
+    setMouseIsOver(false);
   };
 
   return (
     <div
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={style}
-      className="m-2 box-border h-[250px] touch-none overflow-auto rounded-lg border bg-gray-50 px-2 py-0.5 shadow-md"
+      className="relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg border bg-gray-50 px-2 py-0.5 shadow-md"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isEditingTitle ? (
-        <form onSubmit={handleTitleSubmit}>
-          <Input
-            autoFocus
-            type="text"
-            className="w-full py-2 text-3xl"
-            onBlur={handleTitleBlur}
-            value={task.title}
-            onChange={handleTitleOnChange}
-          />
-        </form>
+        <Input
+          autoFocus
+          type="text"
+          className="w-full py-2 text-3xl"
+          onBlur={handleTitleBlur}
+          value={task.title}
+          onChange={handleTitleOnChange}
+          onKeyDown={handleTitleKeydown}
+        />
       ) : (
         <section
           className="break-words py-2 text-3xl font-semibold"
@@ -120,16 +130,15 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
         </PopoverTrigger>
         <PopoverContent sideOffset={5} side="right">
           {isEditingDescription ? (
-            <form onSubmit={handleDescriptionSubmit}>
-              <Input
-                autoFocus
-                type="text"
-                className="w-full py-2 text-3xl"
-                onBlur={handleDescriptionBlur}
-                value={description}
-                onChange={handleDescriptionOnChange}
-              />
-            </form>
+            <Input
+              autoFocus
+              type="text"
+              className="w-full py-2 text-3xl"
+              onBlur={handleDescriptionBlur}
+              value={description}
+              onChange={handleDescriptionOnChange}
+              onKeyDown={handleDescriptionKeydown}
+            />
           ) : (
             <section
               className="py-2 text-2xl text-gray-700"
@@ -159,11 +168,23 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
           <p>{points}</p>
           <button onClick={() => updatePoints("up")}>+</button>
         </div>
-        <div>
-          {priority === "Low" && <HiOutlineChevronDown color="green" />}
-          {priority === "Medium" && <RiEqualLine color="orange" />}
-          {priority === "High" && <HiOutlineChevronDoubleUp color="red" />}
+        <div className="w-[24px]">
+          {priority === "low" && <HiOutlineChevronDown color="green" />}
+          {priority === "medium" && <RiEqualLine color="orange" />}
+          {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
         </div>
+
+        {MouseIsOver && (
+          <Button
+            onClick={() => deleteTask(id)}
+            className="absolute bottom-0 right-5 z-30 translate-x-1/2"
+          >
+            <HiOutlineTrash
+              className="opacity-60 hover:stroke-rose-500 hover:opacity-100"
+              size={20}
+            />
+          </Button>
+        )}
       </section>
     </div>
   );
