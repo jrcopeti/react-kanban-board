@@ -4,6 +4,7 @@ import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
 import { RiEqualLine } from "react-icons/ri";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import Input from "@/components/ui/input";
 
 function TaskCard({ task, updateTask }: TaskCardProps) {
   const {
@@ -68,7 +69,7 @@ function TaskCard({ task, updateTask }: TaskCardProps) {
     >
       {isEditingTitle ? (
         <form onSubmit={handleTitleSubmit}>
-          <input
+          <Input
             autoFocus
             type="text"
             className="w-full py-2 text-3xl"
