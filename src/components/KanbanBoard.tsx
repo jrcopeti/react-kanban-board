@@ -20,7 +20,6 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
 } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 
@@ -39,6 +38,13 @@ function KanbanBoard() {
     setColumns([...columns, columnToAdd]);
   };
 
+  const updateColumn = (id: string | number, title: string) => {
+    const updatedColumns = columns.map((col) => {
+      return col.id === id ? { ...col, title } : col;
+    });
+    setColumns(updatedColumns);
+  };
+
   const deleteColumn = (id: string | number) => {
     const filteredColumn = columns.filter((col) => col.id !== id);
     setColumns(filteredColumn);
@@ -51,7 +57,7 @@ function KanbanBoard() {
 
   const onDragStart = (event: DragStartEvent) => {
     if (event.active.data.current?.type === "column") {
-      setActiveColumn(event.active.data.current.column);
+      setActiveColumn(event.active.data.current.column as Column);
       return;
     }
 
@@ -99,6 +105,7 @@ function KanbanBoard() {
                 <ColumnContainer
                   key={col.id}
                   column={col}
+                  updateColumn={updateColumn}
                   deleteColumn={deleteColumn}
                 />
               ))}

@@ -22,6 +22,7 @@ type Column = {
 
 type ColumnContainerProps = {
   column: Column;
+  updateColumn: (id: string | number, title: string) => void;
   deleteColumn: (id: string | number) => void;
 };
 
