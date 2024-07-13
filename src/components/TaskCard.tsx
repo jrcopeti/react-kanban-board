@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { TaskCardProps } from "../types";
+import { useState, Dispatch, SetStateAction } from "react";
+import { Task, TaskCardProps } from "../types";
 import {
   HiOutlineChevronDoubleUp,
   HiOutlineChevronDown,
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { HiMiniQueueList, HiOutlinePencilSquare } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
@@ -30,8 +31,9 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   } = task;
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
-
   const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [isEditingAssignee, setIsEditingAssignee] = useState(false);
+  const [IsEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
 
   const [MouseIsOver, setMouseIsOver] = useState(false);
 
@@ -54,41 +56,29 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     }
   };
 
-  const handleTitleClick = () => {
-    setIsEditingTitle(true);
+  const handleToggleIsEditing = (action: Dispatch<SetStateAction<boolean>>) => {
+    action((prev) => !prev);
+    setMouseIsOver(false);
   };
 
-  const handleTitleBlur = () => {
-    setIsEditingTitle(false);
+  const handleBlur = (action: (value: boolean) => void) => {
+    action(false);
   };
 
-  const handleTitleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateTask({ ...task, title: e.target.value });
-  };
-
-  const handleTitleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter") return;
-    setIsEditingTitle(false);
-  };
-  const handleDescriptionClick = () => {
-    setIsEditingDescription(true);
-  };
-
-  const handleDescriptionBlur = () => {
-    setIsEditingDescription(false);
-  };
-
-  const handleDescriptionOnChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+  const handleFieldChange = <T extends keyof Task>(
+    field: T,
+    value: Task[T],
   ) => {
-    updateTask({ ...task, description: e.target.value });
+    updateTask({ ...task, [field]: value });
   };
 
-  const handleDescriptionKeydown = (
+  const handleKeydown = (
     e: React.KeyboardEvent<HTMLInputElement>,
+    action: (value: boolean) => void,
   ) => {
-    if (e.key !== "Enter") return;
-    setIsEditingDescription;
+    if (e.key === "Enter" && e.shiftKey) {
+      action(false);
+    }
   };
 
   const handleMouseEnter = () => {
@@ -110,15 +100,17 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           autoFocus
           type="text"
           className="w-full py-2 text-3xl"
-          onBlur={handleTitleBlur}
-          value={task.title}
-          onChange={handleTitleOnChange}
-          onKeyDown={handleTitleKeydown}
+          onBlur={() => handleBlur(() => setIsEditingTitle(false))}
+          value={title}
+          onChange={(e) => handleFieldChange("title", e.target.value as string)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+            handleKeydown(e, setIsEditingTitle)
+          }
         />
       ) : (
         <section
           className="break-words py-2 text-3xl font-semibold"
-          onClick={handleTitleClick}
+          onClick={() => handleToggleIsEditing(() => setIsEditingTitle(true))}
         >
           <h2>{title}</h2>
         </section>
@@ -128,37 +120,110 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
         <PopoverTrigger>
           <HiOutlinePencilSquare />
         </PopoverTrigger>
-        <PopoverContent sideOffset={5} side="right">
+        <PopoverContent className="h-[400px]" sideOffset={5} side="right">
           {isEditingDescription ? (
-            <Input
-              autoFocus
-              type="text"
-              className="w-full py-2 text-3xl"
-              onBlur={handleDescriptionBlur}
-              value={description}
-              onChange={handleDescriptionOnChange}
-              onKeyDown={handleDescriptionKeydown}
-            />
+            <div>
+              <Label htmlFor="description" className="text-sm text-gray-400">
+                Description
+              </Label>
+              <Input
+                autoFocus
+                type="text"
+                className="w-full py-2 text-xl"
+                onBlur={() => handleBlur(() => setIsEditingDescription(false))}
+                value={description}
+                onChange={(e) =>
+                  handleFieldChange("description", e.target.value as string)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleKeydown(e, setIsEditingDescription)
+                }
+              />
+            </div>
           ) : (
             <section
-              className="py-2 text-2xl text-gray-700"
-              onClick={handleDescriptionClick}
+              className="text-xl text-gray-700"
+              onClick={() =>
+                handleToggleIsEditing(() => setIsEditingDescription(true))
+              }
             >
+              <Label htmlFor="description" className="text-sm text-gray-400">
+                Description
+              </Label>
               <p>{description}</p>
             </section>
           )}
 
-          <section className="flex h-full w-full flex-col gap-1 text-lg">
-            <p>
-              <strong>Assignee:</strong> {assignee}
-            </p>
-            <p>
-              <strong>Created Date:</strong> {createdDate}
-            </p>
-            <p>
-              <strong>Due Date:</strong> {dueDate}
-            </p>
-          </section>
+          {isEditingAssignee ? (
+            <div>
+              <Label htmlFor="assignee" className="text-sm text-gray-400">
+                Assignee
+              </Label>
+
+              <Input
+                autoFocus
+                type="text"
+                className="w-full py-2 text-xl"
+                onBlur={() => handleBlur(() => setIsEditingAssignee(false))}
+                value={assignee}
+                onChange={(e) =>
+                  handleFieldChange("assignee", e.target.value as string)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleKeydown(e, setIsEditingAssignee)
+                }
+              />
+            </div>
+          ) : (
+            <section
+              onClick={() =>
+                handleToggleIsEditing(() => setIsEditingAssignee(true))
+              }
+              className="flex h-full w-full flex-col gap-1 text-lg"
+            >
+              <Label htmlFor="assignee" className="text-sm text-gray-400">
+                Assignee
+              </Label>
+              <p>{assignee}</p>
+            </section>
+          )}
+          {IsEditingCreatedDate ? (
+            <div>
+              <Label htmlFor="" className="text-sm text-gray-400">
+                Created Date
+              </Label>
+
+              <Input
+                autoFocus
+                type="text"
+                className="w-full py-2 text-xl"
+                onBlur={() => handleBlur(() => setIsEditingCreatedDate(false))}
+                value={assignee}
+                onChange={(e) =>
+                  handleFieldChange("assignee", e.target.value as string)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleKeydown(e, setIsEditingCreatedDate)
+                }
+              />
+            </div>
+          ) : (
+            <section
+              onClick={() =>
+                handleToggleIsEditing(() => setIsEditingCreatedDate(true))
+              }
+              className="flex h-full w-full flex-col gap-1 text-lg"
+            >
+              <Label htmlFor="assignee" className="text-sm text-gray-400">
+                Created Date
+              </Label>
+              <p>{assignee}</p>
+              <p>{createdDate}</p>
+              <p>
+                <strong>Due Date:</strong> {dueDate}
+              </p>
+            </section>
+          )}
         </PopoverContent>
       </Popover>
 

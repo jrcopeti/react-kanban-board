@@ -62,7 +62,7 @@ function KanbanBoard() {
       columnId,
       title: `Task ${tasks.length + 1}`,
       assignee: "",
-      description: "",
+      description: "Maravilhas",
       status: "todo",
       priority: "low",
       points: 1,
@@ -76,6 +76,20 @@ function KanbanBoard() {
     const filteredTasks = tasks.filter((task) => task.id !== id);
     setTasks(filteredTasks);
   };
+
+  const updateTask = (task: Task) => {
+    console.log(task, "task");
+    console.log("function updateTask");
+    const updatedTasks = tasks.map((t) => {
+      return t.id === task.id ? task : t;
+    });
+    setTasks(updatedTasks);
+  };
+
+  const totalPoints = tasks.reduce(
+    (total, task) => total + (task?.points || 0),
+    0,
+  );
 
   // Library DND Kit
 
@@ -114,9 +128,7 @@ function KanbanBoard() {
       },
     }),
     useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
+
     useSensor(MouseSensor),
   );
 
@@ -138,6 +150,8 @@ function KanbanBoard() {
                   deleteColumn={deleteColumn}
                   createTask={createTask}
                   deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  totalPoints={totalPoints}
                   tasks={taskInColumn(col.id)}
                 />
               ))}
@@ -159,6 +173,9 @@ function KanbanBoard() {
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
                 createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                totalPoints={totalPoints}
                 tasks={taskInColumn(activeColumn.id)}
               />
             )}

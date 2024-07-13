@@ -34,6 +34,8 @@ function ColumnContainer({
   deleteColumn,
   createTask,
   deleteTask,
+  updateTask,
+  totalPoints,
   tasks,
 }: ColumnContainerProps) {
   const { id, title } = column;
@@ -56,19 +58,6 @@ function ColumnContainer({
     if (e.key !== "Enter") return;
     setIsEditing(false);
   };
-
-  // const updateTask = (task: Task) => {
-  //   console.log("function updateTask");
-  //   const updatedTasks = tasks.map((t) => {
-  //     return t.id === task.id ? task : t;
-  //   });
-  //   setTasks(updatedTasks);
-  // };
-
-  // const totalPoints = tasks.reduce(
-  //   (total, task) => total + (task?.points || 0),
-  //   0,
-  // );
 
   const {
     setNodeRef,
@@ -139,7 +128,7 @@ function ColumnContainer({
       style={style}
       {...attributes}
       {...listeners}
-      className="flex h-full w-[350px] flex-col rounded-md bg-gray-300"
+      className="flex h-full w-[350px] flex-col rounded-md bg-gray-300 overflow-auto"
     >
       <section className="text-md flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-gray-200 p-3 font-bold">
         <div className="flex gap-2">
@@ -176,11 +165,17 @@ function ColumnContainer({
       {/* Content */}
 
       <section className="flex flex-grow flex-col gap-4 p-4">
-        {/* <p className="ml-3 text-2xl font-semibold">
+        <p className="ml-3 text-2xl font-semibold">
           Total Points: {totalPoints}
-        </p> */}
+        </p>
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
+          <TaskCard
+            key={task.id}
+            task={task}
+            deleteTask={deleteTask}
+            updateTask={updateTask}
+          
+          />
         ))}
       </section>
 

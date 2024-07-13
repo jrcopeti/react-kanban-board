@@ -17,6 +17,7 @@ type TaskCardProps = {
   task: Task;
   updateTask: (task: Task) => void;
   deleteTask: (id: number) => void;
+  totalPoints: number;
 };
 
 type Column = {
@@ -30,6 +31,8 @@ type ColumnContainerProps = {
   deleteColumn: (id: Id) => void;
   createTask: (columnId: Id) => void;
   deleteTask: (id: Id) => void;
+  updateTask: (task: Task) => void;
+  totalPoints: number;
   tasks: Task[];
 };
 
