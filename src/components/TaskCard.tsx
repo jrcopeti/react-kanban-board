@@ -1,4 +1,11 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import {
+  useState,
+  Dispatch,
+  SetStateAction,
+  useRef,
+  RefObject,
+  useEffect,
+} from "react";
 import { Task, TaskCardProps } from "../types";
 import {
   HiOutlineChevronDoubleUp,
@@ -31,19 +38,42 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   } = task;
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [isEditingPopOver, setIsEditingPopOver] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
-  const [IsEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
-
+  const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
+  const [isEditingDueDate, setIsEditingDueDate] = useState(false);
   const [MouseIsOver, setMouseIsOver] = useState(false);
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id, disabled: isEditingTitle });
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+  const assigneeRef = useRef<HTMLInputElement>(null);
+  const createdDateRef = useRef<HTMLInputElement>(null);
+  const dueDateRef = useRef<HTMLInputElement>(null);
 
-  const style = {
-    transition: transition,
-    transform: CSS.Transform.toString(transform),
-  };
+  useEffect(() => {
+    if (isEditingTitle) {
+      titleRef.current?.focus();
+    } else if (isEditingDescription && descriptionRef.current) {
+      console.log("descriptionRef", descriptionRef.current);
+      descriptionRef.current.focus();
+    } else if (isEditingAssignee && assigneeRef.current) {
+      console.log("assigneeRef", assigneeRef.current);
+      assigneeRef.current.focus();
+    } else if (isEditingCreatedDate && createdDateRef.current) {
+      console.log("createdDateRef", createdDateRef.current);
+      createdDateRef.current.focus();
+    } else if (isEditingDueDate && dueDateRef.current) {
+      console.log("dueDateRef", dueDateRef.current);
+      dueDateRef.current.focus();
+    }
+  }, [
+    isEditingTitle,
+    isEditingDescription,
+    isEditingAssignee,
+    isEditingCreatedDate,
+    isEditingDueDate,
+  ]);
 
   const updatePoints = (direction: "up" | "down") => {
     console.log("Inside updatePoints");
@@ -55,9 +85,11 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
       updateTask({ ...task, points: newPoints });
     }
   };
+  const handleToggleIsEditing = (
+    setIsEditing: Dispatch<SetStateAction<boolean>>,
+  ) => {
+    setIsEditing((prev) => !prev);
 
-  const handleToggleIsEditing = (action: Dispatch<SetStateAction<boolean>>) => {
-    action((prev) => !prev);
     setMouseIsOver(false);
   };
 
@@ -79,6 +111,15 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     if (e.key === "Enter" && e.shiftKey) {
       action(false);
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsEditingPopOver(false);
+    setIsEditingDescription(false);
+    setIsEditingAssignee(false);
+    setIsEditingCreatedDate(false);
+    setIsEditingDueDate(false);
   };
 
   const handleMouseEnter = () => {
@@ -106,11 +147,12 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
             handleKeydown(e, setIsEditingTitle)
           }
+          ref={titleRef}
         />
       ) : (
         <section
           className="break-words py-2 text-3xl font-semibold"
-          onClick={() => handleToggleIsEditing(() => setIsEditingTitle(true))}
+          onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
           <h2>{title}</h2>
         </section>
@@ -121,108 +163,116 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           <HiOutlinePencilSquare />
         </PopoverTrigger>
         <PopoverContent className="h-[400px]" sideOffset={5} side="right">
-          {isEditingDescription ? (
-            <div>
+          {isEditingPopOver ? (
+            <form onSubmit={handleSubmit}>
               <Label htmlFor="description" className="text-sm text-gray-400">
                 Description
               </Label>
               <Input
-                autoFocus
                 type="text"
                 className="w-full py-2 text-xl"
-                onBlur={() => handleBlur(() => setIsEditingDescription(false))}
                 value={description}
                 onChange={(e) =>
                   handleFieldChange("description", e.target.value as string)
                 }
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                  handleKeydown(e, setIsEditingDescription)
-                }
+                ref={descriptionRef}
               />
-            </div>
-          ) : (
-            <section
-              className="text-xl text-gray-700"
-              onClick={() =>
-                handleToggleIsEditing(() => setIsEditingDescription(true))
-              }
-            >
-              <Label htmlFor="description" className="text-sm text-gray-400">
-                Description
-              </Label>
-              <p>{description}</p>
-            </section>
-          )}
 
-          {isEditingAssignee ? (
-            <div>
               <Label htmlFor="assignee" className="text-sm text-gray-400">
                 Assignee
               </Label>
-
               <Input
-                autoFocus
                 type="text"
                 className="w-full py-2 text-xl"
-                onBlur={() => handleBlur(() => setIsEditingAssignee(false))}
                 value={assignee}
                 onChange={(e) =>
                   handleFieldChange("assignee", e.target.value as string)
                 }
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                  handleKeydown(e, setIsEditingAssignee)
-                }
+                ref={assigneeRef}
               />
-            </div>
-          ) : (
-            <section
-              onClick={() =>
-                handleToggleIsEditing(() => setIsEditingAssignee(true))
-              }
-              className="flex h-full w-full flex-col gap-1 text-lg"
-            >
-              <Label htmlFor="assignee" className="text-sm text-gray-400">
-                Assignee
-              </Label>
-              <p>{assignee}</p>
-            </section>
-          )}
-          {IsEditingCreatedDate ? (
-            <div>
-              <Label htmlFor="" className="text-sm text-gray-400">
+
+              <Label htmlFor="createdDate" className="text-sm text-gray-400">
                 Created Date
               </Label>
-
               <Input
-                autoFocus
                 type="text"
                 className="w-full py-2 text-xl"
-                onBlur={() => handleBlur(() => setIsEditingCreatedDate(false))}
-                value={assignee}
+                value={createdDate}
                 onChange={(e) =>
-                  handleFieldChange("assignee", e.target.value as string)
+                  handleFieldChange("createdDate", e.target.value as string)
                 }
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                  handleKeydown(e, setIsEditingCreatedDate)
-                }
+                ref={createdDateRef}
               />
-            </div>
-          ) : (
-            <section
-              onClick={() =>
-                handleToggleIsEditing(() => setIsEditingCreatedDate(true))
-              }
-              className="flex h-full w-full flex-col gap-1 text-lg"
-            >
-              <Label htmlFor="assignee" className="text-sm text-gray-400">
+
+              <Label htmlFor="due Date" className="text-sm text-gray-400">
                 Created Date
               </Label>
-              <p>{assignee}</p>
-              <p>{createdDate}</p>
-              <p>
-                <strong>Due Date:</strong> {dueDate}
-              </p>
-            </section>
+              <Input
+                type="text"
+                className="w-full py-2 text-xl"
+                value={dueDate}
+                onChange={(e) =>
+                  handleFieldChange("dueDate", e.target.value as string)
+                }
+                ref={dueDateRef}
+              />
+
+              <Button type="submit">Save</Button>
+            </form>
+          ) : (
+            <div>
+              <section
+                onClick={() => {
+                  handleToggleIsEditing(setIsEditingPopOver);
+                  setIsEditingDescription(true);
+                }}
+                className="text-xl text-gray-700"
+              >
+                <Label htmlFor="description" className="text-sm text-gray-400">
+                  Description
+                </Label>
+                <p>{description}</p>
+              </section>
+
+              <section
+                onClick={() => {
+                  handleToggleIsEditing(setIsEditingPopOver);
+                  setIsEditingAssignee(true);
+                }}
+                className="flex h-full w-full flex-col gap-1 text-lg"
+              >
+                <Label htmlFor="assignee" className="text-sm text-gray-400">
+                  Assignee
+                </Label>
+                <p>{assignee} JUBILEUdfklnrkfgn.jktrgnf</p>
+              </section>
+
+              <section
+                onClick={() => {
+                  handleToggleIsEditing(setIsEditingPopOver);
+                  setIsEditingCreatedDate(true);
+                }}
+                className="flex h-full w-full flex-col gap-1 text-lg"
+              >
+                <Label htmlFor="createdDate" className="text-sm text-gray-400">
+                  Created Date
+                </Label>
+                <p>{createdDate}</p>
+              </section>
+
+              <section
+                onClick={() => {
+                  handleToggleIsEditing(setIsEditingPopOver);
+                  setIsEditingDueDate(true);
+                }}
+                className="flex h-full w-full flex-col gap-1 text-lg"
+              >
+                <Label htmlFor="Due Date" className="text-sm text-gray-400">
+                  Due Date
+                </Label>
+                <p>{dueDate}</p>
+              </section>
+            </div>
           )}
         </PopoverContent>
       </Popover>
