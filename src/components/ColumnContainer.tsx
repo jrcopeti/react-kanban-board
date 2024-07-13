@@ -1,15 +1,22 @@
+//React
+import { useMemo, useState } from "react";
+
+//Components
+import TaskCard from "./TaskCard";
+
+//UI
+import Input from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import type { ColumnContainerProps } from "../types";
+import { FiPlusCircle } from "react-icons/fi";
 import { HiOutlineTrash } from "react-icons/hi";
+
+//Lib
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useMemo, useState } from "react";
-import Input from "@/components/ui/input";
-
-import TaskCard from "./TaskCard";
-import { FiPlusCircle } from "react-icons/fi";
-
 import { SortableContext } from "@dnd-kit/sortable";
+
+//Types
+import type { ColumnContainerProps } from "../types";
 
 function ColumnContainer({
   column,
@@ -90,7 +97,7 @@ function ColumnContainer({
       <section className="text-md flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-gray-200 p-3 font-bold">
         <div className="flex gap-2">
           <div className="flex items-center justify-center bg-gray-500 px-2 py-1 text-sm">
-            0
+            {totalPoints}
           </div>
           {isEditing ? (
             <Input
@@ -122,10 +129,6 @@ function ColumnContainer({
       {/* Content */}
 
       <section className="flex flex-grow flex-col gap-4 p-4">
-        <p className="ml-3 text-2xl font-semibold">
-          Total Points: {totalPoints}
-        </p>
-
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
             <TaskCard

@@ -1,23 +1,32 @@
+//React
 import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
-import { Task, TaskCardProps } from "../types";
+
+//UI
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import Input from "@/components/ui/input";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { RiEqualLine } from "react-icons/ri";
 import {
   HiOutlineChevronDoubleUp,
   HiOutlineChevronDown,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { RiEqualLine } from "react-icons/ri";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import Input from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+
+//Lib
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+//Utils
 import { taskPriorities } from "../utils";
+
+//Types
+import type { Task, TaskCardProps } from "../types";
 
 function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
@@ -31,37 +40,37 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     id,
   } = task;
 
+  //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [isEditingPriority, setIsEditingPriority] = useState(false);
+  const [, setPriorityState] = useState<string>(priority);
+  const [MouseIsOver, setMouseIsOver] = useState(false);
+
+  //PopOver state
   const [isEditingPopOver, setIsEditingPopOver] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
   const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
-  const [isEditingPriority, setIsEditingPriority] = useState(false);
-  const [, setPriorityState] = useState<string>(priority);
 
-  const [MouseIsOver, setMouseIsOver] = useState(false);
-
+  //Refs
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
   const createdDateRef = useRef<HTMLInputElement>(null);
   const dueDateRef = useRef<HTMLInputElement>(null);
 
+  //Focus on input
   useEffect(() => {
     if (isEditingTitle) {
       titleRef.current?.focus();
     } else if (isEditingDescription && descriptionRef.current) {
-      console.log("descriptionRef", descriptionRef.current);
       descriptionRef.current.focus();
     } else if (isEditingAssignee && assigneeRef.current) {
-      console.log("assigneeRef", assigneeRef.current);
       assigneeRef.current.focus();
     } else if (isEditingCreatedDate && createdDateRef.current) {
-      console.log("createdDateRef", createdDateRef.current);
       createdDateRef.current.focus();
     } else if (isEditingDueDate && dueDateRef.current) {
-      console.log("dueDateRef", dueDateRef.current);
       dueDateRef.current.focus();
     }
   }, [
@@ -72,6 +81,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     isEditingDueDate,
   ]);
 
+  //Updates
   const updatePoints = (direction: "up" | "down") => {
     console.log("Inside updatePoints");
     const fib = [0, 1, 2, 3, 5, 8, 13];
@@ -88,6 +98,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     updateTask({ ...task, priority: newPriority });
   };
 
+  //Handlers
   const handleToggleIsEditing = (
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => {
@@ -175,6 +186,8 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Title */}
+
       {isEditingTitle ? (
         <Input
           autoFocus
@@ -197,12 +210,16 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
         </section>
       )}
 
+      {/* Points */}
+
       <section className="flex items-center justify-between px-4 py-2 text-2xl">
         <div className="flex items-center justify-start gap-5">
           <button onClick={() => updatePoints("down")}>-</button>
           <p>{points}</p>
           <button onClick={() => updatePoints("up")}>+</button>
         </div>
+
+        {/* Priority */}
 
         {isEditingPriority ? (
           <>
@@ -232,11 +249,18 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           </div>
         )}
 
+        {/* Popover */}
+
         <Popover>
+          {/* Trigger */}
           <PopoverTrigger>
             <HiOutlinePencilSquare />
           </PopoverTrigger>
+
+          {/* Content */}
+
           <PopoverContent className="h-[400px]" sideOffset={5} side="right">
+            {/* Editing Popover */}
             {isEditingPopOver ? (
               <form onSubmit={handleSubmit}>
                 <Label htmlFor="description" className="text-sm text-gray-400">
@@ -296,6 +320,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                 </section>
               </form>
             ) : (
+              // Display Popover
               <div>
                 <section
                   onClick={() => {
@@ -359,6 +384,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           </PopoverContent>
         </Popover>
 
+        {/* Delete Task */}
         {MouseIsOver && (
           <Button
             onClick={() => deleteTask(id)}

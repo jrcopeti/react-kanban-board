@@ -1,9 +1,19 @@
-import { Button } from "@/components/ui/button";
+// React
 import { useMemo, useState } from "react";
-import { FiPlusCircle } from "react-icons/fi";
-import type { Column, Task } from "../types";
-import { generateId } from "../utils";
+import { createPortal } from "react-dom";
+
+//Components
+import TaskCard from "./TaskCard";
 import ColumnContainer from "./ColumnContainer";
+
+//UI
+import { Button } from "@/components/ui/button";
+import { FiPlusCircle } from "react-icons/fi";
+
+// Utils
+import { generateId } from "../utils";
+
+//Lib
 import {
   DndContext,
   DragEndEvent,
@@ -17,9 +27,9 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-import { createPortal } from "react-dom";
-import type { Id } from "../types";
-import TaskCard from "./TaskCard";
+
+// Types
+import type { Column, Task, Id } from "../types";
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
@@ -28,6 +38,7 @@ function KanbanBoard() {
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
+  // Create and update columns
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   const createNewColumn = () => {
@@ -53,9 +64,14 @@ function KanbanBoard() {
     setTasks(filteredTasks);
   };
 
+  // Create and update tasks
   const taskInColumn = (columnId: Id) => {
     return tasks.filter((task) => task.columnId === columnId);
   };
+  const totalPoints = tasks.reduce(
+    (total, task) => total + (task?.points || 0),
+    0,
+  );
 
   const createTask = (columnId: Id) => {
     const newTask = {
@@ -73,11 +89,6 @@ function KanbanBoard() {
     setTasks([...tasks, newTask]);
   };
 
-  const deleteTask = (id: Id) => {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
-    setTasks(filteredTasks);
-  };
-
   const updateTask = (task: Task) => {
     console.log(task, "task");
     console.log("function updateTask");
@@ -87,10 +98,10 @@ function KanbanBoard() {
     setTasks(updatedTasks);
   };
 
-  const totalPoints = tasks.reduce(
-    (total, task) => total + (task?.points || 0),
-    0,
-  );
+  const deleteTask = (id: Id) => {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks(filteredTasks);
+  };
 
   // Library DND Kit
 
@@ -109,8 +120,6 @@ function KanbanBoard() {
       setActiveTask(event.active.data.current.task as Task);
       return;
     }
-
-    console.log("onDragStart", event);
   };
 
   const onDragEnd = (event: DragEndEvent) => {
@@ -147,7 +156,7 @@ function KanbanBoard() {
 
     if (!isActiveTask) return;
 
-    // dropping a task over another task
+    // Dropping a task over another task
     if (isActiveTask && isOverTask) {
       setTasks((tasks) => {
         const activeIndex = getTaskPosition(active.id);
@@ -159,7 +168,7 @@ function KanbanBoard() {
       });
     }
 
-    // dropping a task over a column
+    // Dropping a task over a column
     const isOverColumn = over.data.current?.type === "column";
 
     if (isActiveTask && isOverColumn) {
@@ -181,7 +190,6 @@ function KanbanBoard() {
       },
     }),
     useSensor(TouchSensor),
-
     useSensor(MouseSensor),
   );
 

@@ -1,3 +1,5 @@
+//First attempt at creating a Kanban board, not in use anymore
+
 import initialTasks from "../assets/data.json";
 import TaskCard from "./TaskCard";
 import { tasksStatus } from "../utils";

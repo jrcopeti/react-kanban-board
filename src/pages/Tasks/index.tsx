@@ -1,9 +1,9 @@
-import TaskList from "../../components/TaskList";
+import KanbanBoard from "../../components/KanbanBoard";
 
 function TaskPage() {
   return (
     <div>
-      <TaskList />
+      <KanbanBoard />
     </div>
   );
 }
