@@ -15,4 +15,14 @@ type TaskCardProps = {
   updateTask: (task: Task) => void;
 };
 
-export type { Task, TaskCardProps };
+type Column = {
+  id: string | number;
+  title: string;
+};
+
+type ColumnContainerProps = {
+  column: Column;
+  deleteColumn: (id: string | number) => void;
+};
+
+export type { Task, TaskCardProps, Column, ColumnContainerProps };

@@ -7,4 +7,8 @@ const routes = [
   { to: "/about", label: "About" },
 ];
 
-export { tasksStatus, taskPriorities, routes };
+const generateId = () => {
+  return Math.floor(Math.random() * 10001);
+}
+
+export { tasksStatus, taskPriorities, routes, generateId };
