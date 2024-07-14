@@ -23,12 +23,13 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 //Utils
-import { taskPriorities } from "../utils";
+import { labelOptions, sortedLabels, taskPriorities } from "../utils";
 
 //Types
 import type { Task, TaskCardProps } from "../types";
 import DatePicker from "./DatePicker";
 import { format } from "date-fns";
+import clsx from "clsx";
 
 function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
@@ -39,9 +40,9 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     dueDate,
     priority,
     points,
+    label,
     id,
   } = task;
-  console.log("dueDate", dueDate);
 
   //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -54,15 +55,16 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
   const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
+  const [isEditingLabel, setIsEditingLabel] = useState(false);
+  console.log("isEditingLabel", isEditingLabel);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
-  console.log("isEditingDueDate", isEditingDueDate);
   const [dueDateState, setDueDateState] = useState<Date>(new Date(dueDate));
-  console.log("dueDateState", dueDateState);
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
+  const labelRef = useRef<HTMLSelectElement>(null);
   const createdDateRef = useRef<HTMLInputElement>(null);
   const dueDateRef = useRef<HTMLButtonElement>(null);
   console.log("dueDateRef", dueDateRef);
@@ -78,8 +80,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     } else if (isEditingCreatedDate && createdDateRef.current) {
       createdDateRef.current.focus();
     } else if (isEditingDueDate && dueDateRef.current) {
-      console.log("due date is triggered");
       dueDateRef.current.focus();
+    } else if (isEditingLabel && labelRef.current) {
+      console.log("label is triggered");
+      labelRef.current.focus();
     }
   }, [
     isEditingTitle,
@@ -87,9 +91,11 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     isEditingAssignee,
     isEditingCreatedDate,
     isEditingDueDate,
+    isEditingLabel,
   ]);
 
   //Updates
+
   // Update the task's due date when the dueDateState changes
   useEffect(() => {
     updateTask({ ...task, dueDate: dueDateState.toISOString() });
@@ -109,6 +115,11 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const updatePriority = (newPriority: string) => {
     setPriorityState(newPriority);
     updateTask({ ...task, priority: newPriority });
+  };
+
+  const updateLabel = (newLabel: string) => {
+    console.log("newLabel", newLabel);
+    updateTask({ ...task, label: newLabel });
   };
 
   //Handlers
@@ -145,6 +156,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     setIsEditingPopOver(false);
     setIsEditingDescription(false);
     setIsEditingAssignee(false);
+    setIsEditingLabel(false);
     setIsEditingCreatedDate(false);
     setIsEditingDueDate(false);
   };
@@ -189,13 +201,29 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     );
   }
 
+  const labelToColor = sortedLabels.find((l) => l.label === label)?.color;
+  console.log("labelToColor", labelToColor);
+  const labelClassName = clsx(
+    "absolute left-5 bottom-10 h-1 text-sm capitalize ",
+    `text-${labelToColor}-500`,
+  );
+
+  const divClassNameWithLabel = clsx(
+    " relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-0.5 shadow-md",
+    `border-${labelToColor}-500`,
+  );
+
+  const divClassName = clsx(
+    " relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
+  );
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
-      className="relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg border bg-gray-50 px-2 py-0.5 shadow-md"
+      className={label ? divClassNameWithLabel : divClassName}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -302,18 +330,22 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   ref={assigneeRef}
                 />
 
-                {/* <Label htmlFor="createdDate" className="text-sm text-gray-400">
-                  Created Date
+                <Label htmlFor="label" className="text-sm text-gray-400">
+                  Label
                 </Label>
-                <Input
-                  type="hidden"
-                  // className="w-full py-2 text-xl"
-                  value={createdDate}
-                  onChange={(e) =>
-                    handleFieldChange("createdDate", e.target.value as string)
-                  }
-                  ref={createdDateRef}
-                /> */}
+                <select
+                  value={label}
+                  onChange={(e) => updateLabel(e.target.value)}
+                  onBlur={() => handleBlur(setIsEditingLabel)}
+                  ref={labelRef}
+                  className="capitalize"
+                >
+                  {labelOptions.map((l) => (
+                    <option key={l.value} value={l.value}>
+                      {l.label}
+                    </option>
+                  ))}
+                </select>
 
                 <Label htmlFor="due Date" className="text-sm text-gray-400">
                   Due Date
@@ -357,7 +389,20 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   <Label htmlFor="assignee" className="text-sm text-gray-400">
                     Assignee
                   </Label>
-                  <p>{assignee} JUBILEUdfklnrkfgn.jktrgnf</p>
+                  <p>{assignee}</p>
+                </section>
+
+                <section
+                  onClick={() => {
+                    handleToggleIsEditing(setIsEditingPopOver);
+                    setIsEditingLabel(true);
+                  }}
+                  className="flex h-full w-full flex-col gap-1 text-lg"
+                >
+                  <Label htmlFor="label" className="text-sm text-gray-400">
+                    Label
+                  </Label>
+                  <p>{label}</p>
                 </section>
 
                 <section
@@ -395,6 +440,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                 Created At: {format(createdDate, "dd, MMM yyyy")}
               </p>
             </section>
+
+            {/* Label */}
+
+            <div className={labelClassName}>{label}</div>
           </>
         )}
       </section>

@@ -8,6 +8,7 @@ type Task = {
   description: string;
   status: string;
   priority: string;
+  label: string;
   points?: number;
   createdDate: string;
   dueDate: string;

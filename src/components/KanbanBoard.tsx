@@ -1,5 +1,5 @@
 // React
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 //Components
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
 
 // Utils
-import { generateId } from "../utils";
+import { generateId, labels, randomLabelIndex } from "../utils";
 
 //Lib
 import {
@@ -82,6 +82,7 @@ function KanbanBoard() {
       description: "Maravilhas",
       status: "todo",
       priority: "low",
+      label: labels[randomLabelIndex],
       points: 1,
       createdDate: new Date().toISOString(),
       dueDate: new Date().toISOString(),

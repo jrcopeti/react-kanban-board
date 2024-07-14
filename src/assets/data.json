@@ -5,8 +5,9 @@
     "description": "Create a visually appealing landing page for the website.",
     "assignee": "Mary Davis",
     "status": "To Do",
-    "priority": "High",
+    "priority": "high",
     "points": 5,
+    "label": "design",
     "createdDate": "2023-09-15",
     "dueDate": "2023-09-30"
   },
@@ -16,8 +17,9 @@
     "description": "Implement user registration functionality with email verification.",
     "assignee": "Jane Smith",
     "status": "In Progress",
-    "priority": "Medium",
-    "points": 10,
+    "priority": "medium",
+    "points": 2,
+    "label": "feature",
     "createdDate": "2023-09-16",
     "dueDate": "2023-10-10"
   },
@@ -27,8 +29,9 @@
     "description": "Investigate and fix the login problem reported by users.",
     "assignee": "Mark Johnson",
     "status": "In Progress",
-    "priority": "High",
+    "priority": "high",
     "points": 8,
+    "label": "bug",
     "createdDate": "2023-09-17",
     "dueDate": "2023-09-25"
   },
@@ -38,8 +41,9 @@
     "description": "Prepare for the release of the first version of the application.",
     "assignee": "Sarah Brown",
     "status": "To Do",
-    "priority": "High",
+    "priority": "high",
     "points": 13,
+    "label": "release",
     "createdDate": "2023-09-18",
     "dueDate": "2023-10-05"
   },
@@ -49,8 +53,9 @@
     "description": "Update user documentation with the latest features and changes.",
     "assignee": "David Wilson",
     "status": "Done",
-    "priority": "Low",
+    "priority": "low",
     "points": 3,
+    "label": "documentation",
     "createdDate": "2023-09-19",
     "dueDate": "2023-09-30"
   }
