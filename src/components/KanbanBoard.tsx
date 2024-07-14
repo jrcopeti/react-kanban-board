@@ -1,5 +1,5 @@
 // React
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 //Components
@@ -201,7 +201,7 @@ function KanbanBoard() {
         onDragOver={onDragOver}
         sensors={sensors}
       >
-        <div className="m-auto flex gap-2">
+        <div className="m-auto flex items-start gap-2">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
@@ -227,6 +227,8 @@ function KanbanBoard() {
             Add Column
           </Button>
         </div>
+
+        {/* Drag Overlay */}
         {createPortal(
           <DragOverlay>
             {activeColumn && (

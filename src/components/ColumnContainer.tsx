@@ -50,7 +50,6 @@ function ColumnContainer({
   };
 
   // Library DND Kit
-
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
   }, [tasks]);

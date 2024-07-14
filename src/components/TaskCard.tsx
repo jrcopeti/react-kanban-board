@@ -27,6 +27,8 @@ import { taskPriorities } from "../utils";
 
 //Types
 import type { Task, TaskCardProps } from "../types";
+import DatePicker from "./DatePicker";
+import { format } from "date-fns";
 
 function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
@@ -39,6 +41,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     points,
     id,
   } = task;
+  console.log("dueDate", dueDate);
 
   //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -52,13 +55,17 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
   const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
+  console.log("isEditingDueDate", isEditingDueDate);
+  const [dueDateState, setDueDateState] = useState<Date>(new Date(dueDate));
+  console.log("dueDateState", dueDateState);
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
   const createdDateRef = useRef<HTMLInputElement>(null);
-  const dueDateRef = useRef<HTMLInputElement>(null);
+  const dueDateRef = useRef<HTMLButtonElement>(null);
+  console.log("dueDateRef", dueDateRef);
 
   //Focus on input
   useEffect(() => {
@@ -71,6 +78,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     } else if (isEditingCreatedDate && createdDateRef.current) {
       createdDateRef.current.focus();
     } else if (isEditingDueDate && dueDateRef.current) {
+      console.log("due date is triggered");
       dueDateRef.current.focus();
     }
   }, [
@@ -82,6 +90,11 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   ]);
 
   //Updates
+  // Update the task's due date when the dueDateState changes
+  useEffect(() => {
+    updateTask({ ...task, dueDate: dueDateState.toISOString() });
+  }, [dueDateState, task.dueDate]);
+
   const updatePoints = (direction: "up" | "down") => {
     console.log("Inside updatePoints");
     const fib = [0, 1, 2, 3, 5, 8, 13];
@@ -289,30 +302,26 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   ref={assigneeRef}
                 />
 
-                <Label htmlFor="createdDate" className="text-sm text-gray-400">
+                {/* <Label htmlFor="createdDate" className="text-sm text-gray-400">
                   Created Date
                 </Label>
                 <Input
-                  type="text"
-                  className="w-full py-2 text-xl"
+                  type="hidden"
+                  // className="w-full py-2 text-xl"
                   value={createdDate}
                   onChange={(e) =>
                     handleFieldChange("createdDate", e.target.value as string)
                   }
                   ref={createdDateRef}
-                />
+                /> */}
 
                 <Label htmlFor="due Date" className="text-sm text-gray-400">
-                  Created Date
+                  Due Date
                 </Label>
-                <Input
-                  type="text"
-                  className="w-full py-2 text-xl"
-                  value={dueDate}
-                  onChange={(e) =>
-                    handleFieldChange("dueDate", e.target.value as string)
-                  }
+                <DatePicker
                   ref={dueDateRef}
+                  date={dueDateState}
+                  setDate={setDueDateState}
                 />
 
                 <section className="flex">
@@ -354,22 +363,6 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                 <section
                   onClick={() => {
                     handleToggleIsEditing(setIsEditingPopOver);
-                    setIsEditingCreatedDate(true);
-                  }}
-                  className="flex h-full w-full flex-col gap-1 text-lg"
-                >
-                  <Label
-                    htmlFor="createdDate"
-                    className="text-sm text-gray-400"
-                  >
-                    Created Date
-                  </Label>
-                  <p>{createdDate}</p>
-                </section>
-
-                <section
-                  onClick={() => {
-                    handleToggleIsEditing(setIsEditingPopOver);
                     setIsEditingDueDate(true);
                   }}
                   className="flex h-full w-full flex-col gap-1 text-lg"
@@ -377,7 +370,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   <Label htmlFor="Due Date" className="text-sm text-gray-400">
                     Due Date
                   </Label>
-                  <p>{dueDate}</p>
+                  <p>{format(dueDateState, "MMMM d, yyyy")}</p>
                 </section>
               </div>
             )}
@@ -386,15 +379,23 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
 
         {/* Delete Task */}
         {MouseIsOver && (
-          <Button
-            onClick={() => deleteTask(id)}
-            className="absolute bottom-0 right-5 z-30 translate-x-1/2"
-          >
-            <HiOutlineTrash
-              className="opacity-60 hover:stroke-rose-500 hover:opacity-100"
-              size={20}
-            />
-          </Button>
+          <>
+            <Button
+              onClick={() => deleteTask(id)}
+              className="absolute bottom-0 right-5 z-30 translate-x-1/2"
+            >
+              <HiOutlineTrash
+                className="opacity-60 hover:stroke-rose-500 hover:opacity-100"
+                size={20}
+              />
+            </Button>
+
+            <section className="absolute bottom-0 left-24 z-30 -translate-x-1/2 flex-col gap-1 text-lg">
+              <p className="text-sm text-gray-400">
+                Created At: {format(createdDate, "dd, MMM yyyy")}
+              </p>
+            </section>
+          </>
         )}
       </section>
     </div>
