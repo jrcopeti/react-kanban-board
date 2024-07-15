@@ -1,17 +1,19 @@
+// Router
+import { Link, useLocation } from "react-router-dom";
+
+// UI
 import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { routes } from "../utils";
-import { useOpenSidebar } from "../hooks/useOpenSidebar";
 import { FiMenu } from "react-icons/fi";
+
+// Hooks
+import { useOpenSidebar } from "../hooks/useOpenSidebar";
 
 function Navbar() {
   const { toggleSidebar, headerRef } = useOpenSidebar();
   const path = useLocation();
-  console.log("pathname", path);
 
   const pathname =
     path.pathname === "/" ? "home" : path.pathname.split("/").join("");
-  console.log("pathname", pathname);
 
   return (
     <nav
@@ -22,14 +24,14 @@ function Navbar() {
         <FiMenu size={40} className="cursor-pointer" />
       </button>
 
-      <div className="capitalize">
+      <div className="capitalize text-xl">
         <h2>{pathname}</h2>
       </div>
 
       <Link to="/">
         <div className="flex cursor-pointer items-center gap-4">
           <h1>Kanban Board</h1>
-          <MdOutlineSpaceDashboard size={50} />
+          <MdOutlineSpaceDashboard size={45} />
         </div>
       </Link>
     </nav>
