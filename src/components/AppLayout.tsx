@@ -12,7 +12,7 @@ function AppLayout() {
         <Navbar />
         <Sidebar />
         <main
-          className={`p-4 duration-300 ease-in-out ${isSidebarOpen ? "translate-x-[26rem]" : "translate-x-0"}`}
+          className={`p-4 duration-300 ease-in-out ${isSidebarOpen ? "translate-x-[26rem]" : "translate-x-0"} bg-pallette-200`}
         >
           <Outlet />
           <Footer />

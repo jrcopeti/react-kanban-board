@@ -6,4 +6,7 @@ html,
 body,
 #root {
   @apply box-border h-screen;
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
