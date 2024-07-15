@@ -35,8 +35,6 @@ function ColumnContainer({
     [key: Id]: boolean;
   }>({});
 
-  console.log("popoverOpenStates", popoverOpenStates);
-
   const handleClick = () => {
     setIsEditing(true);
   };
@@ -62,9 +60,6 @@ function ColumnContainer({
   const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
     (state) => state,
   );
-
-  console.log("isAnyPopoverOpen", isAnyPopoverOpen);
-  console.log("objectvalues - popover", Object.values(popoverOpenStates));
 
   const {
     setNodeRef,

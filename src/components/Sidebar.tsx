@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { routes } from "../utils";
 import { useOpenSidebar } from "../hooks/useOpenSidebar";
-import React from "react";
 
 function Sidebar() {
   const { sidebarRef, isSidebarOpen } = useOpenSidebar();
@@ -14,7 +13,7 @@ function Sidebar() {
     >
       {routes.map((route) => (
         <Link to={route.to} key={route.to}>
-          <div className="flex items-center gap-4 font-semibold text-xl">
+          <div className="flex items-center gap-4 text-xl font-semibold">
             <route.icon size={30} />
             {route.label}
           </div>

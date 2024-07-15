@@ -1,5 +1,4 @@
 import { GoBook, GoHome, GoTasklist } from "react-icons/go";
-import { MdOutlineHome } from "react-icons/md";
 
 const tasksStatus = ["to do", "in progress", "done"];
 const taskPriorities = ["low", "medium", "high"];

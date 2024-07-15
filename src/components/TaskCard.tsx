@@ -73,7 +73,6 @@ function TaskCard({
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
   const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
   const [isEditingLabel, setIsEditingLabel] = useState(false);
-  console.log("isEditingLabel", isEditingLabel);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
   const [dueDateState, setDueDateState] = useState<Date>(new Date(dueDate));
 
@@ -84,7 +83,6 @@ function TaskCard({
   const labelRef = useRef<HTMLSelectElement>(null);
   const createdDateRef = useRef<HTMLInputElement>(null);
   const dueDateRef = useRef<HTMLButtonElement>(null);
-  console.log("dueDateRef", dueDateRef);
 
   //Focus on input
   useEffect(() => {
@@ -99,7 +97,6 @@ function TaskCard({
     } else if (isEditingDueDate && dueDateRef.current) {
       dueDateRef.current.focus();
     } else if (isEditingLabel && labelRef.current) {
-      console.log("label is triggered");
       labelRef.current.focus();
     }
   }, [
@@ -119,7 +116,6 @@ function TaskCard({
   }, [dueDateState, task.dueDate]);
 
   const updatePoints = (direction: "up" | "down") => {
-    console.log("Inside updatePoints");
     const fib = [0, 1, 2, 3, 5, 8, 13];
     const currentIndex = fib.indexOf(points ?? -1);
     const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
@@ -135,7 +131,6 @@ function TaskCard({
   };
 
   const updateLabel = (newLabel: string) => {
-    console.log("newLabel", newLabel);
     updateTask({ ...task, label: newLabel });
   };
 
@@ -222,25 +217,24 @@ function TaskCard({
       <div
         ref={setNodeRef}
         style={style}
-        className="relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-rose-500 bg-gray-50 px-2 py-0.5 opacity-50 shadow-md"
+        className="relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-rose-500 bg-gray-50 px-2 py-0.5 opacity-50 shadow-md"
       ></div>
     );
   }
 
   const labelToColor = sortedLabels.find((l) => l.label === label)?.color;
-  console.log("labelToColor", labelToColor);
   const labelClassName = clsx(
     "absolute left-5 bottom-10 h-1 text-sm capitalize ",
     `text-${labelToColor}-500`,
   );
 
   const divClassNameWithLabel = clsx(
-    " relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-0.5 shadow-md",
+    "relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-0.5 shadow-md",
     `border-${labelToColor}-500`,
   );
 
   const divClassName = clsx(
-    "relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
+    "relative h-[100px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
   );
 
   const labelIconClassName = clsx("text-sm", `text-${labelToColor}-500`);
@@ -381,7 +375,6 @@ function TaskCard({
                   className="capitalize"
                 >
                   {labelOptions.map((l) => {
-                    console.log("labelOptions", l);
                     return (
                       <option key={l.label} value={l.value}>
                         {l.label}
