@@ -187,7 +187,7 @@ function KanbanBoard() {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5,
+        distance: 100,
       },
     }),
     useSensor(TouchSensor),
@@ -208,8 +208,7 @@ function KanbanBoard() {
               {columns.map((col) => (
                 <ColumnContainer
                   key={col.id}
-                  column={
-                    col}
+                  column={col}
                   updateColumn={updateColumn}
                   deleteColumn={deleteColumn}
                   createTask={createTask}
@@ -250,7 +249,9 @@ function KanbanBoard() {
                 task={activeTask}
                 updateTask={updateTask}
                 deleteTask={deleteTask}
-                totalPoints={totalPoints}
+                isPopoverOpen={false}
+                setPopoverOpenStates={() => {}}
+
               />
             )}
           </DragOverlay>,

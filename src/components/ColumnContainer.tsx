@@ -16,7 +16,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { SortableContext } from "@dnd-kit/sortable";
 
 //Types
-import type { ColumnContainerProps } from "../types";
+import type { ColumnContainerProps, Id } from "../types";
 
 function ColumnContainer({
   column,
@@ -31,6 +31,11 @@ function ColumnContainer({
   const { id, title } = column;
 
   const [isEditing, setIsEditing] = useState(false);
+  const [popoverOpenStates, setPopoverOpenStates] = useState<{
+    [key: Id]: boolean;
+  }>({});
+
+  console.log("popoverOpenStates", popoverOpenStates);
 
   const handleClick = () => {
     setIsEditing(true);
@@ -54,6 +59,13 @@ function ColumnContainer({
     return tasks.map((task) => task.id);
   }, [tasks]);
 
+  const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
+    (state) => state,
+  );
+
+  console.log("isAnyPopoverOpen", isAnyPopoverOpen);
+  console.log("objectvalues - popover", Object.values(popoverOpenStates));
+
   const {
     setNodeRef,
     attributes,
@@ -63,7 +75,7 @@ function ColumnContainer({
     isDragging,
   } = useSortable({
     id: id,
-    disabled: isEditing,
+    disabled: isEditing || isAnyPopoverOpen,
     data: {
       type: "column",
       column,
@@ -135,7 +147,8 @@ function ColumnContainer({
               task={task}
               deleteTask={deleteTask}
               updateTask={updateTask}
-              totalPoints={totalPoints}
+              isPopoverOpen={popoverOpenStates[task.id] || false}
+              setPopoverOpenStates={setPopoverOpenStates}
             />
           ))}
         </SortableContext>

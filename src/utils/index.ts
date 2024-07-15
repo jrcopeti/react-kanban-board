@@ -33,7 +33,6 @@ const labelOptions = [
     value: label.label,
     label: label.label,
   })),
-  { value: "", label: "none" },
 ];
 
 const routes = [

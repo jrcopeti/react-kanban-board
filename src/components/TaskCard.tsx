@@ -1,6 +1,9 @@
 //React
 import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
 
+//Components
+import DatePicker from "./DatePicker";
+
 //UI
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -17,19 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-//Lib
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-
-//Utils
-import { labelOptions, sortedLabels, taskPriorities } from "../utils";
-
-//Types
-import type { Task, TaskCardProps } from "../types";
-import DatePicker from "./DatePicker";
-import { format } from "date-fns";
-import clsx from "clsx";
+import { Textarea } from "@/components/ui/textarea";
 import { FaCircle } from "react-icons/fa";
 import {
   MdOutlineCalendarToday,
@@ -38,7 +29,25 @@ import {
 } from "react-icons/md";
 import { CgTag } from "react-icons/cg";
 
-function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
+//Lib
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+//Utils
+import { labelOptions, sortedLabels, taskPriorities } from "../utils";
+import { format } from "date-fns";
+import clsx from "clsx";
+
+//Types
+import type { Id, Task, TaskCardProps } from "../types";
+
+function TaskCard({
+  task,
+  updateTask,
+  deleteTask,
+  isPopoverOpen,
+  setPopoverOpenStates,
+}: TaskCardProps) {
   const {
     title,
     assignee,
@@ -58,6 +67,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const [MouseIsOver, setMouseIsOver] = useState(false);
 
   //PopOver state
+
   const [isEditingPopOver, setIsEditingPopOver] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
@@ -69,7 +79,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLSelectElement>(null);
   const createdDateRef = useRef<HTMLInputElement>(null);
@@ -176,6 +186,15 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     setMouseIsOver(false);
   };
 
+  const handleTogglePopover = (taskId: Id) => {
+    setPopoverOpenStates((prev) => {
+      return {
+        ...prev,
+        [taskId]: !prev[taskId],
+      };
+    });
+  };
+
   // DND Kit
   const {
     setNodeRef,
@@ -186,7 +205,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     isDragging,
   } = useSortable({
     id: id,
-    disabled: isEditingPopOver || isEditingTitle,
+    disabled: isPopoverOpen || isEditingPopOver || isEditingTitle,
     data: {
       type: "task",
       task,
@@ -301,7 +320,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
 
         {/* Popover */}
 
-        <Popover>
+        <Popover
+          open={isPopoverOpen as boolean}
+          onOpenChange={() => handleTogglePopover(id)}
+        >
           {/* Trigger */}
           <PopoverTrigger>
             <HiOutlinePencilSquare />
@@ -310,7 +332,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
           {/* Content */}
 
           <PopoverContent
-            className="flex h-full w-[auto] items-start justify-center p-12"
+            className="flex h-full w-[auto] min-w-[400px] items-start justify-center overflow-auto p-12"
             sideOffset={5}
             side="right"
           >
@@ -323,12 +345,11 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                 >
                   Description
                 </Label>
-                <textarea
-                  type="text"
+                <Textarea
                   className="w-full py-2 text-xl"
                   value={description}
-                  onChange={(e) =>
-                    handleFieldChange("description", e.target.value as string)
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    handleFieldChange("description", e.target.value)
                   }
                   ref={descriptionRef}
                 />
@@ -359,11 +380,14 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   ref={labelRef}
                   className="capitalize"
                 >
-                  {labelOptions.map((l) => (
-                    <option key={l.value} value={l.value}>
-                      {l.label}
-                    </option>
-                  ))}
+                  {labelOptions.map((l) => {
+                    console.log("labelOptions", l);
+                    return (
+                      <option key={l.label} value={l.value}>
+                        {l.label}
+                      </option>
+                    );
+                  })}
                 </select>
 
                 <Label
@@ -390,7 +414,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
               </form>
             ) : (
               // Display Popover
-              <div className="flex flex-col items-start gap-4">
+              <div className="flex max-w-[500px] flex-col items-start gap-4">
                 <section
                   onClick={() => {
                     handleToggleIsEditing(setIsEditingPopOver);
@@ -404,7 +428,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   >
                     <MdOutlineSubject size={24} /> Description
                   </Label>
-                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                  <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-gray-300 bg-gray-100 p-4 text-justify">
                     {description ? (
                       <p className="text-lg text-gray-900">{description}</p>
                     ) : (
