@@ -39,8 +39,6 @@ function KanbanBoard() {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
   // Create and update columns
-  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
-
   const createNewColumn = () => {
     const columnToAdd = {
       id: generateId(),
@@ -105,6 +103,7 @@ function KanbanBoard() {
   };
 
   // Library DND Kit
+  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   const getColumnPosition = (id: Id) => {
     const index = columns.findIndex((col) => col.id === id);
@@ -195,14 +194,14 @@ function KanbanBoard() {
   );
 
   return (
-    <div className="m-auto flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden px-[40px]">
+    <div className="flex min-h-screen w-full items-start overflow-x-auto overflow-y-hidden p-8">
       <DndContext
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         sensors={sensors}
       >
-        <div className="m-auto flex items-start gap-2">
+        <div className="flex items-start gap-2">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
@@ -251,7 +250,6 @@ function KanbanBoard() {
                 deleteTask={deleteTask}
                 isPopoverOpen={false}
                 setPopoverOpenStates={() => {}}
-
               />
             )}
           </DragOverlay>,
