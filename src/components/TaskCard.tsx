@@ -30,6 +30,13 @@ import type { Task, TaskCardProps } from "../types";
 import DatePicker from "./DatePicker";
 import { format } from "date-fns";
 import clsx from "clsx";
+import { FaCircle } from "react-icons/fa";
+import {
+  MdOutlineCalendarToday,
+  MdOutlinePersonOutline,
+  MdOutlineSubject,
+} from "react-icons/md";
+import { CgTag } from "react-icons/cg";
 
 function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   const {
@@ -131,8 +138,8 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
     setMouseIsOver(false);
   };
 
-  const handleBlur = (action: (value: boolean) => void) => {
-    action(false);
+  const handleBlur = (setIsEditing: (value: boolean) => void) => {
+    setIsEditing(false);
   };
 
   const handleFieldChange = <T extends keyof Task>(
@@ -144,10 +151,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
 
   const handleKeydown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    action: (value: boolean) => void,
+    setIsEditing: (value: boolean) => void,
   ) => {
-    if (e.key === "Enter" && e.shiftKey) {
-      action(false);
+    if (e.key === "Enter") {
+      setIsEditing(false);
     }
   };
 
@@ -214,8 +221,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
   );
 
   const divClassName = clsx(
-    " relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
+    "relative h-[250px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
   );
+
+  const labelIconClassName = clsx("text-sm", `text-${labelToColor}-500`);
 
   return (
     <div
@@ -244,7 +253,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
         />
       ) : (
         <section
-          className="break-words py-2 text-3xl font-semibold"
+          className="break-words py-2 text-3xl font-semibold text-blue-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
           <h2>{title}</h2>
@@ -300,14 +309,21 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
 
           {/* Content */}
 
-          <PopoverContent className="h-[400px]" sideOffset={5} side="right">
+          <PopoverContent
+            className="flex h-full w-[auto] items-start justify-center p-12"
+            sideOffset={5}
+            side="right"
+          >
             {/* Editing Popover */}
             {isEditingPopOver ? (
               <form onSubmit={handleSubmit}>
-                <Label htmlFor="description" className="text-sm text-gray-400">
+                <Label
+                  htmlFor="description"
+                  className="text-sm font-semibold text-gray-400"
+                >
                   Description
                 </Label>
-                <Input
+                <textarea
                   type="text"
                   className="w-full py-2 text-xl"
                   value={description}
@@ -317,7 +333,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   ref={descriptionRef}
                 />
 
-                <Label htmlFor="assignee" className="text-sm text-gray-400">
+                <Label
+                  htmlFor="assignee"
+                  className="text-sm font-semibold text-gray-400"
+                >
                   Assignee
                 </Label>
                 <Input
@@ -330,7 +349,7 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   ref={assigneeRef}
                 />
 
-                <Label htmlFor="label" className="text-sm text-gray-400">
+                <Label htmlFor="label" className="text-sm text-gray-500">
                   Label
                 </Label>
                 <select
@@ -347,7 +366,10 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   ))}
                 </select>
 
-                <Label htmlFor="due Date" className="text-sm text-gray-400">
+                <Label
+                  htmlFor="due Date"
+                  className="text-sm font-semibold text-gray-500"
+                >
                   Due Date
                 </Label>
                 <DatePicker
@@ -356,27 +378,41 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                   setDate={setDueDateState}
                 />
 
-                <section className="flex">
+                <section className="flex gap-2">
                   <Button type="submit">Save</Button>
+                  <Button
+                    type="button"
+                    onClick={() => setIsEditingPopOver(false)}
+                  >
+                    Cancel
+                  </Button>
                 </section>
               </form>
             ) : (
               // Display Popover
-              <div>
+              <div className="flex flex-col items-start gap-4">
                 <section
                   onClick={() => {
                     handleToggleIsEditing(setIsEditingPopOver);
                     setIsEditingDescription(true);
                   }}
-                  className="text-xl text-gray-700"
+                  className="flex flex-col gap-1 text-lg"
                 >
                   <Label
                     htmlFor="description"
-                    className="text-sm text-gray-400"
+                    className="flex items-center gap-1 text-base text-gray-500"
                   >
-                    Description
+                    <MdOutlineSubject size={24} /> Description
                   </Label>
-                  <p>{description}</p>
+                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                    {description ? (
+                      <p className="text-lg text-gray-900">{description}</p>
+                    ) : (
+                      <p className="text-base text-gray-400">
+                        Click to edit...
+                      </p>
+                    )}
+                  </div>
                 </section>
 
                 <section
@@ -384,12 +420,24 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                     handleToggleIsEditing(setIsEditingPopOver);
                     setIsEditingAssignee(true);
                   }}
-                  className="flex h-full w-full flex-col gap-1 text-lg"
+                  className="flex flex-col gap-1 text-lg"
                 >
-                  <Label htmlFor="assignee" className="text-sm text-gray-400">
+                  <Label
+                    htmlFor="assignee"
+                    className="flex items-center gap-1 text-base font-semibold text-gray-500"
+                  >
+                    <MdOutlinePersonOutline size={22} />
                     Assignee
                   </Label>
-                  <p>{assignee}</p>
+                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                    {assignee ? (
+                      <p className="text-lg text-gray-900">{assignee}</p>
+                    ) : (
+                      <p className="text-base text-gray-400">
+                        Click to edit...
+                      </p>
+                    )}
+                  </div>
                 </section>
 
                 <section
@@ -397,12 +445,29 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                     handleToggleIsEditing(setIsEditingPopOver);
                     setIsEditingLabel(true);
                   }}
-                  className="flex h-full w-full flex-col gap-1 text-lg"
+                  className="flex flex-col gap-1 text-lg"
                 >
-                  <Label htmlFor="label" className="text-sm text-gray-400">
+                  <Label
+                    htmlFor="label"
+                    className="flex items-center gap-1 text-base font-semibold text-gray-500"
+                  >
+                    <CgTag />
                     Label
                   </Label>
-                  <p>{label}</p>
+                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                    <div className="flex items-center gap-2 text-base">
+                      {label !== "" ? (
+                        <>
+                          <p className="capitalize text-gray-900">{label}</p>
+                          <FaCircle className={labelIconClassName} />
+                        </>
+                      ) : (
+                        <p className="text-base text-gray-400">
+                          <FaCircle className="text-gray-300" />
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </section>
 
                 <section
@@ -410,12 +475,26 @@ function TaskCard({ task, updateTask, deleteTask }: TaskCardProps) {
                     handleToggleIsEditing(setIsEditingPopOver);
                     setIsEditingDueDate(true);
                   }}
-                  className="flex h-full w-full flex-col gap-1 text-lg"
+                  className="flex flex-col gap-1 text-lg"
                 >
-                  <Label htmlFor="Due Date" className="text-sm text-gray-400">
+                  <Label
+                    htmlFor="Due Date"
+                    className="flex items-center gap-1 text-base font-semibold text-gray-500"
+                  >
+                    <MdOutlineCalendarToday />
                     Due Date
                   </Label>
-                  <p>{format(dueDateState, "MMMM d, yyyy")}</p>
+                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                    {dueDate ? (
+                      <p className="text-lg text-gray-900">
+                        {format(dueDateState, "MMMM d, yyyy")}
+                      </p>
+                    ) : (
+                      <p className="text-base text-gray-400">
+                        Click to edit...
+                      </p>
+                    )}
+                  </div>
                 </section>
               </div>
             )}

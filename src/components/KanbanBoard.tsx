@@ -208,7 +208,8 @@ function KanbanBoard() {
               {columns.map((col) => (
                 <ColumnContainer
                   key={col.id}
-                  column={col}
+                  column={
+                    col}
                   updateColumn={updateColumn}
                   deleteColumn={deleteColumn}
                   createTask={createTask}

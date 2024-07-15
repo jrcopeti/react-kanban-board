@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+
+
   purge: {
     content: [
       "./src/**/*.{js,jsx,ts,tsx}",
@@ -49,6 +51,7 @@ export default {
   ],
   prefix: "",
   theme: {
+    
     container: {
       center: true,
       padding: "2rem",

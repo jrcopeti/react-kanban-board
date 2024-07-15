@@ -83,8 +83,8 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
               // ...classNames,
             }}
             mode="single"
-            selected={date}
-            onSelect={setDate}
+            selected={date ?? undefined}
+            onSelect={setDate }
           />
         </PopoverContent>
       </Popover>
