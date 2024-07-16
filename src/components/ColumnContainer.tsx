@@ -90,7 +90,7 @@ function ColumnContainer({
   if (isDragging) {
     return (
       <div
-        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-black bg-gray-300 opacity-30"
+        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-pallette-600 bg-pallette-300 opacity-30"
         ref={setNodeRef}
         style={style}
       ></div>
@@ -103,9 +103,9 @@ function ColumnContainer({
       style={style}
       {...attributes}
       {...listeners}
-      className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-gray-300"
+      className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
     >
-      <section className="bg-pallette-600 flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 p-3 text-xl font-bold text-white">
+      <section className="flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-pallette-600 p-3 text-xl font-bold text-white">
         <div className="flex gap-2">
           <div className="flex items-center justify-center px-2 py-1 text-xl text-white">
             {totalPoints}
@@ -157,12 +157,10 @@ function ColumnContainer({
 
       {/* Footer */}
       <Button
-
         onClick={() => {
           createTask(id);
         }}
-        className="hover:bg:gray-500 flex items-center gap-2 rounded-md border-2 border-x-gray-500 border-b-gray-200 p-4 hover:text-rose-500 active:bg-black"
-
+        className="flex items-center gap-2 rounded-md border-2 border-x-pallette-600 border-b-pallette-600 p-4 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100"
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>

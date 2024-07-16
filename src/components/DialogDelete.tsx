@@ -27,7 +27,7 @@ function DialogDelete({
       <DialogTrigger asChild>
         <Button className={isTask ? taskClassName : columnClassName}>
           <HiOutlineTrash
-            className="opacity-60 hover:stroke-rose-500 hover:opacity-100"
+            className="bg-transparent opacity-60 hover:stroke-white hover:opacity-100"
             size={20}
           />
         </Button>
