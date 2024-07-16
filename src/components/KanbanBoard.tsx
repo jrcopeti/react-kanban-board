@@ -511,7 +511,7 @@ function KanbanBoard() {
           </div>
           <Button
             onClick={() => createNewColumn()}
-            className="bg- bg-pallette-100 ring-pallette-600 flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-gray-100 p-4 text-4xl font-normal text-black hover:ring-2"
+            className="bg- flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-gray-100 bg-pallette-100 p-4 text-3xl font-normal text-black ring-pallette-600 hover:ring-2"
           >
             <FiPlusCircle />
             Add Column

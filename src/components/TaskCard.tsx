@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "./@/components/ui/popover";
 import { Textarea } from "./@/components/ui/textarea";
-import { FaCircle } from "react-icons/fa";
+import { FaCircle, FaRegCircle } from "react-icons/fa";
 import {
   MdOutlineCalendarToday,
   MdOutlinePersonOutline,
@@ -37,6 +37,7 @@ import clsx from "clsx";
 
 //Types
 import type { Id, Task, TaskCardProps } from "../types";
+import { PiCigaretteDuotone, PiCircleDuotone } from "react-icons/pi";
 
 function TaskCard({
   task,
@@ -235,7 +236,7 @@ function TaskCard({
       <div
         ref={setNodeRef}
         style={style}
-        className="relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-rose-500 bg-gray-50 px-2 py-0.5 opacity-50 shadow-md"
+        className="bg-pallette-600px-2 relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-pallette-600 py-0.5 opacity-50 shadow-md"
       ></div>
     );
   }
@@ -284,7 +285,7 @@ function TaskCard({
         />
       ) : (
         <section
-          className="break-words py-2 text-3xl font-semibold text-blue-500"
+          className="break-words py-2 text-center text-3xl font-normal text-pallette-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
           <h2>{dueDateState ? format(dueDate, "MMMM d, yyyy") : ""}</h2>
@@ -293,7 +294,7 @@ function TaskCard({
 
       {/* Points */}
 
-      <section className="flex items-center justify-between px-4 py-2 text-2xl">
+      <section className="flex items-center justify-between px-4 py-2 text-2xl font-normal text-pallette-500">
         <div className="flex items-center justify-start gap-5">
           <button onClick={() => updatePoints("down")}>-</button>
           <p>{points}</p>
@@ -341,7 +342,7 @@ function TaskCard({
           {/* Content */}
 
           <PopoverContent
-            className="flex h-full w-[auto] min-w-[400px] items-start justify-center overflow-auto p-12"
+            className="flex h-full w-[auto] min-w-[400px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-12"
             sideOffset={5}
             side="right"
           >
@@ -350,7 +351,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="description"
-                    className="text-sm font-semibold text-gray-400"
+                    className="content-center text-sm font-semibold text-pallette-500"
                   >
                     Description
                   </Label>
@@ -376,17 +377,15 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="description"
-                    className="flex items-center gap-1 text-base text-gray-500"
+                    className="flex items-center gap-1 text-base text-pallette-500"
                   >
                     <MdOutlineSubject size={24} /> Description
                   </Label>
-                  <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-gray-300 bg-gray-100 p-4 text-justify">
+                  <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 p-4 text-justify">
                     {description ? (
-                      <p className="text-lg text-gray-900">{description}</p>
+                      <p className="text-lg text-white">{description}</p>
                     ) : (
-                      <p className="text-base text-gray-400">
-                        Click to edit...
-                      </p>
+                      <p className="text-base text-white">Click to edit...</p>
                     )}
                   </div>
                 </section>
@@ -396,7 +395,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="assignee"
-                    className="text-sm font-semibold text-gray-400"
+                    className="text-sm font-semibold text-pallette-500"
                   >
                     Assignee
                   </Label>
@@ -423,18 +422,16 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="assignee"
-                    className="flex items-center gap-1 text-base font-semibold text-gray-500"
+                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
                   >
                     <MdOutlinePersonOutline size={22} />
                     Assignee
                   </Label>
-                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
                     {assignee ? (
                       <p className="text-lg text-gray-900">{assignee}</p>
                     ) : (
-                      <p className="text-base text-gray-400">
-                        Click to edit...
-                      </p>
+                      <p className="text-base text-white">Click to edit...</p>
                     )}
                   </div>
                 </section>
@@ -442,7 +439,10 @@ function TaskCard({
 
               {isEditingLabel ? (
                 <>
-                  <Label htmlFor="label" className="text-sm text-gray-500">
+                  <Label
+                    htmlFor="label"
+                    className="text-sm font-semibold text-pallette-500"
+                  >
                     Label
                   </Label>
                   <select
@@ -470,21 +470,21 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="label"
-                    className="flex items-center gap-1 text-base font-semibold text-gray-500"
+                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
                   >
                     <CgTag />
                     Label
                   </Label>
-                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
                     <div className="flex items-center gap-2 text-base">
                       {label !== "" ? (
                         <>
-                          <p className="capitalize text-gray-900">{label}</p>
-                          <FaCircle className={labelIconClassName} />
+                          <p className="capitalize text-white">{label}</p>
+                          <PiCircleDuotone className={labelIconClassName} />
                         </>
                       ) : (
                         <p className="text-base text-gray-400">
-                          <FaCircle className="text-gray-300" />
+                          <PiCigaretteDuotone className="text-gray-300" />
                         </p>
                       )}
                     </div>
@@ -496,7 +496,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="due Date"
-                    className="text-sm font-semibold text-gray-500"
+                    className="text-sm font-semibold text-pallette-500"
                   >
                     Due Date
                   </Label>
@@ -517,22 +517,22 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="Due Date"
-                    className="flex items-center gap-1 text-base font-semibold text-gray-500"
+                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
                   >
                     <MdOutlineCalendarToday />
                     Due Date
                   </Label>
-                  <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
+                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
                     {dueDate ? (
+
                       <p className="text-lg text-gray-900">
                         {dueDateState
                           ? format(dueDateState, "MMMM d, yyyy")
                           : ""}
+
                       </p>
                     ) : (
-                      <p className="text-base text-gray-400">
-                        Click to edit...
-                      </p>
+                      <p className="text-base text-white">Click to edit...</p>
                     )}
                   </div>
                 </section>
