@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "./@/components/ui/dialog";
 import { HiOutlineTrash } from "react-icons/hi2";
-import type { DialogDeleteProps } from "src/types";
+import type { DialogDeleteProps } from "../types";
 
 function DialogDelete({
   handleDelete,
