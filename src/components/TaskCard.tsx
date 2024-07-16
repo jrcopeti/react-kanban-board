@@ -39,6 +39,8 @@ import clsx from "clsx";
 function TaskCard() {
   const {
     task,
+
+    //States
     isPopoverOpen,
     isEditingTitle,
     setIsEditingTitle,
@@ -55,11 +57,15 @@ function TaskCard() {
     dueDateState,
     setDueDateState,
     mouseIsOver,
+
+    //Refs
     titleRef,
     descriptionRef,
     assigneeRef,
     labelRef,
     dueDateRef,
+
+    //Handlers
     handleToggleIsEditing,
     handleBlur,
     handleFieldChange,

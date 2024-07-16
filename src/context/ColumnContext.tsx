@@ -8,19 +8,21 @@ import { useKanban } from "../hooks/useKanban";
 import type { Column, Id, Task, ColumnContextType } from "../types";
 
 const defaultContextValue: ColumnContextType = {
-  isEditing: false,
-  popoverOpenStates: {},
-  setPopoverOpenStates: () => {},
-  totalPoints: 0,
-  handleClick: () => {},
-  handleBlur: () => {},
-  handleOnChange: () => {},
-  handleKeyDown: () => {},
   column: {
     id: "",
     title: "",
   },
   tasksInColumn: [],
+  totalPoints: 0,
+
+  isEditing: false,
+  popoverOpenStates: {},
+  setPopoverOpenStates: () => {},
+
+  handleClick: () => {},
+  handleBlur: () => {},
+  handleOnChange: () => {},
+  handleKeyDown: () => {},
 };
 
 const ColumnContext = createContext(defaultContextValue);
@@ -34,12 +36,12 @@ function ColumnProvider({
   column: Column;
   tasksInColumn: Task[];
 }) {
-  const { updateColumn } = useKanban();
-
   const [isEditing, setIsEditing] = useState(false);
   const [popoverOpenStates, setPopoverOpenStates] = useState<{
     [key: Id]: boolean;
   }>({});
+
+  const { updateColumn } = useKanban();
 
   const totalPoints = tasksInColumn.reduce(
     (total, task) => total + (task?.points || 0),
@@ -65,16 +67,21 @@ function ColumnProvider({
   return (
     <ColumnContext.Provider
       value={{
+        //Values
+        column,
+        totalPoints,
+        tasksInColumn,
+
+        //States
         isEditing,
         popoverOpenStates,
         setPopoverOpenStates,
-        totalPoints,
+
+        //Handlers
         handleClick,
         handleBlur,
         handleOnChange,
         handleKeyDown,
-        column,
-        tasksInColumn,
       }}
     >
       {children}

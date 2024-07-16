@@ -1,3 +1,9 @@
+import {
+  DragEndEvent,
+  DragOverEvent,
+  DragStartEvent,
+  useSensors,
+} from "@dnd-kit/core";
 import { RefObject, Dispatch, SetStateAction } from "react";
 
 type Id = string | number;
@@ -57,20 +63,34 @@ type SidebarContextType = {
 };
 
 type KanbanContextType = {
+  columns: Column[];
+  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
   createNewColumn: () => void;
   updateColumn: (id: Id, title: string) => void;
   deleteColumn: (id: Id) => void;
+
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   taskInColumn: (columnId: Id) => Task[];
   createTask: (columnId: Id) => void;
   updateTask: (task: Task) => void;
   deleteTask: (id: Id) => void;
-  columns: Column[];
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
-  tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+
+  // Drag and Drop
+  columnsIds: Id[];
+  activeColumn: Column | null;
+  activeTask: Task | null;
+  onDragStart: (event: DragStartEvent) => void;
+  onDragEnd: (event: DragEndEvent) => void;
+  onDragOver: (event: DragOverEvent) => void;
+  sensors: ReturnType<typeof useSensors>;
 };
 
 type ColumnContextType = {
+  column: Column;
+  totalPoints: number;
+  tasksInColumn: Task[];
+
   isEditing: boolean;
   popoverOpenStates: {
     [key: Id]: boolean;
@@ -78,17 +98,16 @@ type ColumnContextType = {
   setPopoverOpenStates: React.Dispatch<
     React.SetStateAction<{ [key: Id]: boolean }>
   >;
-  totalPoints: number;
+
   handleClick: () => void;
   handleBlur: () => void;
   handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  column: Column;
-  tasksInColumn: Task[];
 };
 
 type TaskContextType = {
   task: Task;
+  //States
   isPopoverOpen: boolean;
   isEditingTitle: boolean;
   setIsEditingTitle: Dispatch<SetStateAction<boolean>>;
@@ -106,11 +125,15 @@ type TaskContextType = {
   setDueDateState: Dispatch<SetStateAction<Date>>;
   mouseIsOver: boolean;
   setMouseIsOver: Dispatch<SetStateAction<boolean>>;
+
+  //Refs
   titleRef: React.RefObject<HTMLInputElement>;
   descriptionRef: React.RefObject<HTMLTextAreaElement>;
   assigneeRef: React.RefObject<HTMLInputElement>;
   labelRef: React.RefObject<HTMLSelectElement>;
   dueDateRef: React.RefObject<HTMLButtonElement>;
+
+  //Handlers
   handleToggleIsEditing: (
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => void;
