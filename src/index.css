@@ -6,7 +6,9 @@ html,
 body,
 #root {
   @apply box-border h-screen;
-  font-family: "Shadows Into Light", cursive;
-  font-weight: 400;
+
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
   font-style: normal;
 }
