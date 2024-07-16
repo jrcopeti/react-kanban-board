@@ -3,18 +3,15 @@ import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
 
 //Components
 import DatePicker from "./DatePicker";
+import DialogDelete from "./DialogDelete";
 
 //UI
-import { Button } from "./@/components/ui/button";
 import { Label } from "./@/components/ui/label";
 import Input from "./@/components/ui/input";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { RiEqualLine } from "react-icons/ri";
-import {
-  HiOutlineChevronDoubleUp,
-  HiOutlineChevronDown,
-  HiOutlineTrash,
-} from "react-icons/hi";
+import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
+import { useToast } from "./@/components/ui/use-toast";
 import {
   Popover,
   PopoverContent,
@@ -61,6 +58,8 @@ function TaskCard({
   } = task;
   console.log("dueDate", dueDate);
 
+  const { toast } = useToast();
+
   //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingPriority, setIsEditingPriority] = useState(false);
@@ -102,12 +101,47 @@ function TaskCard({
     isEditingLabel,
   ]);
 
-  //Updates
+  const prevTaskRef = useRef(task);
+  console.log("prevTaskRef", prevTaskRef);
+  const isInitialRender = useRef(true);
+  console.log("isInitialRender", isInitialRender);
 
-  // Update the task's due date when the dueDateState changes
   useEffect(() => {
-    updateTask({ ...task, dueDate: dueDateState.toISOString() });
-  }, [dueDateState, task.dueDate]);
+    // Skip the initial mounting effect
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+    } else {
+      // Check if relevant task details have changed, excluding due date since it's handled separately
+      if (
+        prevTaskRef.current.title !== task.title ||
+        prevTaskRef.current.assignee !== task.assignee ||
+        prevTaskRef.current.points !== task.points ||
+        prevTaskRef.current.description !== task.description ||
+        prevTaskRef.current.priority !== task.priority ||
+        prevTaskRef.current.label !== task.label
+      ) {
+        const debounce = setTimeout(() => {
+          toast({
+            title: `${task.title}`,
+            description: "Was updated successfully",
+          });
+        }, 2000);
+
+        return () => {
+          clearTimeout(debounce);
+        };
+      }
+    }
+    // Update ref to current task at the end of the effect
+    prevTaskRef.current = task;
+  }, [task, toast]);
+
+  // Effect to update the task's due date when dueDateState changes
+  useEffect(() => {
+    if (!isInitialRender.current) {
+      updateTask({ ...task, dueDate: new Date(dueDateState) });
+    }
+  }, [dueDateState]);
 
   const updatePoints = (direction: "up" | "down") => {
     const fib = [0, 1, 2, 3, 5, 8, 13];
@@ -147,14 +181,6 @@ function TaskCard({
     updateTask({ ...task, [field]: value });
   };
 
-  // const handleKeydown = (
-  //   e: React.KeyboardEvent<HTMLInputElement>,
-  //   setIsEditing: (value: boolean) => void,
-  // ) => {
-  //   if (e.key === "Enter") {
-  //     setIsEditing(false);
-  //   }
-  // };
   const handleKeydown = <T extends HTMLElement>(
     e: React.KeyboardEvent<T>,
 
@@ -250,7 +276,7 @@ function TaskCard({
           className="w-full py-2 text-3xl"
           onBlur={() => handleBlur(() => setIsEditingTitle)}
           value={title}
-          onChange={(e) => handleFieldChange("title", e.target.value as string)}
+          onChange={(e) => handleFieldChange("title", e.target.value)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
             handleKeydown(e, setIsEditingTitle)
           }
@@ -261,7 +287,7 @@ function TaskCard({
           className="break-words py-2 text-3xl font-semibold text-blue-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
-          <h2>{title}</h2>
+          <h2>{dueDateState ? format(dueDate, "MMMM d, yyyy") : ""}</h2>
         </section>
       )}
 
@@ -379,7 +405,7 @@ function TaskCard({
                     className="w-full py-2 text-xl"
                     value={assignee}
                     onChange={(e) =>
-                      handleFieldChange("assignee", e.target.value as string)
+                      handleFieldChange("assignee", e.target.value)
                     }
                     onBlur={() => handleBlur(setIsEditingAssignee)}
                     onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -499,7 +525,9 @@ function TaskCard({
                   <div className="w-fit rounded-md border border-gray-300 bg-gray-100 p-3">
                     {dueDate ? (
                       <p className="text-lg text-gray-900">
-                        {format(dueDateState, "MMMM d, yyyy")}
+                        {dueDateState
+                          ? format(dueDateState, "MMMM d, yyyy")
+                          : ""}
                       </p>
                     ) : (
                       <p className="text-base text-gray-400">
@@ -516,15 +544,7 @@ function TaskCard({
         {/* Delete Task */}
         {MouseIsOver && (
           <>
-            <Button
-              onClick={() => deleteTask(id)}
-              className="absolute bottom-0 right-5 z-30 translate-x-1/2"
-            >
-              <HiOutlineTrash
-                className="opacity-60 hover:stroke-rose-500 hover:opacity-100"
-                size={20}
-              />
-            </Button>
+            <DialogDelete handleDelete={deleteTask} id={id} task={task.title} />
 
             <section className="absolute bottom-0 left-24 z-30 -translate-x-1/2 flex-col gap-1 text-lg">
               <p className="text-sm text-gray-400">

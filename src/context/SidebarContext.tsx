@@ -1,12 +1,6 @@
-import { createContext, useState, useRef, RefObject } from "react";
+import { createContext, useState, useRef } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-
-type SidebarContextType = {
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-  sidebarRef: RefObject<HTMLDivElement>;
-  headerRef: RefObject<HTMLDivElement>;
-};
+import type { SidebarContextType } from "src/types";
 
 const defaultContextValue: SidebarContextType = {
   isSidebarOpen: false,

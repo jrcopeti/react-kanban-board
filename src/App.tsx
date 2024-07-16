@@ -4,6 +4,7 @@ import TaskPage from "./pages/Tasks";
 import AppLayout from "./components/AppLayout";
 import AboutPage from "./pages/About";
 import { OpenSidebarProvider } from "./context/SidebarContext";
+import { Toaster } from "./components/@/components/ui/toaster";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </OpenSidebarProvider>
+      <Toaster />
     </>
   );
 }
