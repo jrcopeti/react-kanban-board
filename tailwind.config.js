@@ -47,6 +47,22 @@ export default {
   ],
   prefix: "",
   theme: {
+    // colors
+
+    // extend: {
+    // colors: {
+    //   blue: {
+    //     50: "#576ECE",
+    //     100: "#7176B6",
+    //     200: "#8B7E9E",
+    //     300: "##A58786",
+    //     400: "#BF8F6D",
+    //     500: "#D99755",
+    //     600: "#F39F3D",
+    //   },
+    // },
+    // },
+
     container: {
       center: true,
       padding: "2rem",
@@ -68,6 +84,17 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      colors: {
+        pallette: {
+          50: "#d4c493",
+          100: "#f5ede0",
+          200: "#936965",
+          300: "#A58786",
+          400: "#9e8467",
+          500: "#63494c",
+          600: "#15232e",
+        },
       },
     },
   },
