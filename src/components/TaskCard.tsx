@@ -35,48 +35,17 @@ import { labelOptions, sortedLabels, taskPriorities } from "../utils";
 import { format } from "date-fns";
 import clsx from "clsx";
 
-function TaskCard() {
-  const {
-    task,
+//Types
+import type { Id, Task, TaskCardProps } from "../types";
+import { PiCigaretteDuotone, PiCircleDuotone } from "react-icons/pi";
 
-    //States
-    isPopoverOpen,
-    isEditingTitle,
-    setIsEditingTitle,
-    isEditingPriority,
-    setIsEditingPriority,
-    isEditingDescription,
-    setIsEditingDescription,
-    isEditingAssignee,
-    setIsEditingAssignee,
-    isEditingLabel,
-    setIsEditingLabel,
-    isEditingDueDate,
-    setIsEditingDueDate,
-    dueDateState,
-    setDueDateState,
-    mouseIsOver,
-
-    //Refs
-    titleRef,
-    descriptionRef,
-    assigneeRef,
-    labelRef,
-    dueDateRef,
-
-    //Handlers
-    handleToggleIsEditing,
-    handleBlur,
-    handleFieldChange,
-    handleKeydown,
-    handleMouseEnter,
-    handleMouseLeave,
-    handleTogglePopover,
-    updatePoints,
-    updatePriority,
-    updateLabel,
-  } = useTask();
-
+function TaskCard({
+  task,
+  updateTask,
+  deleteTask,
+  isPopoverOpen,
+  setPopoverOpenStates,
+}: TaskCardProps) {
   const {
     title,
     assignee,
