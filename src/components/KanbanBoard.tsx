@@ -3,11 +3,10 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 //Components
-import TaskCard from "./TaskCard";
 import ColumnContainer from "./ColumnContainer";
 
 //UI
-import { Button } from "@/components/ui/button";
+import { Button } from "./@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
 
 // Utils
@@ -30,6 +29,7 @@ import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
 // Types
 import type { Column, Task, Id } from "../types";
+import TaskCard from "./TaskCard";
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);

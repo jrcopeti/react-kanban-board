@@ -5,8 +5,8 @@ import { useMemo, useState } from "react";
 import TaskCard from "./TaskCard";
 
 //UI
-import Input from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Input from "./@/components/ui/input";
+import { Button } from "./@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
 import { HiOutlineTrash } from "react-icons/hi";
 
@@ -17,6 +17,7 @@ import { SortableContext } from "@dnd-kit/sortable";
 
 //Types
 import type { ColumnContainerProps, Id } from "../types";
+
 
 function ColumnContainer({
   column,

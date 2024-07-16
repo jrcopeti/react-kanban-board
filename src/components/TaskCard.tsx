@@ -5,9 +5,9 @@ import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
 import DatePicker from "./DatePicker";
 
 //UI
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import Input from "@/components/ui/input";
+import { Button } from "./@/components/ui/button";
+import { Label } from "./@/components/ui/label";
+import Input from "./@/components/ui/input";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { RiEqualLine } from "react-icons/ri";
 import {
@@ -19,8 +19,8 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
+} from "./@/components/ui/popover";
+import { Textarea } from "./@/components/ui/textarea";
 import { FaCircle } from "react-icons/fa";
 import {
   MdOutlineCalendarToday,
@@ -59,7 +59,7 @@ function TaskCard({
     label,
     id,
   } = task;
-  console.log("dueDate", dueDate)
+  console.log("dueDate", dueDate);
 
   //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -72,7 +72,7 @@ function TaskCard({
   const [isEditingLabel, setIsEditingLabel] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
   const [dueDateState, setDueDateState] = useState<Date>(new Date(dueDate));
-  console.log("dueDateState", dueDateState)
+  console.log("dueDateState", dueDateState);
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
