@@ -11,7 +11,7 @@ type Task = {
   label: string;
   points?: number;
   createdDate: string;
-  dueDate: string;
+  dueDate: string | Date;
 };
 
 type TaskCardProps = {

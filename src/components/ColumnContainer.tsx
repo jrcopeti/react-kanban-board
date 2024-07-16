@@ -18,7 +18,6 @@ import { SortableContext } from "@dnd-kit/sortable";
 //Types
 import type { ColumnContainerProps, Id } from "../types";
 
-
 function ColumnContainer({
   column,
   updateColumn,
@@ -152,7 +151,9 @@ function ColumnContainer({
 
       {/* Footer */}
       <Button
-        onClick={() => createTask(id)}
+        onClick={() => {
+          createTask(id);
+        }}
         className="hover:bg:gray-500 flex items-center gap-2 rounded-md border-2 border-x-gray-500 border-b-gray-200 p-4 hover:text-rose-500 active:bg-black"
       >
         <FiPlusCircle size={20} /> Add Task

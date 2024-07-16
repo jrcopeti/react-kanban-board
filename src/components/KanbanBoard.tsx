@@ -30,6 +30,7 @@ import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 // Types
 import type { Column, Task, Id } from "../types";
 import TaskCard from "./TaskCard";
+import { useToast } from "./@/components/ui/use-toast";
 
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
@@ -37,6 +38,8 @@ function KanbanBoard() {
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+
+  const { toast } = useToast();
 
   // Create and update columns
   const createNewColumn = () => {
@@ -86,6 +89,10 @@ function KanbanBoard() {
       dueDate: new Date().toISOString(),
     };
     setTasks([...tasks, newTask]);
+    toast({
+      title: `Task ${tasks.length + 1}`,
+      description: "Was created successfully",
+    });
   };
 
   const updateTask = (task: Task) => {
