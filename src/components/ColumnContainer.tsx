@@ -1,10 +1,5 @@
 //React
-import { useMemo } from "react";
-
-// Hooks
-import { useKanban } from "../hooks/useKanban";
-import { useColumn } from "../hooks/useColumn";
-import { TaskProvider } from "../context/TaskContext";
+import { useMemo, useState } from "react";
 
 //Components
 import TaskCard from "./TaskCard";
@@ -44,8 +39,8 @@ function ColumnContainer() {
   // Library DND Kit
 
   const tasksIds = useMemo(() => {
-    return tasksInColumn.map((task) => task.id);
-  }, [tasksInColumn]);
+    return tasks.map((task) => task.id);
+  }, [tasks]);
 
   const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
     (state) => state,
@@ -59,7 +54,7 @@ function ColumnContainer() {
     transition,
     isDragging,
   } = useSortable({
-    id: column.id,
+    id: id,
     disabled: isEditing || isAnyPopoverOpen,
     data: {
       type: "column",
@@ -75,7 +70,7 @@ function ColumnContainer() {
   if (isDragging) {
     return (
       <div
-        className="border-pallette-600 bg-pallette-300 flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 opacity-30"
+        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-pallette-600 bg-pallette-300 opacity-30"
         ref={setNodeRef}
         style={style}
       ></div>
@@ -88,9 +83,9 @@ function ColumnContainer() {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-pallette-100 flex h-full w-[350px] flex-col overflow-auto rounded-md"
+      className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
     >
-      <section className="bg-pallette-600 flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 p-3 text-xl font-bold text-white">
+      <section className="flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-pallette-600 p-3 text-xl font-bold text-white">
         <div className="flex gap-2">
           <div className="flex items-center justify-center px-2 py-1 text-xl text-white">
             {totalPoints}
@@ -101,7 +96,7 @@ function ColumnContainer() {
               type="text"
               className="w-full rounded border px-2 py-2 text-xl font-bold text-white outline-none focus:border-black"
               onBlur={handleBlur}
-              value={column.title}
+              value={title}
               onChange={handleOnChange}
               onKeyDown={handleKeyDown}
             />
@@ -110,14 +105,14 @@ function ColumnContainer() {
               onClick={handleClick}
               className="p-2 text-xl font-bold text-gray-500"
             >
-              {column.title}
+              {title}
             </p>
           )}
         </div>
 
         <DialogDelete
           handleDelete={deleteColumn}
-          id={column.id}
+          id={id}
           column={column.title}
           isTask={false}
         />
@@ -127,14 +122,15 @@ function ColumnContainer() {
 
       <section className="flex flex-grow flex-col gap-4 p-4">
         <SortableContext items={tasksIds}>
-          {tasksInColumn.map((task) => (
-            <TaskProvider
+          {tasks.map((task) => (
+            <TaskCard
               key={task.id}
               task={task}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
               isPopoverOpen={popoverOpenStates[task.id] || false}
-            >
-              <TaskCard />
-            </TaskProvider>
+              setPopoverOpenStates={setPopoverOpenStates}
+            />
           ))}
         </SortableContext>
       </section>
@@ -142,9 +138,9 @@ function ColumnContainer() {
       {/* Footer */}
       <Button
         onClick={() => {
-          createTask(column.id);
+          createTask(id);
         }}
-        className="border-x-pallette-600 border-b-pallette-600 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100 flex items-center gap-2 rounded-md border-2 p-4"
+        className="flex items-center gap-2 rounded-md border-2 border-x-pallette-600 border-b-pallette-600 p-4 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100"
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>

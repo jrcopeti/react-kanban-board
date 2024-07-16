@@ -1,18 +1,15 @@
 // React
 import { createPortal } from "react-dom";
 
-// Hooks
-import { useKanban } from "../hooks/useKanban";
-import { ColumnProvider } from "../context/ColumnContext";
-import { TaskProvider } from "../context/TaskContext";
-
 //Components
 import ColumnContainer from "./ColumnContainer";
-import TaskCard from "./TaskCard";
 
 //UI
 import { Button } from "./@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
+
+// Utils
+import { generateId, labels, randomLabelIndex } from "../utils";
 
 //Lib
 import { DndContext, DragOverlay } from "@dnd-kit/core";
@@ -45,13 +42,16 @@ function KanbanBoard() {
           <div className="flex gap-4">
             <SortableContext items={columnsIds}>
               {columns.map((col) => (
-                <ColumnProvider
+                <ColumnContainer
                   key={col.id}
                   column={col}
-                  tasksInColumn={taskInColumn(col.id)}
-                >
-                  <ColumnContainer />
-                </ColumnProvider>
+                  updateColumn={updateColumn}
+                  deleteColumn={deleteColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  tasks={taskInColumn(col.id)}
+                />
               ))}
             </SortableContext>
           </div>
@@ -68,17 +68,24 @@ function KanbanBoard() {
         {createPortal(
           <DragOverlay>
             {activeColumn && (
-              <ColumnProvider
+              <ColumnContainer
                 column={activeColumn}
-                tasksInColumn={taskInColumn(activeColumn.id)}
-              >
-                <ColumnContainer />
-              </ColumnProvider>
+                deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                tasks={taskInColumn(activeColumn.id)}
+              />
             )}
             {activeTask && (
-              <TaskProvider task={activeTask} isPopoverOpen={false}>
-                <TaskCard />
-              </TaskProvider>
+              <TaskCard
+                task={activeTask}
+                updateTask={updateTask}
+                deleteTask={deleteTask}
+                isPopoverOpen={false}
+                setPopoverOpenStates={() => {}}
+              />
             )}
           </DragOverlay>,
           document.body,
