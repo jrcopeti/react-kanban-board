@@ -17,18 +17,16 @@ import { SortableContext } from "@dnd-kit/sortable";
 
 //Types
 import type { ColumnContainerProps, Id } from "../types";
+import { useKanban } from "../hooks/useKanban";
 
 function ColumnContainer({
   column,
-  updateColumn,
-  deleteColumn,
-  createTask,
-  deleteTask,
-  updateTask,
-
   tasks,
 }: ColumnContainerProps) {
   const { id, title } = column;
+
+  const { updateColumn, deleteColumn, createTask, deleteTask, updateTask } =
+    useKanban();
 
   const [isEditing, setIsEditing] = useState(false);
   const [popoverOpenStates, setPopoverOpenStates] = useState<{
@@ -90,7 +88,7 @@ function ColumnContainer({
   if (isDragging) {
     return (
       <div
-        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-pallette-600 bg-pallette-300 opacity-30"
+        className="border-pallette-600 bg-pallette-300 flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 opacity-30"
         ref={setNodeRef}
         style={style}
       ></div>
@@ -103,9 +101,9 @@ function ColumnContainer({
       style={style}
       {...attributes}
       {...listeners}
-      className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
+      className="bg-pallette-100 flex h-full w-[350px] flex-col overflow-auto rounded-md"
     >
-      <section className="flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-pallette-600 p-3 text-xl font-bold text-white">
+      <section className="bg-pallette-600 flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 p-3 text-xl font-bold text-white">
         <div className="flex gap-2">
           <div className="flex items-center justify-center px-2 py-1 text-xl text-white">
             {totalPoints}
@@ -160,7 +158,7 @@ function ColumnContainer({
         onClick={() => {
           createTask(id);
         }}
-        className="flex items-center gap-2 rounded-md border-2 border-x-pallette-600 border-b-pallette-600 p-4 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100"
+        className="border-x-pallette-600 border-b-pallette-600 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100 flex items-center gap-2 rounded-md border-2 p-4"
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>

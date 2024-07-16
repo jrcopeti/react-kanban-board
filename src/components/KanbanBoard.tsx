@@ -31,78 +31,20 @@ import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import type { Column, Task, Id } from "../types";
 import TaskCard from "./TaskCard";
 import { useToast } from "./@/components/ui/use-toast";
+import { useKanban } from "../hooks/useKanban";
 
 function KanbanBoard() {
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const {
+    columns,
+    setColumns,
+    tasks,
+    setTasks,
+    createNewColumn,
+    taskInColumn,
+  } = useKanban();
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
-
-  const { toast } = useToast();
-
-  // Create and update columns
-  const createNewColumn = () => {
-    const columnToAdd = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
-    };
-    setColumns([...columns, columnToAdd]);
-  };
-
-  const updateColumn = (id: Id, title: string) => {
-    const updatedColumns = columns.map((col) => {
-      return col.id === id ? { ...col, title } : col;
-    });
-    setColumns(updatedColumns);
-  };
-
-  const deleteColumn = (id: Id) => {
-    const filteredColumn = columns.filter((col) => col.id !== id);
-    setColumns(filteredColumn);
-
-    const filteredTasks = tasks.filter((task) => task.columnId !== id);
-    setTasks(filteredTasks);
-  };
-
-  // Create and update tasks
-  const taskInColumn = (columnId: Id) => {
-    return tasks.filter((task) => task.columnId === columnId);
-  };
-
-
-  const createTask = (columnId: Id) => {
-    const newTask = {
-      id: generateId(),
-      columnId,
-      title: `Task ${tasks.length + 1}`,
-      assignee: "",
-      description: "Maravilhas",
-      status: "todo",
-      priority: "low",
-      label: labels[randomLabelIndex],
-      points: 1,
-      createdDate: new Date().toISOString(),
-      dueDate: new Date().toISOString(),
-    };
-    setTasks([...tasks, newTask]);
-    toast({
-      title: `Task ${tasks.length + 1}`,
-      description: "Was created successfully",
-    });
-  };
-
-  const updateTask = (task: Task) => {
-    const updatedTasks = tasks.map((t) => {
-      return t.id === task.id ? task : t;
-    });
-    setTasks(updatedTasks);
-  };
-
-  const deleteTask = (id: Id) => {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
-    setTasks(filteredTasks);
-  };
 
   // Library DND Kit
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -495,11 +437,6 @@ function KanbanBoard() {
                 <ColumnContainer
                   key={col.id}
                   column={col}
-                  updateColumn={updateColumn}
-                  deleteColumn={deleteColumn}
-                  createTask={createTask}
-                  deleteTask={deleteTask}
-                  updateTask={updateTask}
                   tasks={taskInColumn(col.id)}
                 />
               ))}
@@ -520,19 +457,12 @@ function KanbanBoard() {
             {activeColumn && (
               <ColumnContainer
                 column={activeColumn}
-                deleteColumn={deleteColumn}
-                updateColumn={updateColumn}
-                createTask={createTask}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
                 tasks={taskInColumn(activeColumn.id)}
               />
             )}
             {activeTask && (
               <TaskCard
                 task={activeTask}
-                updateTask={updateTask}
-                deleteTask={deleteTask}
                 isPopoverOpen={false}
                 setPopoverOpenStates={() => {}}
               />

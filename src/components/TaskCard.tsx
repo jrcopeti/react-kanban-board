@@ -38,11 +38,11 @@ import clsx from "clsx";
 //Types
 import type { Id, Task, TaskCardProps } from "../types";
 import { PiCigaretteDuotone, PiCircleDuotone } from "react-icons/pi";
+import { useKanban } from "../hooks/useKanban";
 
 function TaskCard({
   task,
-  updateTask,
-  deleteTask,
+
   isPopoverOpen,
   setPopoverOpenStates,
 }: TaskCardProps) {
@@ -60,6 +60,8 @@ function TaskCard({
   console.log("dueDate", dueDate);
 
   const { toast } = useToast();
+
+  const { updateTask, deleteTask } = useKanban();
 
   //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
