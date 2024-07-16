@@ -7,7 +7,7 @@ function Homepage() {
         <h1 className="mb-4 text-6xl font-semibold text-pallette-600">
           HOME PAGE
         </h1>
-        <p className="text-gray-700">Welcome to the homepage!</p>
+        <p className="text-pallette-600">Welcome to the homepage!</p>
       </div>
     </div>
   );
