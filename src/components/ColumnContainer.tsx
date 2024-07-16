@@ -15,29 +15,49 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableContext } from "@dnd-kit/sortable";
 
+//Types
+import type { ColumnContainerProps, Id } from "../types";
 
-function ColumnContainer() {
-  const { deleteColumn, createTask } = useKanban();
+function ColumnContainer({
+  column,
+  updateColumn,
+  deleteColumn,
+  createTask,
+  deleteTask,
+  updateTask,
 
-  const {
-    //Values
-    tasksInColumn,
-    totalPoints,
-    column,
+  tasks,
+}: ColumnContainerProps) {
+  const { id, title } = column;
 
-    //States
-    isEditing,
-    popoverOpenStates,
+  const [isEditing, setIsEditing] = useState(false);
+  const [popoverOpenStates, setPopoverOpenStates] = useState<{
+    [key: Id]: boolean;
+  }>({});
 
-    //Handlers
-    handleClick,
-    handleBlur,
-    handleOnChange,
-    handleKeyDown,
-  } = useColumn();
+  const totalPoints = tasks.reduce(
+    (total, task) => total + (task?.points || 0),
+    0,
+  );
+
+  const handleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateColumn(id, e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter") return;
+    setIsEditing(false);
+  };
 
   // Library DND Kit
-
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
   }, [tasks]);
