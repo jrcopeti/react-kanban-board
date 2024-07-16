@@ -18,7 +18,10 @@ type TaskCardProps = {
   task: Task;
   updateTask: (task: Task) => void;
   deleteTask: (id: number) => void;
-  totalPoints: number;
+  isPopoverOpen: { [key: Id]: boolean } | boolean;
+  setPopoverOpenStates: React.Dispatch<
+    React.SetStateAction<{ [key: Id]: boolean }>
+  >;
 };
 
 type Column = {
