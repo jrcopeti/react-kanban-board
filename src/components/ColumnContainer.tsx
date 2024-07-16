@@ -25,7 +25,7 @@ function ColumnContainer({
   createTask,
   deleteTask,
   updateTask,
-  totalPoints,
+
   tasks,
 }: ColumnContainerProps) {
   const { id, title } = column;
@@ -34,6 +34,11 @@ function ColumnContainer({
   const [popoverOpenStates, setPopoverOpenStates] = useState<{
     [key: Id]: boolean;
   }>({});
+
+  const totalPoints = tasks.reduce(
+    (total, task) => total + (task?.points || 0),
+    0,
+  );
 
   const handleClick = () => {
     setIsEditing(true);
@@ -161,7 +166,6 @@ function ColumnContainer({
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>
-      <DialogDelete handleDelete={deleteColumn} id={id} column={title} />
     </div>
   );
 }

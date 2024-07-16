@@ -38,7 +38,6 @@ type ColumnContainerProps = {
   createTask: (columnId: Id) => void;
   deleteTask: (id: Id) => void;
   updateTask: (task: Task) => void;
-  totalPoints: number;
   tasks: Task[];
 };
 
