@@ -1,6 +1,11 @@
+//React
 import { createContext, useState, useRef } from "react";
+
+//Hooks
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import type { SidebarContextType } from "src/types";
+
+//Types
+import type { SidebarContextType } from "../types";
 
 const defaultContextValue: SidebarContextType = {
   isSidebarOpen: false,

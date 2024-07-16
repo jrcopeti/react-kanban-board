@@ -1,9 +1,7 @@
-//React
-import { useMemo } from "react";
-
 // Hooks
 import { useKanban } from "../hooks/useKanban";
 import { useColumn } from "../hooks/useColumn";
+import { useDragAndDrop } from "../hooks/useDragAndDrop";
 import { TaskProvider } from "../context/TaskContext";
 
 //Components
@@ -36,38 +34,9 @@ function ColumnContainer() {
     handleKeyDown,
   } = useColumn();
 
-  // const [isEditing, setIsEditing] = useState(false);
-  // const [popoverOpenStates, setPopoverOpenStates] = useState<{
-  //   [key: Id]: boolean;
-  // }>({});
-
-  // const totalPoints = tasks.reduce(
-  //   (total, task) => total + (task?.points || 0),
-  //   0,
-  // );
-
-  // const handleClick = () => {
-  //   setIsEditing(true);
-  // };
-
-  // const handleBlur = () => {
-  //   setIsEditing(false);
-  // };
-
-  // const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   updateColumn(id, e.target.value);
-  // };
-
-  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key !== "Enter") return;
-  //   setIsEditing(false);
-  // };
+  const { tasksIds } = useDragAndDrop();
 
   // Library DND Kit
-  const tasksIds = useMemo(() => {
-    return tasksInColumn.map((task) => task.id);
-  }, [tasksInColumn]);
-
   const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
     (state) => state,
   );

@@ -1,3 +1,10 @@
+import {
+  DragEndEvent,
+  DragOverEvent,
+  DragStartEvent,
+  SensorDescriptor,
+  SensorOptions,
+} from "@dnd-kit/core";
 import { RefObject, Dispatch, SetStateAction } from "react";
 
 type Id = string | number;
@@ -128,6 +135,17 @@ type TaskContextType = {
   updateLabel: (newLabel: string) => void;
 };
 
+type DragAndDropContextType = {
+  activeColumn: Column | null;
+  activeTask: Task | null;
+  columnsIds: Id[];
+  tasksIds: Id[];
+  onDragStart: (event: DragStartEvent) => void;
+  onDragEnd: (event: DragEndEvent) => void;
+  onDragOver: (event: DragOverEvent) => void;
+  sensors: SensorDescriptor<SensorOptions>[];
+};
+
 export type {
   Task,
   TaskCardProps,
@@ -139,4 +157,5 @@ export type {
   KanbanContextType,
   ColumnContextType,
   TaskContextType,
+  DragAndDropContextType,
 };
