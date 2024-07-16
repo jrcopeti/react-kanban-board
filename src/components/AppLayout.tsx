@@ -12,7 +12,8 @@ function AppLayout() {
         <Navbar />
         <Sidebar />
         <main
-          className={`p-4 duration-300 ease-in-out ${isSidebarOpen ? "translate-x-[16rem]" : "translate-x-0"}`}
+          className={`p-4 duration-300 ease-in-out ${isSidebarOpen ? "translate-x-[26rem]" : "translate-x-0"} bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-400 to-orange-300`}
+
         >
           <Outlet />
           <Footer />

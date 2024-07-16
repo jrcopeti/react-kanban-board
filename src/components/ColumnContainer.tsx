@@ -86,7 +86,7 @@ function ColumnContainer({
   if (isDragging) {
     return (
       <div
-        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-rose-500 bg-gray-300 opacity-30"
+        className="flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 border-black bg-gray-300 opacity-30"
         ref={setNodeRef}
         style={style}
       ></div>
@@ -101,16 +101,16 @@ function ColumnContainer({
       {...listeners}
       className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-gray-300"
     >
-      <section className="text-md flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-gray-200 p-3 font-bold">
+      <section className="bg-pallette-600 flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 p-3 text-xl font-bold text-white">
         <div className="flex gap-2">
-          <div className="flex items-center justify-center bg-gray-500 px-2 py-1 text-sm">
+          <div className="flex items-center justify-center px-2 py-1 text-xl text-white">
             {totalPoints}
           </div>
           {isEditing ? (
             <Input
               autoFocus
               type="text"
-              className="text-md w-full rounded border px-2 py-2 font-bold outline-none focus:border-rose-500"
+              className="w-full rounded border px-2 py-2 text-xl font-bold text-white outline-none focus:border-black"
               onBlur={handleBlur}
               value={title}
               onChange={handleOnChange}
@@ -153,7 +153,7 @@ function ColumnContainer({
       {/* Footer */}
       <Button
         onClick={() => createTask(id)}
-        className="hover:bg:gray-500 flex items-center gap-2 rounded-md border-2 border-x-gray-500 border-b-gray-200 p-4 hover:text-rose-500 active:bg-black"
+        className="hover:bg:gray-500 flex items-center gap-2 rounded-md border-2 border-x-gray-500 border-b-gray-200 p-4 hover:text-black active:bg-black"
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>
