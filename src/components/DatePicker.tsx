@@ -5,7 +5,6 @@ import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
@@ -14,15 +13,17 @@ import {
 import { DayPicker } from "react-day-picker";
 
 type DatePickerProps = {
-  date: Date | null;
-  setDate: (date: Date) => void;
+  date: Date | null | undefined;
+  setDate: (date: Date | null | undefined) => void;
   ref: React.Ref<HTMLButtonElement>;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
 };
 
 const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
-  ({ date, setDate }, ref) => {
+  ({ date, setDate, isEditing, setIsEditing }, ref) => {
     return (
-      <Popover>
+      <Popover open={isEditing} onOpenChange={setIsEditing}>
         <PopoverTrigger asChild>
           <Button
             ref={ref}
@@ -37,15 +38,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
-          {/* <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          initialFocus
-        /> */}
           <DayPicker
-            // showOutsideDays={showOutsideDays}
-            // className={cn("p-3", className)}
             classNames={{
               months:
                 "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -83,8 +76,8 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
               // ...classNames,
             }}
             mode="single"
-            selected={date ?? undefined}
-            onSelect={setDate }
+            selected={date || undefined}
+            onSelect={setDate}
           />
         </PopoverContent>
       </Popover>

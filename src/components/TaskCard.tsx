@@ -154,23 +154,22 @@ function TaskCard({
     updateTask({ ...task, [field]: value });
   };
 
-  const handleKeydown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    setIsEditing: (value: boolean) => void,
+  // const handleKeydown = (
+  //   e: React.KeyboardEvent<HTMLInputElement>,
+  //   setIsEditing: (value: boolean) => void,
+  // ) => {
+  //   if (e.key === "Enter") {
+  //     setIsEditing(false);
+  //   }
+  // };
+  const handleKeydown = <T extends HTMLElement>(
+    e: React.KeyboardEvent<T>,
+
+    setIsEditing: (isActive: boolean) => void,
   ) => {
     if (e.key === "Enter") {
       setIsEditing(false);
     }
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsEditingPopOver(false);
-    setIsEditingDescription(false);
-    setIsEditingAssignee(false);
-    setIsEditingLabel(false);
-    setIsEditingCreatedDate(false);
-    setIsEditingDueDate(false);
   };
 
   const handleMouseEnter = () => {
@@ -256,7 +255,7 @@ function TaskCard({
           autoFocus
           type="text"
           className="w-full py-2 text-3xl"
-          onBlur={() => handleBlur(() => setIsEditingTitle(false))}
+          onBlur={() => handleBlur(() => setIsEditingTitle)}
           value={title}
           onChange={(e) => handleFieldChange("title", e.target.value as string)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -302,10 +301,7 @@ function TaskCard({
             </select>
           </>
         ) : (
-          <div
-            autoFocus
-            onClick={() => handleToggleIsEditing(setIsEditingPriority)}
-          >
+          <div onClick={() => handleToggleIsEditing(setIsEditingPriority)}>
             {priority === "low" && <HiOutlineChevronDown color="green" />}
             {priority === "medium" && <RiEqualLine color="orange" />}
             {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
@@ -330,88 +326,32 @@ function TaskCard({
             sideOffset={5}
             side="right"
           >
-            {/* Editing Popover */}
-            {isEditingPopOver ? (
-              <form onSubmit={handleSubmit}>
-                <Label
-                  htmlFor="description"
-                  className="text-sm font-semibold text-gray-400"
-                >
-                  Description
-                </Label>
-                <Textarea
-                  className="w-full py-2 text-xl"
-                  value={description}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                    handleFieldChange("description", e.target.value)
-                  }
-                  ref={descriptionRef}
-                />
-
-                <Label
-                  htmlFor="assignee"
-                  className="text-sm font-semibold text-gray-400"
-                >
-                  Assignee
-                </Label>
-                <Input
-                  type="text"
-                  className="w-full py-2 text-xl"
-                  value={assignee}
-                  onChange={(e) =>
-                    handleFieldChange("assignee", e.target.value as string)
-                  }
-                  ref={assigneeRef}
-                />
-
-                <Label htmlFor="label" className="text-sm text-gray-500">
-                  Label
-                </Label>
-                <select
-                  value={label}
-                  onChange={(e) => updateLabel(e.target.value)}
-                  onBlur={() => handleBlur(setIsEditingLabel)}
-                  ref={labelRef}
-                  className="capitalize"
-                >
-                  {labelOptions.map((l) => {
-                    return (
-                      <option key={l.label} value={l.value}>
-                        {l.label}
-                      </option>
-                    );
-                  })}
-                </select>
-
-                <Label
-                  htmlFor="due Date"
-                  className="text-sm font-semibold text-gray-500"
-                >
-                  Due Date
-                </Label>
-                <DatePicker
-                  ref={dueDateRef}
-                  date={dueDateState}
-                  setDate={setDueDateState}
-                />
-
-                <section className="flex gap-2">
-                  <Button type="submit">Save</Button>
-                  <Button
-                    type="button"
-                    onClick={() => setIsEditingPopOver(false)}
+            <div className="flex max-w-[500px] flex-col items-start gap-4">
+              {isEditingDescription ? (
+                <>
+                  <Label
+                    htmlFor="description"
+                    className="text-sm font-semibold text-gray-400"
                   >
-                    Cancel
-                  </Button>
-                </section>
-              </form>
-            ) : (
-              // Display Popover
-              <div className="flex max-w-[500px] flex-col items-start gap-4">
+                    Description
+                  </Label>
+                  <Textarea
+                    className="w-full py-2 text-xl"
+                    value={description}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                      handleFieldChange("description", e.target.value)
+                    }
+                    onBlur={() => handleBlur(setIsEditingDescription)}
+                    onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) =>
+                      handleKeydown(e, setIsEditingTitle)
+                    }
+                    ref={descriptionRef}
+                  />
+                </>
+              ) : (
                 <section
                   onClick={() => {
-                    handleToggleIsEditing(setIsEditingPopOver);
-                    setIsEditingDescription(true);
+                    handleToggleIsEditing(setIsEditingDescription);
                   }}
                   className="flex flex-col gap-1 text-lg"
                 >
@@ -431,11 +371,34 @@ function TaskCard({
                     )}
                   </div>
                 </section>
+              )}
 
+              {isEditingAssignee ? (
+                <>
+                  <Label
+                    htmlFor="assignee"
+                    className="text-sm font-semibold text-gray-400"
+                  >
+                    Assignee
+                  </Label>
+                  <Input
+                    type="text"
+                    className="w-full py-2 text-xl"
+                    value={assignee}
+                    onChange={(e) =>
+                      handleFieldChange("assignee", e.target.value as string)
+                    }
+                    onBlur={() => handleBlur(setIsEditingAssignee)}
+                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                      handleKeydown(e, setIsEditingAssignee)
+                    }
+                    ref={assigneeRef}
+                  />
+                </>
+              ) : (
                 <section
                   onClick={() => {
-                    handleToggleIsEditing(setIsEditingPopOver);
-                    setIsEditingAssignee(true);
+                    handleToggleIsEditing(setIsEditingAssignee);
                   }}
                   className="flex flex-col gap-1 text-lg"
                 >
@@ -456,11 +419,33 @@ function TaskCard({
                     )}
                   </div>
                 </section>
+              )}
 
+              {isEditingLabel ? (
+                <>
+                  <Label htmlFor="label" className="text-sm text-gray-500">
+                    Label
+                  </Label>
+                  <select
+                    value={label}
+                    onChange={(e) => updateLabel(e.target.value)}
+                    onBlur={() => handleBlur(setIsEditingLabel)}
+                    ref={labelRef}
+                    className="capitalize"
+                  >
+                    {labelOptions.map((l) => {
+                      return (
+                        <option key={l.label} value={l.value}>
+                          {l.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </>
+              ) : (
                 <section
                   onClick={() => {
-                    handleToggleIsEditing(setIsEditingPopOver);
-                    setIsEditingLabel(true);
+                    handleToggleIsEditing(setIsEditingLabel);
                   }}
                   className="flex flex-col gap-1 text-lg"
                 >
@@ -486,11 +471,29 @@ function TaskCard({
                     </div>
                   </div>
                 </section>
+              )}
 
+              {isEditingDueDate ? (
+                <>
+                  <Label
+                    htmlFor="due Date"
+                    className="text-sm font-semibold text-gray-500"
+                  >
+                    Due Date
+                  </Label>
+                  <DatePicker
+                    ref={dueDateRef}
+                    date={dueDateState}
+                    setDate={setDueDateState}
+                    onBlur={() => handleBlur(setIsEditingDueDate)}
+                    isEditing={isEditingDueDate}
+                    setIsEditing={setIsEditingDueDate}
+                  />
+                </>
+              ) : (
                 <section
                   onClick={() => {
-                    handleToggleIsEditing(setIsEditingPopOver);
-                    setIsEditingDueDate(true);
+                    handleToggleIsEditing(setIsEditingDueDate);
                   }}
                   className="flex flex-col gap-1 text-lg"
                 >
@@ -513,8 +516,8 @@ function TaskCard({
                     )}
                   </div>
                 </section>
-              </div>
-            )}
+              )}
+            </div>
           </PopoverContent>
         </Popover>
 

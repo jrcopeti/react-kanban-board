@@ -1,11 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-
-
   purge: {
-    content: [
-      "./src/**/*.{js,jsx,ts,tsx}",
-    ],
+    content: ["./src/**/*.{js,jsx,ts,tsx}"],
     safelist: [
       "text-blue-500",
       "text-green-500",
@@ -51,7 +47,6 @@ export default {
   ],
   prefix: "",
   theme: {
-    
     container: {
       center: true,
       padding: "2rem",
