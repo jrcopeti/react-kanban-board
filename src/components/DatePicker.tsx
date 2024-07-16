@@ -10,14 +10,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, SelectSingleEventHandler } from "react-day-picker";
 
 type DatePickerProps = {
-  date: Date | null | undefined;
-  setDate: (date: Date | null | undefined) => void;
+  date: Date | undefined;
+  setDate:
+    | SelectSingleEventHandler
+    | React.Dispatch<React.SetStateAction<Date>>
+    | undefined;
   ref: React.Ref<HTMLButtonElement>;
   isEditing: boolean;
-  setIsEditing: (isEditing: boolean) => void;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
@@ -76,8 +79,8 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
               // ...classNames,
             }}
             mode="single"
-            selected={date || undefined}
-            onSelect={setDate}
+            selected={date}
+            onSelect={setDate as SelectSingleEventHandler}
           />
         </PopoverContent>
       </Popover>

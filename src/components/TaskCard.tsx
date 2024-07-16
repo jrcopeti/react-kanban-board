@@ -59,29 +59,26 @@ function TaskCard({
     label,
     id,
   } = task;
+  console.log("dueDate", dueDate)
 
   //Card state
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingPriority, setIsEditingPriority] = useState(false);
-  const [, setPriorityState] = useState<string>(priority);
   const [MouseIsOver, setMouseIsOver] = useState(false);
 
   //PopOver state
-
-  const [isEditingPopOver, setIsEditingPopOver] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingAssignee, setIsEditingAssignee] = useState(false);
-  const [isEditingCreatedDate, setIsEditingCreatedDate] = useState(false);
   const [isEditingLabel, setIsEditingLabel] = useState(false);
   const [isEditingDueDate, setIsEditingDueDate] = useState(false);
   const [dueDateState, setDueDateState] = useState<Date>(new Date(dueDate));
+  console.log("dueDateState", dueDateState)
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLSelectElement>(null);
-  const createdDateRef = useRef<HTMLInputElement>(null);
   const dueDateRef = useRef<HTMLButtonElement>(null);
 
   //Focus on input
@@ -92,8 +89,6 @@ function TaskCard({
       descriptionRef.current.focus();
     } else if (isEditingAssignee && assigneeRef.current) {
       assigneeRef.current.focus();
-    } else if (isEditingCreatedDate && createdDateRef.current) {
-      createdDateRef.current.focus();
     } else if (isEditingDueDate && dueDateRef.current) {
       dueDateRef.current.focus();
     } else if (isEditingLabel && labelRef.current) {
@@ -103,7 +98,6 @@ function TaskCard({
     isEditingTitle,
     isEditingDescription,
     isEditingAssignee,
-    isEditingCreatedDate,
     isEditingDueDate,
     isEditingLabel,
   ]);
@@ -126,7 +120,6 @@ function TaskCard({
   };
 
   const updatePriority = (newPriority: string) => {
-    setPriorityState(newPriority);
     updateTask({ ...task, priority: newPriority });
   };
 
@@ -199,7 +192,7 @@ function TaskCard({
     isDragging,
   } = useSortable({
     id: id,
-    disabled: isPopoverOpen || isEditingPopOver || isEditingTitle,
+    disabled: isPopoverOpen || isEditingTitle,
     data: {
       type: "task",
       task,
@@ -485,7 +478,6 @@ function TaskCard({
                     ref={dueDateRef}
                     date={dueDateState}
                     setDate={setDueDateState}
-                    onBlur={() => handleBlur(setIsEditingDueDate)}
                     isEditing={isEditingDueDate}
                     setIsEditing={setIsEditingDueDate}
                   />
