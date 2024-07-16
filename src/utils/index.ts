@@ -1,3 +1,5 @@
+import { GoBook, GoHome, GoTasklist } from "react-icons/go";
+
 const tasksStatus = ["to do", "in progress", "done"];
 const taskPriorities = ["low", "medium", "high"];
 
@@ -33,13 +35,12 @@ const labelOptions = [
     value: label.label,
     label: label.label,
   })),
-  { value: "", label: "none" },
 ];
 
 const routes = [
-  { to: "/", label: "Home" },
-  { to: "/tasks", label: "Tasks" },
-  { to: "/about", label: "About" },
+  { to: "/", label: "Home", icon: GoHome },
+  { to: "/tasks", label: "Tasks", icon: GoTasklist },
+  { to: "/about", label: "About", icon: GoBook },
 ];
 
 const generateId = () => {
