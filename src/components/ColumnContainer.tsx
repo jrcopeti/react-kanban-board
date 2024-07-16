@@ -166,7 +166,6 @@ function ColumnContainer({
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>
-      <DialogDelete handleDelete={deleteColumn} id={id} column={title} />
     </div>
   );
 }

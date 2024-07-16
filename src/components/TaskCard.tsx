@@ -140,6 +140,9 @@ function TaskCard({
   // Effect to update the task's due date when dueDateState changes
   useEffect(() => {
     if (!isInitialRender.current) {
+      console.log(
+        ".....................................................The due date has changed",
+      );
       updateTask({ ...task, dueDate: new Date(dueDateState) });
     }
   }, [dueDateState]);
@@ -167,7 +170,6 @@ function TaskCard({
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => {
     setIsEditing((prev) => !prev);
-
     setMouseIsOver(false);
   };
 
@@ -179,6 +181,7 @@ function TaskCard({
     field: T,
     value: Task[T],
   ) => {
+    console.log("handleFieldChange  CALLED", field, value);
     updateTask({ ...task, [field]: value });
   };
 
@@ -275,7 +278,7 @@ function TaskCard({
           autoFocus
           type="text"
           className="w-full py-2 text-3xl"
-          onBlur={() => handleBlur(() => setIsEditingTitle)}
+          onBlur={() => handleBlur(setIsEditingTitle)}
           value={title}
           onChange={(e) => handleFieldChange("title", e.target.value)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -288,7 +291,7 @@ function TaskCard({
           className="text-pallette-500 break-words py-2 text-center text-3xl font-normal"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
-          <h2>{dueDateState ? format(dueDate, "MMMM d, yyyy") : ""}</h2>
+          <h2>{title}</h2>
         </section>
       )}
 
