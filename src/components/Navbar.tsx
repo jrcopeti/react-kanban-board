@@ -30,7 +30,7 @@ function Navbar() {
 
       <Link to="/">
         <div className="flex cursor-pointer items-center gap-4">
-          <h1>Kanban Board</h1>
+          <h1>KanDo</h1>
           <MdOutlineSpaceDashboard size={45} />
         </div>
       </Link>
