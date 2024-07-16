@@ -140,6 +140,9 @@ function TaskCard({
   // Effect to update the task's due date when dueDateState changes
   useEffect(() => {
     if (!isInitialRender.current) {
+      console.log(
+        ".....................................................The due date has changed",
+      );
       updateTask({ ...task, dueDate: new Date(dueDateState) });
     }
   }, [dueDateState]);
@@ -167,7 +170,6 @@ function TaskCard({
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => {
     setIsEditing((prev) => !prev);
-
     setMouseIsOver(false);
   };
 
@@ -179,6 +181,7 @@ function TaskCard({
     field: T,
     value: Task[T],
   ) => {
+    console.log("handleFieldChange  CALLED", field, value);
     updateTask({ ...task, [field]: value });
   };
 
@@ -236,7 +239,7 @@ function TaskCard({
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-pallette-600px-2 relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-pallette-600 py-0.5 opacity-50 shadow-md"
+        className="bg-pallette-600px-2 border-pallette-600 relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 py-0.5 opacity-50 shadow-md"
       ></div>
     );
   }
@@ -275,7 +278,7 @@ function TaskCard({
           autoFocus
           type="text"
           className="w-full py-2 text-3xl"
-          onBlur={() => handleBlur(() => setIsEditingTitle)}
+          onBlur={() => handleBlur(setIsEditingTitle)}
           value={title}
           onChange={(e) => handleFieldChange("title", e.target.value)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
@@ -285,16 +288,16 @@ function TaskCard({
         />
       ) : (
         <section
-          className="break-words py-2 text-center text-3xl font-normal text-pallette-500"
+          className="text-pallette-500 break-words py-2 text-center text-3xl font-normal"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
-          <h2>{dueDateState ? format(dueDate, "MMMM d, yyyy") : ""}</h2>
+          <h2>{title}</h2>
         </section>
       )}
 
       {/* Points */}
 
-      <section className="flex items-center justify-between px-4 py-2 text-2xl font-normal text-pallette-500">
+      <section className="text-pallette-500 flex items-center justify-between px-4 py-2 text-2xl font-normal">
         <div className="flex items-center justify-start gap-5">
           <button onClick={() => updatePoints("down")}>-</button>
           <p>{points}</p>
@@ -342,7 +345,7 @@ function TaskCard({
           {/* Content */}
 
           <PopoverContent
-            className="flex h-full w-[auto] min-w-[400px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-12"
+            className="border-pallette-600 bg-pallette-100 flex h-full w-[auto] min-w-[400px] items-start justify-center overflow-auto rounded-md border p-12"
             sideOffset={5}
             side="right"
           >
@@ -351,7 +354,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="description"
-                    className="content-center text-sm font-semibold text-pallette-500"
+                    className="text-pallette-500 content-center text-sm font-semibold"
                   >
                     Description
                   </Label>
@@ -377,11 +380,11 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="description"
-                    className="flex items-center gap-1 text-base text-pallette-500"
+                    className="text-pallette-500 flex items-center gap-1 text-base"
                   >
                     <MdOutlineSubject size={24} /> Description
                   </Label>
-                  <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 p-4 text-justify">
+                  <div className="border-pallette-600 bg-pallette-300 max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border p-4 text-justify">
                     {description ? (
                       <p className="text-lg text-white">{description}</p>
                     ) : (
@@ -395,7 +398,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="assignee"
-                    className="text-sm font-semibold text-pallette-500"
+                    className="text-pallette-500 text-sm font-semibold"
                   >
                     Assignee
                   </Label>
@@ -422,12 +425,12 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="assignee"
-                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
+                    className="text-pallette-500 flex items-center gap-1 text-base font-semibold"
                   >
                     <MdOutlinePersonOutline size={22} />
                     Assignee
                   </Label>
-                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
+                  <div className="border-pallette-600 bg-pallette-300 w-fit rounded-md border p-3">
                     {assignee ? (
                       <p className="text-lg text-gray-900">{assignee}</p>
                     ) : (
@@ -441,7 +444,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="label"
-                    className="text-sm font-semibold text-pallette-500"
+                    className="text-pallette-500 text-sm font-semibold"
                   >
                     Label
                   </Label>
@@ -470,12 +473,12 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="label"
-                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
+                    className="text-pallette-500 flex items-center gap-1 text-base font-semibold"
                   >
                     <CgTag />
                     Label
                   </Label>
-                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
+                  <div className="border-pallette-600 bg-pallette-300 w-fit rounded-md border p-3">
                     <div className="flex items-center gap-2 text-base">
                       {label !== "" ? (
                         <>
@@ -496,7 +499,7 @@ function TaskCard({
                 <>
                   <Label
                     htmlFor="due Date"
-                    className="text-sm font-semibold text-pallette-500"
+                    className="text-pallette-500 text-sm font-semibold"
                   >
                     Due Date
                   </Label>
@@ -517,19 +520,17 @@ function TaskCard({
                 >
                   <Label
                     htmlFor="Due Date"
-                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
+                    className="text-pallette-500 flex items-center gap-1 text-base font-semibold"
                   >
                     <MdOutlineCalendarToday />
                     Due Date
                   </Label>
-                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
+                  <div className="border-pallette-600 bg-pallette-300 w-fit rounded-md border p-3">
                     {dueDate ? (
-
                       <p className="text-lg text-gray-900">
                         {dueDateState
                           ? format(dueDateState, "MMMM d, yyyy")
                           : ""}
-
                       </p>
                     ) : (
                       <p className="text-base text-white">Click to edit...</p>
