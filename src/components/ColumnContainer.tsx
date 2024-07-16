@@ -1,5 +1,10 @@
 //React
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+
+// Hooks
+import { useKanban } from "../hooks/useKanban";
+import { useColumn } from "../hooks/useColumn";
+import { TaskProvider } from "../context/TaskContext";
 
 //Components
 import TaskCard from "./TaskCard";
@@ -16,49 +21,52 @@ import { CSS } from "@dnd-kit/utilities";
 import { SortableContext } from "@dnd-kit/sortable";
 
 //Types
-import type { ColumnContainerProps, Id } from "../types";
-import { useKanban } from "../hooks/useKanban";
+function ColumnContainer() {
+  const { deleteColumn, createTask } = useKanban();
 
-function ColumnContainer({
-  column,
-  tasks,
-}: ColumnContainerProps) {
-  const { id, title } = column;
+  const {
+    tasksInColumn,
+    totalPoints,
+    column,
+    popoverOpenStates,
+    isEditing,
+    handleClick,
+    handleBlur,
+    handleOnChange,
+    handleKeyDown,
+  } = useColumn();
 
-  const { updateColumn, deleteColumn, createTask, deleteTask, updateTask } =
-    useKanban();
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [popoverOpenStates, setPopoverOpenStates] = useState<{
+  //   [key: Id]: boolean;
+  // }>({});
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [popoverOpenStates, setPopoverOpenStates] = useState<{
-    [key: Id]: boolean;
-  }>({});
+  // const totalPoints = tasks.reduce(
+  //   (total, task) => total + (task?.points || 0),
+  //   0,
+  // );
 
-  const totalPoints = tasks.reduce(
-    (total, task) => total + (task?.points || 0),
-    0,
-  );
+  // const handleClick = () => {
+  //   setIsEditing(true);
+  // };
 
-  const handleClick = () => {
-    setIsEditing(true);
-  };
+  // const handleBlur = () => {
+  //   setIsEditing(false);
+  // };
 
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
+  // const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   updateColumn(id, e.target.value);
+  // };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateColumn(id, e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter") return;
-    setIsEditing(false);
-  };
+  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key !== "Enter") return;
+  //   setIsEditing(false);
+  // };
 
   // Library DND Kit
   const tasksIds = useMemo(() => {
-    return tasks.map((task) => task.id);
-  }, [tasks]);
+    return tasksInColumn.map((task) => task.id);
+  }, [tasksInColumn]);
 
   const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
     (state) => state,
@@ -72,7 +80,7 @@ function ColumnContainer({
     transition,
     isDragging,
   } = useSortable({
-    id: id,
+    id: column.id,
     disabled: isEditing || isAnyPopoverOpen,
     data: {
       type: "column",
@@ -114,7 +122,7 @@ function ColumnContainer({
               type="text"
               className="w-full rounded border px-2 py-2 text-xl font-bold text-white outline-none focus:border-black"
               onBlur={handleBlur}
-              value={title}
+              value={column.title}
               onChange={handleOnChange}
               onKeyDown={handleKeyDown}
             />
@@ -123,14 +131,14 @@ function ColumnContainer({
               onClick={handleClick}
               className="p-2 text-xl font-bold text-gray-500"
             >
-              {title}
+              {column.title}
             </p>
           )}
         </div>
 
         <DialogDelete
           handleDelete={deleteColumn}
-          id={id}
+          id={column.id}
           column={column.title}
           isTask={false}
         />
@@ -140,15 +148,14 @@ function ColumnContainer({
 
       <section className="flex flex-grow flex-col gap-4 p-4">
         <SortableContext items={tasksIds}>
-          {tasks.map((task) => (
-            <TaskCard
+          {tasksInColumn.map((task) => (
+            <TaskProvider
               key={task.id}
               task={task}
-              deleteTask={deleteTask}
-              updateTask={updateTask}
               isPopoverOpen={popoverOpenStates[task.id] || false}
-              setPopoverOpenStates={setPopoverOpenStates}
-            />
+            >
+              <TaskCard />
+            </TaskProvider>
           ))}
         </SortableContext>
       </section>
@@ -156,7 +163,7 @@ function ColumnContainer({
       {/* Footer */}
       <Button
         onClick={() => {
-          createTask(id);
+          createTask(column.id);
         }}
         className="border-x-pallette-600 border-b-pallette-600 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100 flex items-center gap-2 rounded-md border-2 p-4"
       >

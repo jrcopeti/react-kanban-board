@@ -1,21 +1,14 @@
-import { createContext, useState, useRef } from "react";
+// React
+import { createContext, useState } from "react";
+
+// UI
 import { useToast } from "../components/@/components/ui/use-toast";
-import { Column, Id, Task } from "src/types";
+
+// Utils
 import { generateId, labels, randomLabelIndex } from "../utils";
 
-type KanbanContextType = {
-  createNewColumn: () => void;
-  updateColumn: (id: Id, title: string) => void;
-  deleteColumn: (id: Id) => void;
-  taskInColumn: (columnId: Id) => Task[];
-  createTask: (columnId: Id) => void;
-  updateTask: (task: Task) => void;
-  deleteTask: (id: Id) => void;
-  columns: Column[];
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
-  tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-};
+// Types
+import type { Column, Id, Task, KanbanContextType } from "../types";
 
 const defaultContextValue: KanbanContextType = {
   createNewColumn: () => {},
