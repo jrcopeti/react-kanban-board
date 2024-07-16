@@ -3,18 +3,15 @@ import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
 
 //Components
 import DatePicker from "./DatePicker";
+import DialogDelete from "./DialogDelete";
 
 //UI
-import { Button } from "./@/components/ui/button";
 import { Label } from "./@/components/ui/label";
 import Input from "./@/components/ui/input";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { RiEqualLine } from "react-icons/ri";
-import {
-  HiOutlineChevronDoubleUp,
-  HiOutlineChevronDown,
-  HiOutlineTrash,
-} from "react-icons/hi";
+import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
+import { useToast } from "./@/components/ui/use-toast";
 import {
   Popover,
   PopoverContent,
@@ -40,7 +37,6 @@ import clsx from "clsx";
 
 //Types
 import type { Id, Task, TaskCardProps } from "../types";
-import { useToast } from "./@/components/ui/use-toast";
 
 function TaskCard({
   task,
@@ -548,15 +544,7 @@ function TaskCard({
         {/* Delete Task */}
         {MouseIsOver && (
           <>
-            <Button
-              onClick={() => deleteTask(id)}
-              className="absolute bottom-0 right-5 z-30 translate-x-1/2"
-            >
-              <HiOutlineTrash
-                className="opacity-60 hover:stroke-rose-500 hover:opacity-100"
-                size={20}
-              />
-            </Button>
+            <DialogDelete handleDelete={deleteTask} id={id} task={task.title} />
 
             <section className="absolute bottom-0 left-24 z-30 -translate-x-1/2 flex-col gap-1 text-lg">
               <p className="text-sm text-gray-400">

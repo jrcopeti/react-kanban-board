@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 type Id = string | number;
 
 type Task = {
@@ -17,7 +19,7 @@ type Task = {
 type TaskCardProps = {
   task: Task;
   updateTask: (task: Task) => void;
-  deleteTask: (id: number) => void;
+  deleteTask: (id: Id) => void;
   isPopoverOpen: { [key: Id]: boolean } | boolean;
   setPopoverOpenStates: React.Dispatch<
     React.SetStateAction<{ [key: Id]: boolean }>
@@ -40,4 +42,27 @@ type ColumnContainerProps = {
   tasks: Task[];
 };
 
-export type { Task, TaskCardProps, Column, ColumnContainerProps, Id };
+type DialogDeleteProps = {
+  handleDelete: (id: Id) => void;
+  id: Id;
+  task?: string;
+  column?: string;
+  isTask?: boolean;
+};
+
+type SidebarContextType = {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+  sidebarRef: RefObject<HTMLDivElement>;
+  headerRef: RefObject<HTMLDivElement>;
+};
+
+export type {
+  Task,
+  TaskCardProps,
+  Column,
+  ColumnContainerProps,
+  Id,
+  DialogDeleteProps,
+  SidebarContextType,
+};

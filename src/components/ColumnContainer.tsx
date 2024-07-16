@@ -3,12 +3,12 @@ import { useMemo, useState } from "react";
 
 //Components
 import TaskCard from "./TaskCard";
+import DialogDelete from "./DialogDelete";
 
 //UI
 import Input from "./@/components/ui/input";
 import { Button } from "./@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
-import { HiOutlineTrash } from "react-icons/hi";
 
 //Lib
 import { useSortable } from "@dnd-kit/sortable";
@@ -124,12 +124,13 @@ function ColumnContainer({
             </p>
           )}
         </div>
-        <Button
-          onClick={() => deleteColumn(id)}
-          className="rounded bg-white stroke-gray-500 px-1 py-2 hover:bg-gray-500"
-        >
-          <HiOutlineTrash className="hover:stroke-white" size={20} />
-        </Button>
+
+        <DialogDelete
+          handleDelete={deleteColumn}
+          id={id}
+          column={column.title}
+          isTask={false}
+        />
       </section>
 
       {/* Content */}
@@ -158,6 +159,7 @@ function ColumnContainer({
       >
         <FiPlusCircle size={20} /> Add Task
       </Button>
+      <DialogDelete handleDelete={deleteColumn} id={id} column={title} />
     </div>
   );
 }
