@@ -1,5 +1,6 @@
-//React
-import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react";
+// Hooks
+import { useTask } from "../hooks/useTask";
+import { useKanban } from "../hooks/useKanban";
 
 //Components
 import DatePicker from "./DatePicker";
@@ -8,22 +9,24 @@ import DialogDelete from "./DialogDelete";
 //UI
 import { Label } from "./@/components/ui/label";
 import Input from "./@/components/ui/input";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
-import { RiEqualLine } from "react-icons/ri";
-import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
-import { useToast } from "./@/components/ui/use-toast";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "./@/components/ui/popover";
 import { Textarea } from "./@/components/ui/textarea";
+
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { RiEqualLine } from "react-icons/ri";
+import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
+
 import {
   MdOutlineCalendarToday,
   MdOutlinePersonOutline,
   MdOutlineSubject,
 } from "react-icons/md";
 import { CgTag } from "react-icons/cg";
+import { PiCircleDuotone, PiCigaretteDuotone } from "react-icons/pi";
 
 //Lib
 import { useSortable } from "@dnd-kit/sortable";
@@ -34,17 +37,49 @@ import { labelOptions, sortedLabels, taskPriorities } from "../utils";
 import { format } from "date-fns";
 import clsx from "clsx";
 
-//Types
-import type { Id, Task, TaskCardProps } from "../types";
-import { PiCigaretteDuotone, PiCircleDuotone } from "react-icons/pi";
 
-function TaskCard({
-  task,
-  updateTask,
-  deleteTask,
-  isPopoverOpen,
-  setPopoverOpenStates,
-}: TaskCardProps) {
+function TaskCard() {
+  const {
+    task,
+
+    //States
+    isPopoverOpen,
+    isEditingTitle,
+    setIsEditingTitle,
+    isEditingPriority,
+    setIsEditingPriority,
+    isEditingDescription,
+    setIsEditingDescription,
+    isEditingAssignee,
+    setIsEditingAssignee,
+    isEditingLabel,
+    setIsEditingLabel,
+    isEditingDueDate,
+    setIsEditingDueDate,
+    dueDateState,
+    setDueDateState,
+    mouseIsOver,
+
+    //Refs
+    titleRef,
+    descriptionRef,
+    assigneeRef,
+    labelRef,
+    dueDateRef,
+
+    //Handlers
+    handleToggleIsEditing,
+    handleBlur,
+    handleFieldChange,
+    handleKeydown,
+    handleMouseEnter,
+    handleMouseLeave,
+    handleTogglePopover,
+    updatePoints,
+    updatePriority,
+    updateLabel,
+  } = useTask();
+
   const {
     title,
     assignee,
@@ -58,158 +93,7 @@ function TaskCard({
   } = task;
   console.log("dueDate", dueDate);
 
-  const { toast } = useToast();
-
-  //Card state
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [isEditingPriority, setIsEditingPriority] = useState(false);
-  const [MouseIsOver, setMouseIsOver] = useState(false);
-
-  //PopOver state
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [isEditingAssignee, setIsEditingAssignee] = useState(false);
-  const [isEditingLabel, setIsEditingLabel] = useState(false);
-  const [isEditingDueDate, setIsEditingDueDate] = useState(false);
-  const [dueDateState, setDueDateState] = useState<Date>(new Date(dueDate));
-  console.log("dueDateState", dueDateState);
-
-  //Refs
-  const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const assigneeRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLSelectElement>(null);
-  const dueDateRef = useRef<HTMLButtonElement>(null);
-
-  //Focus on input
-  useEffect(() => {
-    if (isEditingTitle) {
-      titleRef.current?.focus();
-    } else if (isEditingDescription && descriptionRef.current) {
-      descriptionRef.current.focus();
-    } else if (isEditingAssignee && assigneeRef.current) {
-      assigneeRef.current.focus();
-    } else if (isEditingDueDate && dueDateRef.current) {
-      dueDateRef.current.focus();
-    } else if (isEditingLabel && labelRef.current) {
-      labelRef.current.focus();
-    }
-  }, [
-    isEditingTitle,
-    isEditingDescription,
-    isEditingAssignee,
-    isEditingDueDate,
-    isEditingLabel,
-  ]);
-
-  const prevTaskRef = useRef(task);
-  console.log("prevTaskRef", prevTaskRef);
-  const isInitialRender = useRef(true);
-  console.log("isInitialRender", isInitialRender);
-
-  useEffect(() => {
-    // Skip the initial mounting effect
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-    } else {
-      // Check if relevant task details have changed, excluding due date since it's handled separately
-      if (
-        prevTaskRef.current.title !== task.title ||
-        prevTaskRef.current.assignee !== task.assignee ||
-        prevTaskRef.current.points !== task.points ||
-        prevTaskRef.current.description !== task.description ||
-        prevTaskRef.current.priority !== task.priority ||
-        prevTaskRef.current.label !== task.label
-      ) {
-        const debounce = setTimeout(() => {
-          toast({
-            title: `${task.title}`,
-            description: "Was updated successfully",
-          });
-        }, 2000);
-
-        return () => {
-          clearTimeout(debounce);
-        };
-      }
-    }
-    // Update ref to current task at the end of the effect
-    prevTaskRef.current = task;
-  }, [task, toast]);
-
-  // Effect to update the task's due date when dueDateState changes
-  useEffect(() => {
-    if (!isInitialRender.current) {
-      console.log(
-        ".....................................................The due date has changed",
-      );
-      updateTask({ ...task, dueDate: new Date(dueDateState) });
-    }
-  }, [dueDateState]);
-
-  const updatePoints = (direction: "up" | "down") => {
-    const fib = [0, 1, 2, 3, 5, 8, 13];
-    const currentIndex = fib.indexOf(points ?? -1);
-    const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
-    const newPoints = fib[nextIndex];
-    if (newPoints) {
-      updateTask({ ...task, points: newPoints });
-    }
-  };
-
-  const updatePriority = (newPriority: string) => {
-    updateTask({ ...task, priority: newPriority });
-  };
-
-  const updateLabel = (newLabel: string) => {
-    updateTask({ ...task, label: newLabel });
-  };
-
-  //Handlers
-  const handleToggleIsEditing = (
-    setIsEditing: Dispatch<SetStateAction<boolean>>,
-  ) => {
-    setIsEditing((prev) => !prev);
-    setMouseIsOver(false);
-  };
-
-  const handleBlur = (setIsEditing: (value: boolean) => void) => {
-    setIsEditing(false);
-  };
-
-  const handleFieldChange = <T extends keyof Task>(
-    field: T,
-    value: Task[T],
-  ) => {
-    console.log("handleFieldChange  CALLED", field, value);
-    updateTask({ ...task, [field]: value });
-  };
-
-  const handleKeydown = <T extends HTMLElement>(
-    e: React.KeyboardEvent<T>,
-
-    setIsEditing: (isActive: boolean) => void,
-  ) => {
-    if (e.key === "Enter") {
-      setIsEditing(false);
-    }
-  };
-
-  const handleMouseEnter = () => {
-    setMouseIsOver(true);
-  };
-
-  const handleMouseLeave = () => {
-    setMouseIsOver(false);
-  };
-
-  const handleTogglePopover = (taskId: Id) => {
-    setPopoverOpenStates((prev) => {
-      return {
-        ...prev,
-        [taskId]: !prev[taskId],
-      };
-    });
-  };
+  const { deleteTask } = useKanban();
 
   // DND Kit
   const {
@@ -333,7 +217,7 @@ function TaskCard({
         {/* Popover */}
 
         <Popover
-          open={isPopoverOpen as boolean}
+          open={isPopoverOpen}
           onOpenChange={() => handleTogglePopover(id)}
         >
           {/* Trigger */}
@@ -544,7 +428,7 @@ function TaskCard({
         </Popover>
 
         {/* Delete Task */}
-        {MouseIsOver && (
+        {mouseIsOver && (
           <>
             <DialogDelete handleDelete={deleteTask} id={id} task={task.title} />
 

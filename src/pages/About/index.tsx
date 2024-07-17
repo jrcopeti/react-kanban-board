@@ -1,3 +1,4 @@
+
 function About() {
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -46,7 +47,7 @@ function About() {
           Kan Do.
         </p>
       </div>
-    </div>
+
   );
 }
 
