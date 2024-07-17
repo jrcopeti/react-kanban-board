@@ -6,6 +6,7 @@ import { useKanban } from "../hooks/useKanban";
 
 //Components
 import ColumnContainer from "./ColumnContainer";
+import TaskCard from "./TaskCard";
 
 //UI
 import { Button } from "./@/components/ui/button";
@@ -16,7 +17,6 @@ import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { ColumnProvider } from "../context/ColumnContext";
 import { TaskProvider } from "../context/TaskContext";
-import TaskCard from "./TaskCard";
 
 function KanbanBoard() {
   const {
@@ -25,6 +25,7 @@ function KanbanBoard() {
     taskInColumn,
     columnsIds,
 
+    // DND Kit
     activeColumn,
     activeTask,
     onDragStart,
@@ -34,7 +35,7 @@ function KanbanBoard() {
   } = useKanban();
 
   return (
-    <div className="flex min-h-screen w-full items-start overflow-x-auto overflow-y-hidden p-8">
+    <div className="flex min-h-full w-full touch-manipulation items-start overflow-x-auto overflow-y-hidden p-8">
       <DndContext
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
@@ -43,7 +44,10 @@ function KanbanBoard() {
       >
         <div className="flex items-start gap-2">
           <div className="flex gap-4">
-            <SortableContext items={columnsIds}>
+            <SortableContext
+
+              items={columnsIds}
+            >
               {columns.map((col) => (
                 <ColumnProvider
                   key={col.id}
@@ -57,7 +61,7 @@ function KanbanBoard() {
           </div>
           <Button
             onClick={() => createNewColumn()}
-            className="bg-pallette-100 ring-pallette-600 flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-gray-100 p-4 text-3xl font-normal text-black hover:ring-2"
+            className="flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-gray-100 bg-pallette-100 p-4 text-3xl font-normal text-black ring-pallette-600 hover:ring-2"
           >
             <FiPlusCircle />
             Add Column
@@ -66,7 +70,13 @@ function KanbanBoard() {
 
         {/* Drag Overlay */}
         {createPortal(
-          <DragOverlay>
+          <DragOverlay
+            dropAnimation={{
+              duration: 300,
+              easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+            }}
+
+          >
             {activeColumn && (
               <ColumnProvider
                 column={activeColumn}
