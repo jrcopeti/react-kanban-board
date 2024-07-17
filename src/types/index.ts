@@ -18,7 +18,7 @@ type Task = {
   priority: string;
   label: string;
   points?: number;
-  createdDate: string;
+  createdDate: string | Date;
   dueDate: string | Date;
 };
 
@@ -159,4 +159,7 @@ export type {
   Id,
   DialogDeleteProps,
   SidebarContextType,
+  KanbanContextType,
+  ColumnContextType,
+  TaskContextType,
 };
