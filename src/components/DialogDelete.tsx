@@ -19,9 +19,11 @@ function DialogDelete({
   column,
   isTask = true,
 }: DialogDeleteProps) {
+
   const taskClassName =
     "absolute bottom-1 right-9 z-30 translate-x-1/2 bg-transparent hover:bg-pallette-300";
   const columnClassName = "bg-transparent hover:bg-pallette-300";
+
 
   return (
     <Dialog>

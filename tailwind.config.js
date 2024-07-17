@@ -35,6 +35,30 @@ export default {
       "border-rose-500",
       "border-emerald-500",
 
+      "h-[135px]",
+      "h-[283px]",
+      "h-[450px]",
+      "h-[630px]",
+      "h-[900px]",
+      "h-[1000px]",
+      "h-[100%]",
+
+      "min-h-[135px]",
+      "min-h-[283px]",
+      "min-h-[450px]",
+      "min-h-[630px]",
+      "min-h-[900px]",
+      "min-h-[1000px]",
+      "min-h-[100%]",
+
+      "max-h-[135px]",
+      "max-h-[283px]",
+      "max-h-[450px]",
+      "max-h-[630px]",
+      "max-h-[900px]",
+      "max-h-[1000px]",
+      "max-h-[100%]",
+
       // Add other color classes that you are using
     ],
   },

@@ -19,6 +19,8 @@ import { FiPlusCircle } from "react-icons/fi";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableContext } from "@dnd-kit/sortable";
+import clsx from "clsx";
+import { Task } from "src/types";
 
 function ColumnContainer() {
   const { deleteColumn, createTask } = useKanban();
@@ -68,16 +70,34 @@ function ColumnContainer() {
 
   const style = {
     transition,
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
   };
+
+  const getHeight = (tasksInColumn: Task[]) => {
+    switch (tasksInColumn.length) {
+      case 0:
+        return "135px";
+      case 1:
+        return "283px";
+      case 2:
+        return "450px";
+      case 3:
+        return "630px";
+      case 4:
+        return "900px";
+      default:
+        return "1000px";
+    }
+  };
+
+  const isDraggingClassName = clsx(
+    "flex w-[350px] flex-col rounded-md border-2 border-pallette-600 bg-pallette-300 opacity-30 overflow-auto",
+    `min-h-[${getHeight(tasksInColumn)}] max-h-[${getHeight(tasksInColumn)}] `,
+  );
 
   if (isDragging) {
     return (
-      <div
-        className="border-pallette-600 bg-pallette-300 flex h-[500px] max-h-[500px] w-[350px] flex-col rounded-md border-2 opacity-30"
-        ref={setNodeRef}
-        style={style}
-      ></div>
+      <div className={isDraggingClassName} ref={setNodeRef} style={style}></div>
     );
   }
 
@@ -87,9 +107,11 @@ function ColumnContainer() {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-pallette-100 flex h-full w-[350px] flex-col overflow-auto rounded-md"
+      className="flex h-full max-h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
     >
+
       <section className="flex h-[60px] cursor-grab items-center justify-between rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100">
+
         <div className="flex gap-2">
           <div className="flex items-center justify-center px-2 py-1 text-xl text-pallette-100">
             {totalPoints}
@@ -124,7 +146,7 @@ function ColumnContainer() {
 
       {/* Content */}
 
-      <section className="flex flex-grow flex-col gap-4 p-4">
+      <section className="flex flex-grow touch-manipulation flex-col gap-4 p-4">
         <SortableContext items={tasksIds}>
           {tasksInColumn.map((task) => (
             <TaskProvider
@@ -143,6 +165,7 @@ function ColumnContainer() {
         onClick={() => {
           createTask(column.id);
         }}
+
         className="flex h-[60px] cursor-grab items-center rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl gap-2 font-semibold text-pallette-100"
 
       >

@@ -122,7 +122,9 @@ function TaskCard() {
       <div
         ref={setNodeRef}
         style={style}
+
         className="bg-pallette-600px-2 relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-pallette-200 py-0.5 opacity-50 shadow-md"
+
       ></div>
     );
   }
@@ -134,6 +136,7 @@ function TaskCard() {
   );
 
   const divClassNameWithLabel = clsx(
+
     "relative h-[150px] cursor-grab touch-none bg-pallette-100 overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-0.5 shadow-md",
     `border-${labelToColor}-500`,
   );
@@ -141,6 +144,7 @@ function TaskCard() {
   // const divClassName = clsx(
   //   "relative h-[100px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
   // );
+
 
   const labelIconClassName = clsx("text-sm", `text-${labelToColor}-500`);
 
