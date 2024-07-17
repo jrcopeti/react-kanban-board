@@ -19,6 +19,7 @@ import { ColumnProvider } from "../context/ColumnContext";
 import { TaskProvider } from "../context/TaskContext";
 
 function KanbanBoard() {
+
   const {
     columns,
     createNewColumn,
@@ -33,6 +34,7 @@ function KanbanBoard() {
     onDragOver,
     sensors,
   } = useKanban();
+
 
   return (
     <div className="flex min-h-full w-full touch-manipulation items-start overflow-x-auto overflow-y-hidden p-8">
@@ -61,7 +63,9 @@ function KanbanBoard() {
           </div>
           <Button
             onClick={() => createNewColumn()}
-            className="flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-gray-100 bg-pallette-100 p-4 text-3xl font-normal text-black ring-pallette-600 hover:ring-2"
+
+            className="flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-pallette-100 bg-pallette-100 p-4 text-2xl font-semibold text-pallette-600 ring-pallette-500 hover:ring-2"
+
           >
             <FiPlusCircle />
             Add Column
