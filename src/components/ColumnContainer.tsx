@@ -105,16 +105,16 @@ function ColumnContainer({
       {...listeners}
       className="flex h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
     >
-      <section className="flex h-[60px] cursor-grab items-center justify-between rounded-md rounded-b-none border-4 border-b-gray-200 bg-pallette-600 p-3 text-xl font-bold text-white">
+      <section className="flex h-[60px] cursor-grab items-center justify-between rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100">
         <div className="flex gap-2">
-          <div className="flex items-center justify-center px-2 py-1 text-xl text-white">
+          <div className="flex items-center justify-center px-2 py-1 text-xl text-pallette-100">
             {totalPoints}
           </div>
           {isEditing ? (
             <Input
               autoFocus
               type="text"
-              className="w-full rounded border px-2 py-2 text-xl font-bold text-white outline-none focus:border-black"
+              className="w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-100 outline-none"
               onBlur={handleBlur}
               value={title}
               onChange={handleOnChange}
@@ -123,7 +123,7 @@ function ColumnContainer({
           ) : (
             <p
               onClick={handleClick}
-              className="p-2 text-xl font-bold text-gray-500"
+              className="p-2 text-xl font-semibold text-pallette-100"
             >
               {title}
             </p>
@@ -160,9 +160,9 @@ function ColumnContainer({
         onClick={() => {
           createTask(id);
         }}
-        className="flex items-center gap-2 rounded-md border-2 border-x-pallette-600 border-b-pallette-600 p-4 hover:bg-pallette-600 hover:text-pallette-100 active:bg-pallette-100"
+        className="flex h-[60px] cursor-grab items-center rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100"
       >
-        <FiPlusCircle size={20} /> Add Task
+        <FiPlusCircle size={15} /> Add Task
       </Button>
     </div>
   );

@@ -32,8 +32,8 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             ref={ref}
             variant={"outline"}
             className={cn(
-              "w-[280px] justify-start text-left font-normal focus:border-rose-500",
-              !date && "text-muted-foreground focus:border-rose-500",
+              "w-[280px] justify-start text-left font-normal focus:border-pallette-600",
+              !date && "text-muted-foreground focus:border-pallette-600",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

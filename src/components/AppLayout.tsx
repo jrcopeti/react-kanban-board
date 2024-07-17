@@ -4,13 +4,10 @@ import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import { useOpenSidebar } from "../hooks/useOpenSidebar";
 
-
-
 function AppLayout() {
   const { isSidebarOpen } = useOpenSidebar();
   return (
     <>
-
       <Navbar />
       <Sidebar />
       <main
@@ -19,7 +16,6 @@ function AppLayout() {
         <Outlet />
         <Footer />
       </main>
-
     </>
   );
 }
