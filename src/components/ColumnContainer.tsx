@@ -76,17 +76,17 @@ function ColumnContainer() {
   const getHeight = (tasksInColumn: Task[]) => {
     switch (tasksInColumn.length) {
       case 0:
-        return "135px";
+        return "152px";
       case 1:
-        return "283px";
+        return "302px";
       case 2:
-        return "450px";
+        return "468px";
       case 3:
-        return "630px";
+        return "634px";
       case 4:
-        return "900px";
+        return "800px";
       default:
-        return "1000px";
+        return "970px";
     }
   };
 
@@ -107,11 +107,9 @@ function ColumnContainer() {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex h-full max-h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
+      className="z-40 flex h-full max-h-full w-[350px] flex-col overflow-auto rounded-md bg-pallette-100"
     >
-
       <section className="flex h-[60px] cursor-grab items-center justify-between rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100">
-
         <div className="flex gap-2">
           <div className="flex items-center justify-center px-2 py-1 text-xl text-pallette-100">
             {totalPoints}
@@ -165,9 +163,7 @@ function ColumnContainer() {
         onClick={() => {
           createTask(column.id);
         }}
-
-        className="flex h-[60px] cursor-grab items-center rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl gap-2 font-semibold text-pallette-100"
-
+        className="flex h-[60px] cursor-grab items-center gap-2 rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100"
       >
         <FiPlusCircle size={15} /> Add Task
       </Button>

@@ -15,9 +15,9 @@ import { KanbanProvider } from "./context/KanbanContext";
 function App() {
   return (
     <>
-      <OpenSidebarProvider>
-        <KanbanProvider>
-          <BrowserRouter>
+      <BrowserRouter>
+        <OpenSidebarProvider>
+          <KanbanProvider>
             <Routes>
               <Route element={<AppLayout />}>
                 <Route path="/" element={<Homepage />} />
@@ -25,9 +25,9 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
               </Route>
             </Routes>
-          </BrowserRouter>
-        </KanbanProvider>
-      </OpenSidebarProvider>
+          </KanbanProvider>
+        </OpenSidebarProvider>
+      </BrowserRouter>
       <Toaster />
     </>
   );

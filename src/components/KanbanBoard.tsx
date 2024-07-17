@@ -37,7 +37,7 @@ function KanbanBoard() {
 
 
   return (
-    <div className="flex min-h-full w-full touch-manipulation items-start overflow-x-auto overflow-y-hidden p-8">
+    <div className="flex min-h-full w-full touch-manipulation items-start overflow-x-auto overflow-y-hidden p-8 ">
       <DndContext
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}

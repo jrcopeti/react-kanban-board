@@ -11,7 +11,7 @@ function AppLayout() {
       <Navbar />
       <Sidebar />
       <main
-        className={`min-h-screen p-4 duration-300 ease-in-out ${isSidebarOpen ? "w-[calc(100%-18rem)] translate-x-[18rem]" : "w-full translate-x-0"} bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-400 to-orange-300`}
+        className={`min-h-[92vh] w-full p-4 duration-300 ease-in-out  ${isSidebarOpen ? "w-[calc(100%-18rem)] translate-x-[18rem]" : "w-full translate-x-0"} bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-400 to-orange-300`}
       >
         <Outlet />
         <Footer />

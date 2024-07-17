@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Homepage() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex items-center justify-center m-[130px]">
       <div className="max-w-5xl p-4 text-center">
         <h1 className="mb-8 text-6xl font-normal text-pallette-600">Welcome</h1>
         <p className="mb-12 text-balance text-3xl font-semibold text-pallette-600">
