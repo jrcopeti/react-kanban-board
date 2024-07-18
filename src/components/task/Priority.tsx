@@ -29,15 +29,15 @@ function Priority() {
   } = useTask();
   const { priority } = task;
   return (
-    <>
+    <div className="cursor-pointer">
       {isEditingPriority ? (
         <>
-          <Label htmlFor="due Date" className="text-sm"></Label>
+          <Label htmlFor="priority" className="text-xs"></Label>
           <Select
             value={priority}
             onValueChange={(newValue) => updatePriority(newValue)}
           >
-            <SelectTrigger className="w-[150px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950">
+            <SelectTrigger className="h-8 w-[100px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950">
               <SelectValue placeholder="Select a priority" />
             </SelectTrigger>
             <SelectContent
@@ -57,13 +57,16 @@ function Priority() {
           </Select>
         </>
       ) : (
-        <div onClick={() => handleToggleIsEditing(setIsEditingPriority)}>
+        <div
+          className="flex cursor-pointer flex-col items-center text-2xl"
+          onClick={() => handleToggleIsEditing(setIsEditingPriority)}
+        >
           {priority === "low" && <HiOutlineChevronDown color="green" />}
           {priority === "medium" && <RiEqualLine color="orange" />}
           {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
         </div>
       )}
-    </>
+    </div>
   );
 }
 

@@ -18,7 +18,7 @@ import {
 } from "@dnd-kit/core";
 
 // Utils
-import { generateId, labels, randomLabelIndex } from "../utils";
+import { generateId, labels, taskPriorities, fib } from "../utils";
 
 // Types
 import type { Column, Id, Task, KanbanContextType } from "../types";
@@ -54,6 +54,10 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
   const [columns, setColumns] = useState<Column[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  const [randomLabelIndex, setRandomLabelIndex] = useState(0);
+  const [randomPriorityIndex, setRandomPriorityIndex] = useState(0);
+  const [randomPoints, setRandomPoints] = useState(0);
+
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
@@ -87,18 +91,29 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
   const taskInColumn = (columnId: Id) => {
     return tasks.filter((task) => task.columnId === columnId);
   };
+  const generateRandomLabel = () => {
+    setRandomLabelIndex(Math.floor(Math.random() * labels.length));
+  };
+  const generateRandomPriority = () => {
+    setRandomPriorityIndex(Math.floor(Math.random() * taskPriorities.length));
+  };
+  const generateRandomPoints = () => {
+    setRandomPoints(Math.floor(Math.random() * fib.length));
+  };
 
   const createTask = (columnId: Id) => {
+    generateRandomLabel();
+    generateRandomPriority();
+    generateRandomPoints();
     const newTask = {
       id: generateId(),
       columnId,
       title: `Task ${tasks.length + 1}`,
       assignee: "",
       description: "Maravilhas",
-      status: "todo",
-      priority: "low",
+      priority: taskPriorities[randomPriorityIndex],
       label: labels[randomLabelIndex],
-      points: 1,
+      points: fib[randomPoints],
       createdDate: new Date().toISOString(),
       dueDate: new Date().toISOString(),
     };

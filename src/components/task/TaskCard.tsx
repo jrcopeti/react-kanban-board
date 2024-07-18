@@ -78,7 +78,7 @@ function TaskCard() {
   }
 
   const divClassNameWithLabel = clsx(
-    "relative h-[135px] cursor-grab touch-none bg-orange-100 dark:bg-blue-200 overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-2 shadow-md",
+    "relative h-[135px] cursor-grab touch-none bg-orange-100 dark:bg-blue-200 overflow-auto rounded-lg border-l-8 bg-gray-50 px-2 py-1 shadow-md",
     `border-${labelToColor}-500`,
   );
 
@@ -95,7 +95,7 @@ function TaskCard() {
       {/* Title */}
       <Title />
 
-      <section className="flex items-center justify-between px-4 py-2 text-xl font-semibold text-pallette-500">
+      <section className="flex items-center justify-between px-4 py-3 text-xl font-semibold text-pallette-500 w-[290px]">
         {/* Points */}
         <Points />
 
@@ -110,13 +110,13 @@ function TaskCard() {
         >
           {/* Trigger */}
           <PopoverTrigger>
-            <HiOutlinePencilSquare />
+            <HiOutlinePencilSquare size={25} />
           </PopoverTrigger>
 
           {/* Content */}
 
           <PopoverContent
-            className="flex h-full w-[auto] min-w-[400px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-12"
+            className="flex h-full w-[auto] min-w-[500px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-12"
             sideOffset={5}
             side="right"
           >

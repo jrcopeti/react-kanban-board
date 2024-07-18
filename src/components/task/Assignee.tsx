@@ -22,15 +22,18 @@ function Assignee() {
   const { assignee } = task;
   return (
     <>
+      <Label
+        htmlFor="assignee"
+        className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
+      >
+        <MdOutlinePersonOutline size={22} />
+        Assignee
+      </Label>
+
       {isEditingAssignee ? (
         <>
-          <Label
-            htmlFor="assignee"
-            className="text-sm font-semibold text-pallette-500 dark:text-blue-100"
-          >
-            Assignee
-          </Label>
           <Input
+            maxLength={28}
             type="text"
             className="w-full py-2 text-xl dark:bg-blue-100 dark:text-rose-950"
             value={assignee}
@@ -49,14 +52,7 @@ function Assignee() {
           }}
           className="flex flex-col gap-1 text-lg"
         >
-          <Label
-            htmlFor="assignee"
-            className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
-          >
-            <MdOutlinePersonOutline size={22} />
-            Assignee
-          </Label>
-          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
+          <div className="min-w-[300px] max-w-[300px] cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             {assignee ? (
               <p className="text-lg text-white dark:text-rose-950">
                 {assignee}

@@ -7,7 +7,10 @@ function DarkModeToggle() {
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   return (
-    <Button onClick={toggleDarkMode}>
+    <Button
+      className="bg-slate-700 text-2xl text-blue-100 hover:bg-slate-500 dark:bg-pallette-100 dark:text-pallette-600"
+      onClick={toggleDarkMode}
+    >
       {isDarkMode ? <HiOutlineMoon /> : <HiOutlineSun />}
     </Button>
   );

@@ -18,7 +18,7 @@ function Sidebar() {
 
       {routes.map((route) => (
         <Link to={route.to} key={route.to}>
-          <div className="flex items-center gap-4 text-xl font-semibold">
+          <div className="flex items-center gap-4 text-xl font-semibold hover:text-pallette-50  dark:hover:text-blue-200">
             <route.icon size={30} />
             {route.label}
           </div>

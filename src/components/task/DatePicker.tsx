@@ -27,7 +27,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             ref={ref}
             variant={"outline"}
             className={cn(
-              "w-[280px] justify-start text-left font-normal focus:border-pallette-600",
+              "h-12 w-[280px] justify-start bg-pallette-100 text-left font-normal hover:bg-pallette-100 dark:hover:text-rose-950 focus:border-pallette-600 dark:bg-blue-100 dark:text-rose-950 dark:hover:bg-blue-100 ",
               !date && "text-muted-foreground focus:border-pallette-600",
             )}
           >

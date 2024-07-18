@@ -37,18 +37,21 @@ function TaskLabel() {
 
   return (
     <>
+      <Label
+        htmlFor="label"
+        className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
+      >
+        <CgTag />
+        Label
+      </Label>
       {isEditingLabel ? (
         <>
-          <Label htmlFor="label" className="text-sm font-semibold">
-            Label
-          </Label>
-
           <div ref={labelRef}>
             <Select
               value={label}
               onValueChange={(newValue) => updateLabel(newValue)}
             >
-              <SelectTrigger className="w-[180px] border-pallette-600 bg-pallette-100 font-semibold capitalize text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
+              <SelectTrigger className="h-12 w-[180px] border-pallette-600 bg-pallette-100 font-semibold capitalize text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
                 <SelectValue placeholder="Select a label" />
               </SelectTrigger>
               <SelectContent
@@ -79,14 +82,7 @@ function TaskLabel() {
           }}
           className="flex flex-col gap-1 text-lg"
         >
-          <Label
-            htmlFor="label"
-            className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
-          >
-            <CgTag />
-            Label
-          </Label>
-          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
+          <div className=" cursor-pointer h-12 min-w-[180px] max-w-[180px] rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             <div className="flex items-center gap-2 text-base">
               {label !== "" ? (
                 <>
