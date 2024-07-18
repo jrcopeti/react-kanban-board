@@ -151,6 +151,19 @@ type TaskContextType = {
   updateLabel: (newLabel: string) => void;
 };
 
+type Theme = "dark" | "light" | "system";
+
+type ThemeProviderProps = {
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+  storageKey?: string;
+};
+
+type ThemeContextType = {
+  isDarkMode: boolean;
+  toggleDarkMode: (e: React.MouseEvent) => void;
+};
+
 export type {
   Task,
   TaskCardProps,
@@ -162,4 +175,7 @@ export type {
   KanbanContextType,
   ColumnContextType,
   TaskContextType,
+  Theme,
+  ThemeProviderProps,
+  ThemeContextType,
 };
