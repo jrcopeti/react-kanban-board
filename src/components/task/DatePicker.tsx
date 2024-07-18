@@ -27,7 +27,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             ref={ref}
             variant={"outline"}
             className={cn(
-              "h-12 w-[280px] justify-start bg-pallette-100 text-left font-normal hover:bg-pallette-100 dark:hover:text-rose-950 focus:border-pallette-600 dark:bg-blue-100 dark:text-rose-950 dark:hover:bg-blue-100 ",
+              "h-12 w-[280px] justify-start bg-pallette-100 text-left font-normal hover:bg-pallette-100 dark:hover:text-rose-950 focus:border-pallette-600 dark:bg-blue-100 dark:text-rose-950 dark:hover:bg-blue-100",
               !date && "text-muted-foreground focus:border-pallette-600",
             )}
           >
@@ -39,7 +39,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           <DayPicker
             classNames={{
               months:
-                "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+                "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 p-2",
               month: "space-y-4",
               caption: "flex justify-center pt-1 relative items-center",
               caption_label: "text-sm font-medium",
@@ -60,7 +60,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
                 buttonVariants({ variant: "ghost" }),
                 "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
               ),
-              day_range_end: "day-range-end",
+              // day_range_end: "day-range-end",
               day_selected:
                 "bg-gray-100 text-gray-50 hover:bg-gray-900 hover:text-gray-50 focus:bg-gray-900 focus:text-gray-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50 dark:hover:text-gray-900 dark:focus:bg-gray-50 dark:focus:text-gray-900",
               day_today:
