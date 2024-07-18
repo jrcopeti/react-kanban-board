@@ -47,7 +47,7 @@ function ColumnContainer() {
   const tasksIds = useMemo(() => {
     return tasksInColumn.map((task) => task.id);
   }, [tasksInColumn]);
-
+  console.log("tasksIds", tasksIds);
   const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
     (state) => state,
   );
