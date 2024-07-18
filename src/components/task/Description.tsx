@@ -31,7 +31,7 @@ function Description() {
             Description
           </Label>
           <Textarea
-            className="w-full py-2 text-xl dark:bg-blue-100 dark:text-rose-950"
+            className="w-full bg-pallette-100 py-2 text-xl text-pallette-600 dark:bg-blue-100 dark:text-rose-950"
             value={description}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleFieldChange("description", e.target.value)
