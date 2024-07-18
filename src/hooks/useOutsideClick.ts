@@ -11,22 +11,13 @@ export function useOutsideClick<T extends HTMLElement>(
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (
-        refs.every(
-          (ref) => ref.current && !ref.current.contains(e.target as Node),
+        refs.some(
+          (ref) => ref.current && ref.current.contains(e.target as Node),
         )
       ) {
-        console.log("click outside");
-        handler();
+        return;
       }
-
-      // if (
-      //   refs.some(
-      //     (ref) => ref.current && ref.current.contains(e.target as Node),
-      //   )
-      // ) {
-      //   return; // Click is inside one of the elements, do nothing
-      // }
-      // handler();
+      handler();
     }
 
     document.addEventListener("click", handleClick);

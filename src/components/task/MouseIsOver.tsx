@@ -7,18 +7,16 @@ import DialogDelete from "../ui/DialogDelete";
 import CreatedDate from "./CreatedDate";
 
 //Utils
-import { sortedLabels } from "../../utils";
 import clsx from "clsx";
 
 function MouseIsOver() {
   const { deleteTask } = useKanban();
-  const { mouseIsOver, task } = useTask();
+  const { mouseIsOver, task, labelToColor } = useTask();
   const { label, title, id } = task;
 
-  const labelToColor = sortedLabels.find((l) => l.label === label)?.color;
 
   const labelClassName = clsx(
-    "absolute left-5 bottom-9 h-1   text-sm dark:text-rose-950 capitalize ",
+    "absolute left-7 bottom-11 h-1 text-sm capitalize ",
     `text-${labelToColor}-500`,
   );
   return (

@@ -7,16 +7,18 @@ import {
   SetStateAction,
 } from "react";
 
-//Hooks
+// Hooks
+import { useKanban } from "../hooks/useKanban";
+import { useColumn } from "../hooks/useColumn";
 
 // UI
 import { useToast } from "../components/@/components/ui/use-toast";
 
+//Utils
+import { sortedLabels, fib } from "../utils";
+
 //Types
 import type { Id, Task, TaskContextType } from "../types";
-import { useKanban } from "../hooks/useKanban";
-import { useColumn } from "../hooks/useColumn";
-import { sortedLabels } from "../utils";
 
 const defaultContextValue: TaskContextType = {
   task: {
@@ -178,7 +180,6 @@ function TaskProvider({
   const labelToColor = sortedLabels.find((l) => l.label === task.label)?.color;
 
   const updatePoints = (direction: "up" | "down") => {
-    const fib = [0, 1, 2, 3, 5, 8, 13];
     const currentIndex = fib.indexOf(task.points ?? -1);
     const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
     const newPoints = fib[nextIndex];

@@ -4,10 +4,10 @@ function Points() {
   const { task, updatePoints } = useTask();
   const { points } = task;
   return (
-    <div className="flex items-center justify-start gap-5">
-      <button onClick={() => updatePoints("down")}>-</button>
-      <p>{points}</p>
-      <button onClick={() => updatePoints("up")}>+</button>
+    <div className="flex items-center justify-start gap-5 text-lg">
+      <button className='text-2xl' onClick={() => updatePoints("down")}>-</button>
+      <p className='cursor-text'>{points}</p>
+      <button className='text-2xl' onClick={() => updatePoints("up")}>+</button>
     </div>
   );
 }

@@ -23,14 +23,15 @@ function DueDate() {
   const { dueDate } = task;
   return (
     <>
+      <Label
+        htmlFor="Due Date"
+        className="flex min-w-[180px] max-w-[180px] items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
+      >
+        <MdOutlineCalendarToday />
+        Due Date
+      </Label>
       {isEditingDueDate ? (
         <>
-          <Label
-            htmlFor="due Date"
-            className="text-sm font-semibold text-pallette-500 dark:text-blue-100"
-          >
-            Due Date
-          </Label>
           <DatePicker
             ref={dueDateRef}
             date={dueDateState}
@@ -46,14 +47,7 @@ function DueDate() {
           }}
           className="flex flex-col gap-1 text-lg"
         >
-          <Label
-            htmlFor="Due Date"
-            className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
-          >
-            <MdOutlineCalendarToday />
-            Due Date
-          </Label>
-          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
+          <div className="min-w-[180px] max-w-[180px] cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             {dueDate ? (
               <p className="text-base text-white dark:text-rose-950">
                 {dueDateState ? format(dueDateState, "MMMM d, yyyy") : ""}

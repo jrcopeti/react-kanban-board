@@ -20,10 +20,9 @@ function Title() {
     <>
       {isEditingTitle ? (
         <Input
-          maxLength={28}
-          autoFocus
+          maxLength={23}
           type="text"
-          className="h-9 w-72 py-3 text-2xl dark:bg-blue-100 dark:text-rose-950"
+          className="h-9 w-72 py-3 text-xl dark:bg-blue-100 dark:text-rose-950"
           onBlur={() => handleBlur(setIsEditingTitle)}
           value={title}
           onChange={(e) => handleFieldChange("title", e.target.value)}
@@ -34,7 +33,7 @@ function Title() {
         />
       ) : (
         <section
-          className="break-words py-2 text-center text-xl font-semibold text-pallette-500"
+          className="cursor-pointer break-words py-1 text-center text-xl font-semibold text-pallette-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
           <h2>{title}</h2>

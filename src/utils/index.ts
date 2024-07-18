@@ -1,6 +1,5 @@
 import { GoBook, GoHome, GoTasklist } from "react-icons/go";
 
-const tasksStatus = ["to do", "in progress", "done"];
 const taskPriorities = ["low", "medium", "high"];
 
 const taskLabelsWithColors = [
@@ -29,6 +28,8 @@ const labels = sortedLabels.map((label) => label.label);
 
 const randomLabelIndex = Math.floor(Math.random() * 15);
 
+const fib = [1, 2, 3, 5, 8, 13];
+
 const labelOptions = [
   ...sortedLabels.map((label) => ({
     value: label.label,
@@ -56,4 +57,5 @@ export {
   sortedLabels,
   randomLabelIndex,
   labelOptions,
+  fib,
 };
