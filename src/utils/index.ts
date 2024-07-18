@@ -48,7 +48,6 @@ const generateId = () => {
 };
 
 export {
-  tasksStatus,
   taskPriorities,
   routes,
   generateId,
