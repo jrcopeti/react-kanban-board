@@ -109,7 +109,9 @@ function ColumnContainer() {
       {...listeners}
       className="z-40 flex h-full max-h-full w-[350px] cursor-grab flex-col overflow-auto rounded-md bg-pallette-100 dark:bg-blue-100"
     >
+
       <section className="flex h-[60px] items-center justify-between rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100 dark:border-blue-100 dark:bg-slate-700 dark:text-blue-100">
+
         <div className="flex gap-2">
           <div className="flex cursor-text items-center justify-center px-2 py-1 text-xl text-pallette-100 dark:text-blue-100">
             {totalPoints}
@@ -164,7 +166,9 @@ function ColumnContainer() {
         onClick={() => {
           createTask(column.id);
         }}
+
         className="flex h-[60px] cursor-pointer items-center gap-2 rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100 dark:border-blue-100 dark:bg-slate-800 dark:text-blue-100 dark:hover:bg-rose-950"
+
       >
         <FiPlusCircle size={15} /> Add Task
       </Button>

@@ -28,7 +28,7 @@ function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 z-50 flex items-center justify-between bg-pallette-100 px-12 py-3 text-5xl font-normal dark:bg-gray-900 dark:text-blue-100"
+      className="sticky top-0 z-50 flex items-center justify-between bg-pallette-100 px-12 py-3 text-4xl font-normal dark:bg-gray-900 dark:text-blue-100"
       ref={headerRef}
     >
       <button onClick={toggleSidebar}>

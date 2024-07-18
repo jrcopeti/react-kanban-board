@@ -29,8 +29,10 @@ function DialogDelete({
       <DialogTrigger asChild>
         <Button className={isTask ? taskClassName : columnClassName}>
           <MdOutlineDeleteOutline
-            className="opacity-60 hover:opacity-100"
-            size={25}
+
+            className="opacity-100 hover:opacity-65"
+            size={20}
+
           />
         </Button>
       </DialogTrigger>
