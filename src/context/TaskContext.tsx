@@ -105,6 +105,11 @@ function TaskProvider({
   const assigneeRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const dueDateRef = useRef<HTMLButtonElement>(null);
+  
+  const prevTaskRef = useRef(task);
+  console.log("prevTaskRef", prevTaskRef);
+  const isInitialRender = useRef(true);
+  console.log("isInitialRender", isInitialRender);
 
   //Focus on input
   useEffect(() => {
@@ -132,10 +137,7 @@ function TaskProvider({
     isEditingLabel,
   ]);
 
-  const prevTaskRef = useRef(task);
-  console.log("prevTaskRef", prevTaskRef);
-  const isInitialRender = useRef(true);
-  console.log("isInitialRender", isInitialRender);
+
 
   useEffect(() => {
     // Skip the initial mounting effect
