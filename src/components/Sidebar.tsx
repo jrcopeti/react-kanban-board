@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { routes } from "../utils";
 import { useOpenSidebar } from "../hooks/useOpenSidebar";
+import ToggleTheme from "./ToggleTheme";
 
 function Sidebar() {
   const { sidebarRef, isSidebarOpen } = useOpenSidebar();
@@ -8,10 +9,13 @@ function Sidebar() {
 
   return (
     <aside
-      className={`bg-pallette-600 text text-pallette-100 fixed z-50 h-full w-[18rem] grid-cols-1 flex flex-col gap-10 border-r-[1px] px-[3.2rem] py-[2.4rem] text-3xl shadow-md duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
-
+      className={`text fixed z-50 flex h-full w-[18rem] grid-cols-1 flex-col gap-10 border-r-[1px] bg-pallette-600 px-[3.2rem] py-[2.4rem] text-3xl text-pallette-100 shadow-md duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       ref={sidebarRef}
     >
+      <div>
+        <ToggleTheme />
+      </div>
+
       {routes.map((route) => (
         <Link to={route.to} key={route.to}>
           <div className="flex items-center gap-4 text-xl font-semibold">

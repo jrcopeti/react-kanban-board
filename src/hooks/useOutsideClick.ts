@@ -15,8 +15,18 @@ export function useOutsideClick<T extends HTMLElement>(
           (ref) => ref.current && !ref.current.contains(e.target as Node),
         )
       ) {
+        console.log("click outside");
         handler();
       }
+
+      // if (
+      //   refs.some(
+      //     (ref) => ref.current && ref.current.contains(e.target as Node),
+      //   )
+      // ) {
+      //   return; // Click is inside one of the elements, do nothing
+      // }
+      // handler();
     }
 
     document.addEventListener("click", handleClick);
