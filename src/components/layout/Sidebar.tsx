@@ -9,7 +9,7 @@ function Sidebar() {
 
   return (
     <aside
-      className={`text fixed z-50 flex h-full w-[18rem] grid-cols-1 flex-col gap-10 border-r-[1px] bg-pallette-600 px-[3.2rem] py-[2.4rem] text-3xl text-pallette-100 shadow-md duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      className={`text fixed z-50 flex h-full w-[18rem] grid-cols-1 flex-col gap-10 border-r-[1px] bg-pallette-600 px-[3.2rem] py-[2.4rem] text-3xl text-pallette-100 shadow-md duration-300 ease-in-out dark:bg-slate-700 dark:text-blue-100 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       ref={sidebarRef}
     >
       <div>
