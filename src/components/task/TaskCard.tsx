@@ -26,8 +26,7 @@ import {
 } from "../@/components/ui/select";
 
 import { HiOutlinePencilSquare } from "react-icons/hi2";
-import { RiEqualLine } from "react-icons/ri";
-import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
+
 
 import {
   MdOutlineCalendarToday,
@@ -47,6 +46,7 @@ import { format } from "date-fns";
 import clsx from "clsx";
 import Title from "./Title";
 import Points from "./Points";
+import Priority from "./Priority";
 
 function TaskCard() {
   const {
@@ -163,48 +163,12 @@ function TaskCard() {
       {/* Title */}
       <Title />
 
-
       <section className="flex items-center justify-between px-4 py-2 text-xl font-semibold text-pallette-500">
-      {/* Points */}
+        {/* Points */}
         <Points />
 
         {/* Priority */}
-
-        {isEditingPriority ? (
-          <>
-            <Label htmlFor="due Date" className="text-sm text-gray-400">
-              Priority
-            </Label>
-            <Select
-              value={priority}
-              onValueChange={(newValue) => updatePriority(newValue)}
-            >
-              <SelectTrigger className="w-[180px] capitalize">
-                <SelectValue placeholder="Select a priority" />
-              </SelectTrigger>
-              <SelectContent
-                onCloseAutoFocus={() => handleBlur(setIsEditingPriority)}
-              >
-                <SelectGroup>
-                  <SelectLabel>Label</SelectLabel>
-                  {taskPriorities.map((p) => {
-                    return (
-                      <SelectItem className="capitalize" key={p} value={p}>
-                        {p}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </>
-        ) : (
-          <div onClick={() => handleToggleIsEditing(setIsEditingPriority)}>
-            {priority === "low" && <HiOutlineChevronDown color="green" />}
-            {priority === "medium" && <RiEqualLine color="orange" />}
-            {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
-          </div>
-        )}
+        <Priority />
 
         {/* Popover */}
 
