@@ -32,21 +32,19 @@ function Priority() {
     <>
       {isEditingPriority ? (
         <>
-          <Label htmlFor="due Date" className="text-sm text-gray-400">
-            Priority
-          </Label>
+          <Label htmlFor="due Date" className="text-sm"></Label>
           <Select
             value={priority}
             onValueChange={(newValue) => updatePriority(newValue)}
           >
-            <SelectTrigger className="w-[180px] capitalize">
+            <SelectTrigger className="w-[150px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950">
               <SelectValue placeholder="Select a priority" />
             </SelectTrigger>
             <SelectContent
               onCloseAutoFocus={() => handleBlur(setIsEditingPriority)}
             >
-              <SelectGroup>
-                <SelectLabel>Label</SelectLabel>
+              <SelectGroup className="bg-pallette-100 font-semibold text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
+                <SelectLabel>Priority</SelectLabel>
                 {taskPriorities.map((p) => {
                   return (
                     <SelectItem className="capitalize" key={p} value={p}>

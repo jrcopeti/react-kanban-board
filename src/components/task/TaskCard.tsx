@@ -78,7 +78,7 @@ function TaskCard() {
   }
 
   const divClassNameWithLabel = clsx(
-    "relative h-[150px] cursor-grab touch-none bg-pallette-100 overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-0.5 shadow-md",
+    "relative h-[135px] cursor-grab touch-none bg-orange-100 dark:bg-blue-200 overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-2 shadow-md",
     `border-${labelToColor}-500`,
   );
 

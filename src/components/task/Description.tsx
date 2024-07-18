@@ -26,12 +26,12 @@ function Description() {
         <>
           <Label
             htmlFor="description"
-            className="content-center text-sm font-semibold text-pallette-500"
+            className="content-center text-sm font-semibold text-pallette-500 dark:text-blue-100"
           >
             Description
           </Label>
           <Textarea
-            className="w-full py-2 text-xl"
+            className="w-full py-2 text-xl dark:bg-blue-100 dark:text-rose-950"
             value={description}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleFieldChange("description", e.target.value)
@@ -52,15 +52,19 @@ function Description() {
         >
           <Label
             htmlFor="description"
-            className="flex items-center gap-1 text-base text-pallette-500"
+            className="flex items-center gap-1 text-base text-pallette-500 dark:text-blue-100"
           >
             <MdOutlineSubject size={24} /> Description
           </Label>
-          <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 p-4 text-justify">
+          <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 p-4 text-justify dark:bg-blue-100 dark:text-rose-950">
             {description ? (
-              <p className="text-lg text-white">{description}</p>
+              <p className="text-lg text-white dark:text-rose-950">
+                {description}
+              </p>
             ) : (
-              <p className="text-base text-white">Click to edit...</p>
+              <p className="text-base text-white dark:text-rose-950">
+                Click to edit...
+              </p>
             )}
           </div>
         </section>

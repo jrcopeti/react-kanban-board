@@ -19,11 +19,10 @@ function DialogDelete({
   column,
   isTask = true,
 }: DialogDeleteProps) {
-
   const taskClassName =
-    "absolute bottom-1 right-9 z-30 translate-x-1/2 bg-transparent hover:bg-pallette-300";
-  const columnClassName = "bg-transparent hover:bg-pallette-300";
-
+    "absolute bottom-1 right-9 z-30 translate-x-1/2 bg-transparent dark:bg-transparent dark:hover:bg-blue-100 hover:bg-pallette-300";
+  const columnClassName =
+    "bg-transparent hover:bg-pallette-300 dark:bg-transparent";
 
   return (
     <Dialog>
@@ -35,9 +34,9 @@ function DialogDelete({
           />
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-pallette-100 sm:max-w-md">
+      <DialogContent className="bg-pallette-100 dark:bg-gray-900 sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-pallette-600">
+          <DialogTitle className="text-pallette-600 dark:text-blue-100">
             Are you sure you want to delete {isTask ? task : column}?
           </DialogTitle>
           <DialogDescription className="text-pallette-300">
