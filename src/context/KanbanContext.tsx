@@ -91,6 +91,7 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
   const taskInColumn = (columnId: Id) => {
     return tasks.filter((task) => task.columnId === columnId);
   };
+
   const generateRandomLabel = () => {
     setRandomLabelIndex(Math.floor(Math.random() * labels.length));
   };
@@ -110,7 +111,7 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
       columnId,
       title: `Task ${tasks.length + 1}`,
       assignee: "",
-      description: "Maravilhas",
+      description: "",
       priority: taskPriorities[randomPriorityIndex],
       label: labels[randomLabelIndex],
       points: fib[randomPoints],
@@ -153,13 +154,11 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
   const onDragStart = (event: DragStartEvent) => {
     if (event.active.data.current?.type === "column") {
       setActiveColumn(event.active.data.current.column as Column);
-      console.log("activeColumn", activeColumn);
       return;
     }
 
     if (event.active.data.current?.type === "task") {
       setActiveTask(event.active.data.current.task as Task);
-      console.log("activeTask", activeTask);
       return;
     }
   };

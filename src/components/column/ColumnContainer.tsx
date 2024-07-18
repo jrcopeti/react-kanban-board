@@ -119,7 +119,7 @@ function ColumnContainer() {
               maxLength={16}
               autoFocus
               type="text"
-              className="w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-100 outline-none dark:text-blue-100"
+              className="w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:text-blue-100 dark:bg-slate-600"
               onBlur={handleBlur}
               value={column.title}
               onChange={handleOnChange}
