@@ -1,20 +1,20 @@
 // Hooks
-import { useTask } from "../hooks/useTask";
-import { useKanban } from "../hooks/useKanban";
+import { useTask } from "../../hooks/useTask";
+import { useKanban } from "../../hooks/useKanban";
 
 //Components
 import DatePicker from "./DatePicker";
-import DialogDelete from "./DialogDelete";
+import DialogDelete from "../DialogDelete";
 
 //UI
-import { Label } from "./@/components/ui/label";
-import Input from "./@/components/ui/input";
+import { Label } from "../@/components/ui/label";
+import Input from "../@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "./@/components/ui/popover";
-import { Textarea } from "./@/components/ui/textarea";
+} from "../@/components/ui/popover";
+import { Textarea } from "../@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -23,7 +23,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./@/components/ui/select";
+} from "../@/components/ui/select";
 
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { RiEqualLine } from "react-icons/ri";
@@ -42,9 +42,11 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 //Utils
-import { sortedLabels, taskPriorities } from "../utils";
+import { sortedLabels, taskPriorities } from "../../utils";
 import { format } from "date-fns";
 import clsx from "clsx";
+import Title from "./Title";
+import Points from "./Points";
 
 function TaskCard() {
   const {
@@ -146,10 +148,6 @@ function TaskCard() {
     `border-${labelToColor}-500`,
   );
 
-  // const divClassName = clsx(
-  //   "relative h-[100px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
-  // );
-
   const labelIconClassName = clsx("text-sm", `text-${labelToColor}-500`);
 
   return (
@@ -163,37 +161,12 @@ function TaskCard() {
       onMouseLeave={handleMouseLeave}
     >
       {/* Title */}
+      <Title />
 
-      {isEditingTitle ? (
-        <Input
-          autoFocus
-          type="text"
-          className="h-fit w-fit py-2 text-2xl"
-          onBlur={() => handleBlur(setIsEditingTitle)}
-          value={title}
-          onChange={(e) => handleFieldChange("title", e.target.value)}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-            handleKeydown(e, setIsEditingTitle)
-          }
-          ref={titleRef}
-        />
-      ) : (
-        <section
-          className="break-words py-2 text-center text-xl font-semibold text-pallette-500"
-          onClick={() => handleToggleIsEditing(setIsEditingTitle)}
-        >
-          <h2>{title}</h2>
-        </section>
-      )}
-
-      {/* Points */}
 
       <section className="flex items-center justify-between px-4 py-2 text-xl font-semibold text-pallette-500">
-        <div className="flex items-center justify-start gap-5">
-          <button onClick={() => updatePoints("down")}>-</button>
-          <p>{points}</p>
-          <button onClick={() => updatePoints("up")}>+</button>
-        </div>
+      {/* Points */}
+        <Points />
 
         {/* Priority */}
 

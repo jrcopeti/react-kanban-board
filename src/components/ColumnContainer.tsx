@@ -7,7 +7,7 @@ import { useColumn } from "../hooks/useColumn";
 import { TaskProvider } from "../context/TaskContext";
 
 //Components
-import TaskCard from "./TaskCard";
+import TaskCard from "./task/TaskCard";
 import DialogDelete from "./DialogDelete";
 
 //UI
