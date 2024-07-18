@@ -1,4 +1,4 @@
-import { createContext, useEffect} from "react";
+import { createContext, useEffect } from "react";
 import type { ThemeContextType } from "../types";
 import { useLocalStorageState } from "../hooks/useLocalStorage";
 
@@ -10,7 +10,7 @@ const defaultContextValue: ThemeContextType = {
 const ThemeContext = createContext(defaultContextValue);
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [isDarkMode, setIsDarkMode] = useLocalStorageState(
+  const { value: isDarkMode, setValue: setIsDarkMode } = useLocalStorageState(
     window.matchMedia("(prefers-color-scheme: dark)").matches,
     "isDarkMode",
   );

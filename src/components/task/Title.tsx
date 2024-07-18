@@ -20,6 +20,7 @@ function Title() {
     <>
       {isEditingTitle ? (
         <Input
+          maxLength={28}
           autoFocus
           type="text"
           className="h-fit w-fit py-2 text-2xl"

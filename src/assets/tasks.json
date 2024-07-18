@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
+    "columnId": 1,
     "title": "Design Landing Page",
     "description": "Create a visually appealing landing page for the website.",
     "assignee": "Mary Davis",
-    "status": "To Do",
     "priority": "high",
     "points": 5,
     "label": "design",
@@ -13,6 +13,7 @@
   },
   {
     "id": 2,
+    "columnId": 1,
     "title": "Develop User Registration",
     "description": "Implement user registration functionality with email verification.",
     "assignee": "Jane Smith",
@@ -25,6 +26,7 @@
   },
   {
     "id": 3,
+    "columnId": 1,
     "title": "Bug Fix: Login Issue",
     "description": "Investigate and fix the login problem reported by users.",
     "assignee": "Mark Johnson",
@@ -37,6 +39,7 @@
   },
   {
     "id": 4,
+    "columnId": 2,
     "title": "Release Version 1.0",
     "description": "Prepare for the release of the first version of the application.",
     "assignee": "Sarah Brown",
@@ -49,13 +52,14 @@
   },
   {
     "id": 5,
+    "columnId": 2,
     "title": "Update Documentation",
     "description": "Update user documentation with the latest features and changes.",
     "assignee": "David Wilson",
     "status": "Done",
     "priority": "low",
     "points": 3,
-    "label": "documentation",
+    "label": "appoint",
     "createdDate": "2023-09-19",
     "dueDate": "2023-09-30"
   }

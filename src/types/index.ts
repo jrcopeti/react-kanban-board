@@ -10,12 +10,11 @@ import { SelectSingleEventHandler } from "react-day-picker";
 type Id = string | number;
 
 type Task = {
-  id: number;
+  id: Id;
   columnId: Id;
   title: string;
   assignee: string;
   description: string;
-  status: string;
   priority: string;
   label: string;
   points?: number;

@@ -27,7 +27,6 @@ const defaultContextValue: TaskContextType = {
     points: 0,
     assignee: "",
     label: "",
-    status: "",
     priority: "",
     dueDate: new Date(),
     createdDate: new Date(),

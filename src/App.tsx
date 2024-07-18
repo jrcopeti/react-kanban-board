@@ -6,6 +6,7 @@ import AppLayout from "./components/layout/AppLayout";
 import Homepage from "./pages/Home";
 import TaskPage from "./pages/Tasks";
 import AboutPage from "./pages/About";
+import NotFoundPage from "./pages/NotFound";
 
 // Providers
 import { OpenSidebarProvider } from "./context/SidebarContext";
@@ -25,6 +26,7 @@ function App() {
                   <Route path="/" element={<Homepage />} />
                   <Route path="/tasks" element={<TaskPage />} />
                   <Route path="/about" element={<AboutPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Route>
               </Routes>
             </KanbanProvider>
