@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 function Homepage() {
   return (
     <div className="m-[130px] flex items-center justify-center">
-      <div className="max-w-5xl p-4 text-center">
+      <div className="max-w-4xl p-4 text-center">
         <h1 className="mb-8 text-6xl font-normal text-pallette-600 dark:text-blue-100">
           Welcome
         </h1>
-        <p className="mb-12 text-balance text-3xl font-semibold text-pallette-600 dark:text-blue-100">
+        <p className="mb-12 text-balance text-3xl font-semibold text-pallette-600 dark:text-blue-100 max-w-4xl">
           At Kan Do, we turn chaos into clarity—navigating tasks with ease and
           driving progress, one step at a time...
         </p>
