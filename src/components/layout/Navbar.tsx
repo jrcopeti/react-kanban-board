@@ -6,7 +6,7 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 
 // Hooks
-import { useOpenSidebar } from "../hooks/useOpenSidebar";
+import { useOpenSidebar } from "../../hooks/useOpenSidebar";
 
 function Navbar() {
   const { toggleSidebar, headerRef } = useOpenSidebar();

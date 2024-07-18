@@ -5,8 +5,7 @@
 *,
 *::before,
 *::after {
-  @apply m-0 box-border p-0;
-  transition: background-color 0.5s, border 0.3s;
+  @apply box-border;
 }
 
 html,
@@ -16,5 +15,4 @@ body,
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
-
 }
