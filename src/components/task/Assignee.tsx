@@ -35,7 +35,7 @@ function Assignee() {
           <Input
             maxLength={28}
             type="text"
-            className="w-full py-2 text-xl dark:bg-blue-100 dark:text-rose-950"
+            className="w-full bg-pallette-100 py-2 text-xl text-pallette-600 dark:bg-blue-100 dark:text-rose-950"
             value={assignee}
             onChange={(e) => handleFieldChange("assignee", e.target.value)}
             onBlur={() => handleBlur(setIsEditingAssignee)}
