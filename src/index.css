@@ -5,13 +5,15 @@
 *,
 *::before,
 *::after {
-  @apply m-0 box-border p-0;
-  transition: background-color 0.5s, border 0.3s;
+
+
 }
 
 html,
 body,
 #root {
+  /* @apply  box-border; */
+
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;

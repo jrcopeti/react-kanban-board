@@ -130,7 +130,7 @@ type TaskContextType = {
   titleRef: React.RefObject<HTMLInputElement>;
   descriptionRef: React.RefObject<HTMLTextAreaElement>;
   assigneeRef: React.RefObject<HTMLInputElement>;
-  labelRef: React.RefObject<HTMLSelectElement>;
+  labelRef: React.RefObject<HTMLDivElement>;
   dueDateRef: React.RefObject<HTMLButtonElement>;
 
   //Handlers

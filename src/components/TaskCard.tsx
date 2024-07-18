@@ -15,6 +15,15 @@ import {
   PopoverTrigger,
 } from "./@/components/ui/popover";
 import { Textarea } from "./@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./@/components/ui/select";
 
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { RiEqualLine } from "react-icons/ri";
@@ -33,10 +42,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 //Utils
-import { labelOptions, sortedLabels, taskPriorities } from "../utils";
+import { sortedLabels, taskPriorities } from "../utils";
 import { format } from "date-fns";
 import clsx from "clsx";
-
 
 function TaskCard() {
   const {
@@ -122,9 +130,7 @@ function TaskCard() {
       <div
         ref={setNodeRef}
         style={style}
-
         className="bg-pallette-600px-2 relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-pallette-200 py-0.5 opacity-50 shadow-md"
-
       ></div>
     );
   }
@@ -136,7 +142,6 @@ function TaskCard() {
   );
 
   const divClassNameWithLabel = clsx(
-
     "relative h-[150px] cursor-grab touch-none bg-pallette-100 overflow-auto rounded-lg  border-l-8  bg-gray-50 px-2 py-0.5 shadow-md",
     `border-${labelToColor}-500`,
   );
@@ -144,7 +149,6 @@ function TaskCard() {
   // const divClassName = clsx(
   //   "relative h-[100px] cursor-grab touch-none overflow-auto rounded-lg bg-gray-50 px-2 py-0.5 shadow-md",
   // );
-
 
   const labelIconClassName = clsx("text-sm", `text-${labelToColor}-500`);
 
@@ -198,17 +202,28 @@ function TaskCard() {
             <Label htmlFor="due Date" className="text-sm text-gray-400">
               Priority
             </Label>
-            <select
+            <Select
               value={priority}
-              onChange={(e) => updatePriority(e.target.value)}
-              onBlur={() => handleBlur(setIsEditingPriority)}
+              onValueChange={(newValue) => updatePriority(newValue)}
             >
-              {taskPriorities.map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="w-[180px] capitalize">
+                <SelectValue placeholder="Select a priority" />
+              </SelectTrigger>
+              <SelectContent
+                onCloseAutoFocus={() => handleBlur(setIsEditingPriority)}
+              >
+                <SelectGroup>
+                  <SelectLabel>Label</SelectLabel>
+                  {taskPriorities.map((p) => {
+                    return (
+                      <SelectItem className="capitalize" key={p} value={p}>
+                        {p}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </>
         ) : (
           <div onClick={() => handleToggleIsEditing(setIsEditingPriority)}>
@@ -335,21 +350,35 @@ function TaskCard() {
                   >
                     Label
                   </Label>
-                  <select
-                    value={label}
-                    onChange={(e) => updateLabel(e.target.value)}
-                    onBlur={() => handleBlur(setIsEditingLabel)}
-                    ref={labelRef}
-                    className="capitalize"
-                  >
-                    {labelOptions.map((l) => {
-                      return (
-                        <option key={l.label} value={l.value}>
-                          {l.label}
-                        </option>
-                      );
-                    })}
-                  </select>
+
+                  <div ref={labelRef}>
+                    <Select
+                      value={label}
+                      onValueChange={(newValue) => updateLabel(newValue)}
+                    >
+                      <SelectTrigger className="w-[180px] capitalize">
+                        <SelectValue placeholder="Select a label" />
+                      </SelectTrigger>
+                      <SelectContent
+                        onCloseAutoFocus={() => handleBlur(setIsEditingLabel)}
+                      >
+                        <SelectGroup>
+                          <SelectLabel>Label</SelectLabel>
+                          {sortedLabels.map((l) => {
+                            return (
+                              <SelectItem
+                                className="capitalize"
+                                key={l.label}
+                                value={l.label}
+                              >
+                                {l.label}
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </>
               ) : (
                 <section
