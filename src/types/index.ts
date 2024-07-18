@@ -164,6 +164,17 @@ type ThemeContextType = {
   toggleDarkMode: (e: React.MouseEvent) => void;
 };
 
+type DatePickerProps = {
+  date: Date | undefined;
+  setDate:
+    | SelectSingleEventHandler
+    | React.Dispatch<React.SetStateAction<Date>>
+    | undefined;
+  ref: React.Ref<HTMLButtonElement>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 export type {
   Task,
   TaskCardProps,
@@ -178,4 +189,5 @@ export type {
   Theme,
   ThemeProviderProps,
   ThemeContextType,
+  DatePickerProps,
 };

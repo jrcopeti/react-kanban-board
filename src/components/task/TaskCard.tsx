@@ -27,7 +27,6 @@ import {
 
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 
-
 import {
   MdOutlineCalendarToday,
   MdOutlinePersonOutline,
@@ -47,6 +46,10 @@ import clsx from "clsx";
 import Title from "./Title";
 import Points from "./Points";
 import Priority from "./Priority";
+import Description from "./Description";
+import Assignee from "./Assignee";
+import TaskLabel from "./TaskLabel";
+import DueDate from "./DueDate";
 
 function TaskCard() {
   const {
@@ -189,210 +192,17 @@ function TaskCard() {
             side="right"
           >
             <div className="flex max-w-[500px] flex-col items-start gap-4">
-              {isEditingDescription ? (
-                <>
-                  <Label
-                    htmlFor="description"
-                    className="content-center text-sm font-semibold text-pallette-500"
-                  >
-                    Description
-                  </Label>
-                  <Textarea
-                    className="w-full py-2 text-xl"
-                    value={description}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      handleFieldChange("description", e.target.value)
-                    }
-                    onBlur={() => handleBlur(setIsEditingDescription)}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) =>
-                      handleKeydown(e, setIsEditingTitle)
-                    }
-                    ref={descriptionRef}
-                  />
-                </>
-              ) : (
-                <section
-                  onClick={() => {
-                    handleToggleIsEditing(setIsEditingDescription);
-                  }}
-                  className="flex flex-col gap-1 text-lg"
-                >
-                  <Label
-                    htmlFor="description"
-                    className="flex items-center gap-1 text-base text-pallette-500"
-                  >
-                    <MdOutlineSubject size={24} /> Description
-                  </Label>
-                  <div className="max-h-[250px] w-fit overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 p-4 text-justify">
-                    {description ? (
-                      <p className="text-lg text-white">{description}</p>
-                    ) : (
-                      <p className="text-base text-white">Click to edit...</p>
-                    )}
-                  </div>
-                </section>
-              )}
+              {/* Description */}
+              <Description />
 
-              {isEditingAssignee ? (
-                <>
-                  <Label
-                    htmlFor="assignee"
-                    className="text-sm font-semibold text-pallette-500"
-                  >
-                    Assignee
-                  </Label>
-                  <Input
-                    type="text"
-                    className="w-full py-2 text-xl"
-                    value={assignee}
-                    onChange={(e) =>
-                      handleFieldChange("assignee", e.target.value)
-                    }
-                    onBlur={() => handleBlur(setIsEditingAssignee)}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                      handleKeydown(e, setIsEditingAssignee)
-                    }
-                    ref={assigneeRef}
-                  />
-                </>
-              ) : (
-                <section
-                  onClick={() => {
-                    handleToggleIsEditing(setIsEditingAssignee);
-                  }}
-                  className="flex flex-col gap-1 text-lg"
-                >
-                  <Label
-                    htmlFor="assignee"
-                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
-                  >
-                    <MdOutlinePersonOutline size={22} />
-                    Assignee
-                  </Label>
-                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
-                    {assignee ? (
-                      <p className="text-lg text-white">{assignee}</p>
-                    ) : (
-                      <p className="text-base text-white">Click to edit...</p>
-                    )}
-                  </div>
-                </section>
-              )}
+              {/* Assignee */}
+              <Assignee />
 
-              {isEditingLabel ? (
-                <>
-                  <Label
-                    htmlFor="label"
-                    className="text-sm font-semibold text-pallette-500"
-                  >
-                    Label
-                  </Label>
+              {/* Label */}
+              <TaskLabel />
 
-                  <div ref={labelRef}>
-                    <Select
-                      value={label}
-                      onValueChange={(newValue) => updateLabel(newValue)}
-                    >
-                      <SelectTrigger className="w-[180px] capitalize">
-                        <SelectValue placeholder="Select a label" />
-                      </SelectTrigger>
-                      <SelectContent
-                        onCloseAutoFocus={() => handleBlur(setIsEditingLabel)}
-                      >
-                        <SelectGroup>
-                          <SelectLabel>Label</SelectLabel>
-                          {sortedLabels.map((l) => {
-                            return (
-                              <SelectItem
-                                className="capitalize"
-                                key={l.label}
-                                value={l.label}
-                              >
-                                {l.label}
-                              </SelectItem>
-                            );
-                          })}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </>
-              ) : (
-                <section
-                  onClick={() => {
-                    handleToggleIsEditing(setIsEditingLabel);
-                  }}
-                  className="flex flex-col gap-1 text-lg"
-                >
-                  <Label
-                    htmlFor="label"
-                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
-                  >
-                    <CgTag />
-                    Label
-                  </Label>
-                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
-                    <div className="flex items-center gap-2 text-base">
-                      {label !== "" ? (
-                        <>
-                          <p className="capitalize text-pallette-100">
-                            {label}
-                          </p>
-                          <PiCircleDuotone className={labelIconClassName} />
-                        </>
-                      ) : (
-                        <p className="text-base text-pallette-300">
-                          <PiCigaretteDuotone className="text-gray-300" />
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </section>
-              )}
-
-              {isEditingDueDate ? (
-                <>
-                  <Label
-                    htmlFor="due Date"
-                    className="text-sm font-semibold text-pallette-500"
-                  >
-                    Due Date
-                  </Label>
-                  <DatePicker
-                    ref={dueDateRef}
-                    date={dueDateState}
-                    setDate={setDueDateState}
-                    isEditing={isEditingDueDate}
-                    setIsEditing={setIsEditingDueDate}
-                  />
-                </>
-              ) : (
-                <section
-                  onClick={() => {
-                    handleToggleIsEditing(setIsEditingDueDate);
-                  }}
-                  className="flex flex-col gap-1 text-lg"
-                >
-                  <Label
-                    htmlFor="Due Date"
-                    className="flex items-center gap-1 text-base font-semibold text-pallette-500"
-                  >
-                    <MdOutlineCalendarToday />
-                    Due Date
-                  </Label>
-                  <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
-                    {dueDate ? (
-                      <p className="text-base text-white">
-                        {dueDateState
-                          ? format(dueDateState, "MMMM d, yyyy")
-                          : ""}
-                      </p>
-                    ) : (
-                      <p className="text-base text-white">Click to edit...</p>
-                    )}
-                  </div>
-                </section>
-              )}
+              {/* Due Date */}
+              <DueDate />
             </div>
           </PopoverContent>
         </Popover>
