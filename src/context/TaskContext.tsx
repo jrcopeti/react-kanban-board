@@ -16,6 +16,7 @@ import { useToast } from "../components/@/components/ui/use-toast";
 import type { Id, Task, TaskContextType } from "../types";
 import { useKanban } from "../hooks/useKanban";
 import { useColumn } from "../hooks/useColumn";
+import { sortedLabels } from "../utils";
 
 const defaultContextValue: TaskContextType = {
   task: {
@@ -63,6 +64,7 @@ const defaultContextValue: TaskContextType = {
   updatePoints: () => {},
   updatePriority: () => {},
   updateLabel: () => {},
+  labelToColor: "",
 };
 
 const TaskContext = createContext(defaultContextValue);
@@ -174,6 +176,8 @@ function TaskProvider({
     }
   }, [dueDateState]);
 
+  const labelToColor = sortedLabels.find((l) => l.label === task.label)?.color;
+
   const updatePoints = (direction: "up" | "down") => {
     const fib = [0, 1, 2, 3, 5, 8, 13];
     const currentIndex = fib.indexOf(task.points ?? -1);
@@ -275,6 +279,7 @@ function TaskProvider({
         updatePoints,
         updatePriority,
         updateLabel,
+        labelToColor,
       }}
     >
       {children}

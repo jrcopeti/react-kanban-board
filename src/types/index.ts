@@ -5,6 +5,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { RefObject, Dispatch, SetStateAction } from "react";
+import { SelectSingleEventHandler } from "react-day-picker";
 
 type Id = string | number;
 
@@ -149,14 +150,9 @@ type TaskContextType = {
   updatePoints: (direction: "up" | "down") => void;
   updatePriority: (newPriority: string) => void;
   updateLabel: (newLabel: string) => void;
-};
 
-type Theme = "dark" | "light" | "system";
-
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
+  //Helpers
+  labelToColor: string | undefined;
 };
 
 type ThemeContextType = {
@@ -186,8 +182,6 @@ export type {
   KanbanContextType,
   ColumnContextType,
   TaskContextType,
-  Theme,
-  ThemeProviderProps,
   ThemeContextType,
   DatePickerProps,
 };

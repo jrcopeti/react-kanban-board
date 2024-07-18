@@ -34,7 +34,6 @@ const labelOptions = [
     value: label.label,
     label: label.label,
   })),
-
 ];
 
 const routes = [
