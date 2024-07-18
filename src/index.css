@@ -16,3 +16,7 @@ body,
   font-weight: 300;
   font-style: normal;
 }
+
+html {
+  @apply antialiased bg-pallette-100
+}
