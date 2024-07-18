@@ -1,27 +1,22 @@
-import * as React from "react";
+//React
 import { forwardRef } from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
 
-import { cn } from "./@/lib/utils";
-import { Button, buttonVariants } from "./@/components/ui/button";
+//React
+import { Calendar as CalendarIcon } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "./@/components/ui/popover";
+} from "../@/components/ui/popover";
+import { Button, buttonVariants } from "../@/components/ui/button";
 import { DayPicker, SelectSingleEventHandler } from "react-day-picker";
 
-type DatePickerProps = {
-  date: Date | undefined;
-  setDate:
-    | SelectSingleEventHandler
-    | React.Dispatch<React.SetStateAction<Date>>
-    | undefined;
-  ref: React.Ref<HTMLButtonElement>;
-  isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-};
+//Utils
+import { format } from "date-fns";
+import { cn } from "../@/lib/utils";
+
+//Types
+import type { DatePickerProps } from "../../types";
 
 const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
   ({ date, setDate, isEditing, setIsEditing }, ref) => {

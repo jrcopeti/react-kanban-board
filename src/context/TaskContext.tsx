@@ -16,6 +16,7 @@ import { useToast } from "../components/@/components/ui/use-toast";
 import type { Id, Task, TaskContextType } from "../types";
 import { useKanban } from "../hooks/useKanban";
 import { useColumn } from "../hooks/useColumn";
+import { sortedLabels } from "../utils";
 
 const defaultContextValue: TaskContextType = {
   task: {
@@ -63,6 +64,7 @@ const defaultContextValue: TaskContextType = {
   updatePoints: () => {},
   updatePriority: () => {},
   updateLabel: () => {},
+  labelToColor: "",
 };
 
 const TaskContext = createContext(defaultContextValue);
@@ -100,20 +102,25 @@ function TaskProvider({
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLSelectElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
   const dueDateRef = useRef<HTMLButtonElement>(null);
 
   //Focus on input
   useEffect(() => {
     if (isEditingTitle) {
+      console.log("titleRef", titleRef);
       titleRef.current?.focus();
     } else if (isEditingDescription && descriptionRef.current) {
+      console.log("descriptionRef", descriptionRef);
       descriptionRef.current.focus();
     } else if (isEditingAssignee && assigneeRef.current) {
+      console.log("assigneeRef", assigneeRef);
       assigneeRef.current.focus();
     } else if (isEditingDueDate && dueDateRef.current) {
+      console.log("dueDateRef", dueDateRef);
       dueDateRef.current.focus();
     } else if (isEditingLabel && labelRef.current) {
+      console.log("labelRef", labelRef);
       labelRef.current.focus();
     }
   }, [
@@ -142,7 +149,6 @@ function TaskProvider({
         prevTaskRef.current.description !== task.description ||
         prevTaskRef.current.priority !== task.priority ||
         prevTaskRef.current.label !== task.label
-
       ) {
         const debounce = setTimeout(() => {
           toast.toast({
@@ -170,6 +176,8 @@ function TaskProvider({
     }
   }, [dueDateState]);
 
+  const labelToColor = sortedLabels.find((l) => l.label === task.label)?.color;
+
   const updatePoints = (direction: "up" | "down") => {
     const fib = [0, 1, 2, 3, 5, 8, 13];
     const currentIndex = fib.indexOf(task.points ?? -1);
@@ -185,6 +193,7 @@ function TaskProvider({
   };
 
   const updateLabel = (newLabel: string) => {
+    console.log("updateLabel CALLED", newLabel);
     updateTask({ ...task, label: newLabel });
   };
 
@@ -270,6 +279,7 @@ function TaskProvider({
         updatePoints,
         updatePriority,
         updateLabel,
+        labelToColor,
       }}
     >
       {children}

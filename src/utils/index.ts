@@ -19,7 +19,7 @@ const taskLabelsWithColors = [
   { label: "appointments", color: "cyan" },
   { label: "cooking", color: "rose" },
   { label: "reading", color: "emerald" },
-  { label: "none", color: "" },
+  { label: "no label", color: "no-color" },
 ];
 
 const sortedLabels = [
@@ -30,7 +30,6 @@ const labels = sortedLabels.map((label) => label.label);
 const randomLabelIndex = Math.floor(Math.random() * 15);
 
 const labelOptions = [
-  { value: "", label: "Select a Label" },
   ...sortedLabels.map((label) => ({
     value: label.label,
     label: label.label,

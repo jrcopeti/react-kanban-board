@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { routes } from "../utils";
-import { useOpenSidebar } from "../hooks/useOpenSidebar";
-import ToggleTheme from "./ToggleTheme";
+import { routes } from "../../utils";
+import { useOpenSidebar } from "../../hooks/useOpenSidebar";
+import ToggleTheme from "../ui/ToggleTheme";
 
 function Sidebar() {
   const { sidebarRef, isSidebarOpen } = useOpenSidebar();

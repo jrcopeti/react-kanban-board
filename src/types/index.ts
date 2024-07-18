@@ -5,6 +5,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { RefObject, Dispatch, SetStateAction } from "react";
+import { SelectSingleEventHandler } from "react-day-picker";
 
 type Id = string | number;
 
@@ -130,7 +131,7 @@ type TaskContextType = {
   titleRef: React.RefObject<HTMLInputElement>;
   descriptionRef: React.RefObject<HTMLTextAreaElement>;
   assigneeRef: React.RefObject<HTMLInputElement>;
-  labelRef: React.RefObject<HTMLSelectElement>;
+  labelRef: React.RefObject<HTMLDivElement>;
   dueDateRef: React.RefObject<HTMLButtonElement>;
 
   //Handlers
@@ -149,19 +150,25 @@ type TaskContextType = {
   updatePoints: (direction: "up" | "down") => void;
   updatePriority: (newPriority: string) => void;
   updateLabel: (newLabel: string) => void;
-};
 
-type Theme = "dark" | "light" | "system";
-
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
+  //Helpers
+  labelToColor: string | undefined;
 };
 
 type ThemeContextType = {
   isDarkMode: boolean;
   toggleDarkMode: (e: React.MouseEvent) => void;
+};
+
+type DatePickerProps = {
+  date: Date | undefined;
+  setDate:
+    | SelectSingleEventHandler
+    | React.Dispatch<React.SetStateAction<Date>>
+    | undefined;
+  ref: React.Ref<HTMLButtonElement>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type {
@@ -175,7 +182,6 @@ export type {
   KanbanContextType,
   ColumnContextType,
   TaskContextType,
-  Theme,
-  ThemeProviderProps,
   ThemeContextType,
+  DatePickerProps,
 };

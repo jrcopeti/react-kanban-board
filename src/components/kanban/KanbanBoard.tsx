@@ -2,21 +2,21 @@
 import { createPortal } from "react-dom";
 
 //Hooks
-import { useKanban } from "../hooks/useKanban";
+import { useKanban } from "../../hooks/useKanban";
 
 //Components
-import ColumnContainer from "./ColumnContainer";
-import TaskCard from "./TaskCard";
+import ColumnContainer from "../column/ColumnContainer";
+import TaskCard from "../task/TaskCard";
 
 //UI
-import { Button } from "./@/components/ui/button";
+import { Button } from "../@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
 
 //Lib
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
-import { ColumnProvider } from "../context/ColumnContext";
-import { TaskProvider } from "../context/TaskContext";
+import { ColumnProvider } from "../../context/ColumnContext";
+import { TaskProvider } from "../../context/TaskContext";
 
 function KanbanBoard() {
   const {
@@ -58,7 +58,11 @@ function KanbanBoard() {
           </div>
           <Button
             onClick={() => createNewColumn()}
+<<<<<<< HEAD:src/components/KanbanBoard.tsx
             className="flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-4 border-b-pallette-100 bg-pallette-100 p-4 text-2xl font-semibold text-pallette-600 ring-pallette-500 hover:ring-2 dark:border-blue-100 dark:bg-slate-700 dark:text-blue-100 dark:hover:bg-rose-950"
+=======
+            className="flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-2 border-b-pallette-100 bg-pallette-100 p-4 text-2xl font-semibold text-pallette-600 ring-pallette-500 hover:ring-2"
+>>>>>>> 0e9cfb4288086adf3a16de0e6326b3810e698a52:src/components/kanban/KanbanBoard.tsx
           >
             <FiPlusCircle />
             Add Column
