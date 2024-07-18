@@ -2,21 +2,21 @@
 import { createPortal } from "react-dom";
 
 //Hooks
-import { useKanban } from "../hooks/useKanban";
+import { useKanban } from "../../hooks/useKanban";
 
 //Components
-import ColumnContainer from "./ColumnContainer";
-import TaskCard from "./task/TaskCard";
+import ColumnContainer from "../column/ColumnContainer";
+import TaskCard from "../task/TaskCard";
 
 //UI
-import { Button } from "./@/components/ui/button";
+import { Button } from "../@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
 
 //Lib
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
-import { ColumnProvider } from "../context/ColumnContext";
-import { TaskProvider } from "../context/TaskContext";
+import { ColumnProvider } from "../../context/ColumnContext";
+import { TaskProvider } from "../../context/TaskContext";
 
 function KanbanBoard() {
   const {

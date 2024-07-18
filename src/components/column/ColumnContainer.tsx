@@ -2,17 +2,17 @@
 import { useMemo } from "react";
 
 //Hooks
-import { useKanban } from "../hooks/useKanban";
-import { useColumn } from "../hooks/useColumn";
-import { TaskProvider } from "../context/TaskContext";
+import { useKanban } from "../../hooks/useKanban";
+import { useColumn } from "../../hooks/useColumn";
+import { TaskProvider } from "../../context/TaskContext";
 
 //Components
-import TaskCard from "./task/TaskCard";
-import DialogDelete from "./DialogDelete";
+import TaskCard from "../task/TaskCard";
+import DialogDelete from "../ui/DialogDelete";
 
 //UI
-import Input from "./@/components/ui/input";
-import { Button } from "./@/components/ui/button";
+import Input from "../@/components/ui/input";
+import { Button } from "../@/components/ui/button";
 import { FiPlusCircle } from "react-icons/fi";
 
 //Lib

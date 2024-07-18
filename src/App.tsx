@@ -2,7 +2,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Pages
-import AppLayout from "./components/AppLayout";
+import AppLayout from "./components/layout/AppLayout";
 import Homepage from "./pages/Home";
 import TaskPage from "./pages/Tasks";
 import AboutPage from "./pages/About";
@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <ThemeProvider>
           <OpenSidebarProvider>
             <KanbanProvider>
               <Routes>

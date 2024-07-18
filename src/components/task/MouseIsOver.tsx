@@ -3,7 +3,7 @@ import { useKanban } from "../../hooks/useKanban";
 import { useTask } from "../../hooks/useTask";
 
 //Components
-import DialogDelete from "../DialogDelete";
+import DialogDelete from "../ui/DialogDelete";
 import CreatedDate from "./CreatedDate";
 
 //Utils

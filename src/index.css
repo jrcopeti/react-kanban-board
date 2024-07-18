@@ -5,18 +5,14 @@
 *,
 *::before,
 *::after {
-
-
+  @apply box-border;
 }
 
 html,
 body,
 #root {
-  /* @apply  box-border; */
-
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
-
 }
