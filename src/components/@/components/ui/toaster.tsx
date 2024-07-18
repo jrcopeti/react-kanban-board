@@ -18,16 +18,16 @@ export function Toaster() {
           <Toast
             key={id}
             {...props}
-            className="rounded-lg bg-pallette-100 dark:bg-blue-100"
+            className="rounded-lg bg-pallette-100 dark:bg-gray-900"
           >
             <div className="grid gap-1">
               {title && (
-                <ToastTitle className="text-lg font-semibold text-pallette-600 dark:text-rose-950">
+                <ToastTitle className="text-lg font-semibold text-pallette-600 dark:text-blue-100">
                   {title}
                 </ToastTitle>
               )}
               {description && (
-                <ToastDescription className="text-base font-semibold text-pallette-600 dark:text-rose-950">
+                <ToastDescription className="text-base font-semibold text-pallette-600 dark:text-blue-100">
                   {description}
                 </ToastDescription>
               )}

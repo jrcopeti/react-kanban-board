@@ -23,7 +23,7 @@ function Title() {
           maxLength={28}
           autoFocus
           type="text"
-          className="h-fit w-fit py-2 text-2xl"
+          className="h-9 w-72 py-3 text-2xl dark:bg-blue-100 dark:text-rose-950"
           onBlur={() => handleBlur(setIsEditingTitle)}
           value={title}
           onChange={(e) => handleFieldChange("title", e.target.value)}

@@ -18,7 +18,7 @@ function MouseIsOver() {
   const labelToColor = sortedLabels.find((l) => l.label === label)?.color;
 
   const labelClassName = clsx(
-    "absolute left-5 bottom-10 h-1 bg-pallette-300 text-sm capitalize ",
+    "absolute left-5 bottom-9 h-1   text-sm dark:text-rose-950 capitalize ",
     `text-${labelToColor}-500`,
   );
   return (

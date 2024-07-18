@@ -27,7 +27,7 @@ function DueDate() {
         <>
           <Label
             htmlFor="due Date"
-            className="text-sm font-semibold text-pallette-500"
+            className="text-sm font-semibold text-pallette-500 dark:text-blue-100"
           >
             Due Date
           </Label>
@@ -48,18 +48,20 @@ function DueDate() {
         >
           <Label
             htmlFor="Due Date"
-            className="flex items-center gap-1 text-base font-semibold text-pallette-500"
+            className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
           >
             <MdOutlineCalendarToday />
             Due Date
           </Label>
-          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
+          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             {dueDate ? (
-              <p className="text-base text-white">
+              <p className="text-base text-white dark:text-rose-950">
                 {dueDateState ? format(dueDateState, "MMMM d, yyyy") : ""}
               </p>
             ) : (
-              <p className="text-base text-white">Click to edit...</p>
+              <p className="text-base text-white dark:text-rose-950">
+                Click to edit...
+              </p>
             )}
           </div>
         </section>

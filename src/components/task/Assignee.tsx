@@ -26,13 +26,13 @@ function Assignee() {
         <>
           <Label
             htmlFor="assignee"
-            className="text-sm font-semibold text-pallette-500"
+            className="text-sm font-semibold text-pallette-500 dark:text-blue-100"
           >
             Assignee
           </Label>
           <Input
             type="text"
-            className="w-full py-2 text-xl"
+            className="w-full py-2 text-xl dark:bg-blue-100 dark:text-rose-950"
             value={assignee}
             onChange={(e) => handleFieldChange("assignee", e.target.value)}
             onBlur={() => handleBlur(setIsEditingAssignee)}
@@ -51,16 +51,20 @@ function Assignee() {
         >
           <Label
             htmlFor="assignee"
-            className="flex items-center gap-1 text-base font-semibold text-pallette-500"
+            className="flex items-center gap-1 text-base font-semibold text-pallette-500 dark:text-blue-100"
           >
             <MdOutlinePersonOutline size={22} />
             Assignee
           </Label>
-          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3">
+          <div className="w-fit rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             {assignee ? (
-              <p className="text-lg text-white">{assignee}</p>
+              <p className="text-lg text-white dark:text-rose-950">
+                {assignee}
+              </p>
             ) : (
-              <p className="text-base text-white">Click to edit...</p>
+              <p className="text-base text-white dark:text-rose-950">
+                Click to edit...
+              </p>
             )}
           </div>
         </section>
