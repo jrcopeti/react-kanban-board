@@ -2,7 +2,7 @@ import { formatDistanceToNow, isToday } from "date-fns";
 import { useTask } from "../../hooks/useTask";
 
 function DueDateStateInMouseIsOver() {
-  const { task, dueDateState } = useTask();
+  const { dueDateState } = useTask();
 
   if (!dueDateState) return;
 
