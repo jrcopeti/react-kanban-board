@@ -8,6 +8,7 @@ function DarkModeToggle() {
 
   return (
     <Button
+    title="Light/Dark Mode"
       className="bg-slate-700 text-2xl text-blue-100 hover:bg-slate-500 dark:bg-pallette-100 dark:text-pallette-600"
       onClick={toggleDarkMode}
     >

@@ -33,6 +33,7 @@ function Title() {
         />
       ) : (
         <section
+          title="Task Title"
           className="cursor-pointer break-words py-1 text-center text-xl font-semibold text-pallette-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >

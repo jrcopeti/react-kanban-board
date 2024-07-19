@@ -5,7 +5,7 @@ function CreatedDate() {
   const { task } = useTask();
   const { createdDate } = task;
   return (
-    <section className="absolute bottom-2 left-24 z-30 -translate-x-1/2 flex-col gap-1 text-lg">
+    <section title="Created Date" className="absolute bottom-2 left-24 z-30 -translate-x-1/2 flex-col gap-1 text-lg">
       <p className="text-left text-xs text-pallette-300 dark:text-slate-500">
         Created At: {format(createdDate, "dd, MMM yyyy")}
       </p>

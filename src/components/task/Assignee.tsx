@@ -47,6 +47,7 @@ function Assignee() {
         </>
       ) : (
         <section
+        title="Assignee"
           onClick={() => {
             handleToggleIsEditing(setIsEditingAssignee);
           }}

@@ -109,11 +109,12 @@ function ColumnContainer() {
       {...listeners}
       className="z-40 flex h-full max-h-full w-[350px] cursor-grab flex-col overflow-auto rounded-md bg-pallette-100 dark:bg-blue-100"
     >
-
       <section className="flex h-[60px] items-center justify-between rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100 dark:border-blue-100 dark:bg-slate-700 dark:text-blue-100">
-
         <div className="flex gap-2">
-          <div className="flex cursor-text items-center justify-center px-2 py-1 text-xl text-pallette-100 dark:text-blue-100">
+          <div
+            title="Total Points"
+            className="flex cursor-text items-center justify-center px-2 py-1 text-xl text-pallette-100 dark:text-blue-100"
+          >
             {totalPoints}
           </div>
           {isEditing ? (
@@ -121,7 +122,7 @@ function ColumnContainer() {
               maxLength={16}
               autoFocus
               type="text"
-              className="w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:text-blue-100 dark:bg-slate-600"
+              className="w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:bg-slate-600 dark:text-blue-100"
               onBlur={handleBlur}
               value={column.title}
               onChange={handleOnChange}
@@ -129,6 +130,7 @@ function ColumnContainer() {
             />
           ) : (
             <p
+              title="Column Title"
               onClick={handleClick}
               className="cursor-pointer p-2 text-xl font-semibold text-pallette-100 dark:text-blue-100"
             >
@@ -163,12 +165,11 @@ function ColumnContainer() {
 
       {/* Footer */}
       <Button
+        title="Add Task"
         onClick={() => {
           createTask(column.id);
         }}
-
         className="flex h-[60px] cursor-pointer items-center gap-2 rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100 dark:border-blue-100 dark:bg-slate-800 dark:text-blue-100 dark:hover:bg-rose-950"
-
       >
         <FiPlusCircle size={15} /> Add Task
       </Button>

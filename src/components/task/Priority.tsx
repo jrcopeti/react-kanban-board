@@ -58,6 +58,7 @@ function Priority() {
         </>
       ) : (
         <div
+          title="Priority"
           className="flex cursor-pointer flex-col items-center text-2xl"
           onClick={() => handleToggleIsEditing(setIsEditingPriority)}
         >
