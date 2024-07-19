@@ -38,9 +38,9 @@ const labelOptions = [
 ];
 
 const routes = [
-  { to: "/", label: "Home", icon: GoHome },
-  { to: "/tasks", label: "Tasks", icon: GoTasklist },
-  { to: "/about", label: "About", icon: GoBook },
+  { to: "/", label: "Home", icon: GoHome, title: "Home" },
+  { to: "/tasks", label: "Tasks", icon: GoTasklist, title: "Tasks" },
+  { to: "/about", label: "About", icon: GoBook, title: "About" },
 ];
 
 const generateId = () => {

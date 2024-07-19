@@ -59,6 +59,7 @@ function KanbanBoard() {
             </SortableContext>
           </div>
           <Button
+            title="Add Column"
             onClick={() => createNewColumn()}
             className="flex h-[80px] w-[350px] min-w-[350px] cursor-pointer items-center gap-2 rounded-lg border-4 border-b-pallette-100 bg-pallette-100 p-4 text-2xl font-semibold text-pallette-600 ring-pallette-500 hover:bg-pallette-500 hover:ring-2 dark:border-blue-100 dark:bg-slate-700 dark:text-blue-100 dark:hover:bg-rose-950"
           >

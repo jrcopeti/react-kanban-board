@@ -77,12 +77,13 @@ function TaskLabel() {
         </>
       ) : (
         <section
+          title="Label"
           onClick={() => {
             handleToggleIsEditing(setIsEditingLabel);
           }}
           className="flex flex-col gap-1 text-lg"
         >
-          <div className=" cursor-pointer h-12 min-w-[180px] max-w-[180px] rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
+          <div className="h-12 min-w-[180px] max-w-[180px] cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             <div className="flex items-center gap-2 text-base">
               {label !== "" ? (
                 <>

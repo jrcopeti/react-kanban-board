@@ -31,16 +31,16 @@ function Navbar() {
       className="sticky top-0 z-50 flex items-center justify-between bg-pallette-100 px-12 py-3 text-4xl font-normal dark:bg-gray-900 dark:text-blue-100"
       ref={headerRef}
     >
-      <button onClick={toggleSidebar}>
+      <button title="Toggle Sidebar" onClick={toggleSidebar}>
         <FiMenu size={40} className="cursor-pointer" />
       </button>
 
-      <div className="ml-[140px] text-4xl capitalize">
+      <div title="Page" className="ml-[140px] text-4xl capitalize">
         <h2>{pathname()}</h2>
       </div>
 
       <Link to="/">
-        <div className="flex cursor-pointer items-center gap-4">
+        <div title="Home" className="flex cursor-pointer items-center gap-4">
           <h1>KanDo</h1>
           <MdOutlineSpaceDashboard size={45} />
         </div>

@@ -24,6 +24,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       <Popover open={isEditing} onOpenChange={setIsEditing}>
         <PopoverTrigger asChild>
           <Button
+          title="Due Date"
             ref={ref}
             variant={"outline"}
             className={cn(
