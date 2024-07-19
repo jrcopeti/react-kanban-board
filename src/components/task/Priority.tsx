@@ -23,6 +23,7 @@ function Priority() {
     task,
     isEditingPriority,
     setIsEditingPriority,
+    priorityRef,
     updatePriority,
     handleBlur,
     handleToggleIsEditing,
@@ -30,14 +31,17 @@ function Priority() {
   const { priority } = task;
   return (
     <div className="cursor-pointer">
+      <Label htmlFor="priority" className="text-xs"></Label>
       {isEditingPriority ? (
         <>
-          <Label htmlFor="priority" className="text-xs"></Label>
           <Select
             value={priority}
             onValueChange={(newValue) => updatePriority(newValue)}
           >
-            <SelectTrigger className="h-8 w-[100px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950">
+            <SelectTrigger
+              ref={priorityRef}
+              className="h-8 w-[100px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950"
+            >
               <SelectValue placeholder="Select a priority" />
             </SelectTrigger>
             <SelectContent
@@ -62,9 +66,18 @@ function Priority() {
           className="flex cursor-pointer flex-col items-center text-2xl"
           onClick={() => handleToggleIsEditing(setIsEditingPriority)}
         >
-          {priority === "low" && <HiOutlineChevronDown color="green" />}
-          {priority === "medium" && <RiEqualLine color="orange" />}
-          {priority === "high" && <HiOutlineChevronDoubleUp color="red" />}
+          {priority === "low" && (
+            <HiOutlineChevronDown color="green" className="hover:opacity-60" />
+          )}
+          {priority === "medium" && (
+            <RiEqualLine color="orange" className="hover:opacity-60" />
+          )}
+          {priority === "high" && (
+            <HiOutlineChevronDoubleUp
+              color="red"
+              className="hover:opacity-60"
+            />
+          )}
         </div>
       )}
     </div>

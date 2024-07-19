@@ -20,7 +20,7 @@ function DialogDelete({
   isTask = true,
 }: DialogDeleteProps) {
   const taskClassName =
-    "absolute bottom-1 right-6 z-30 text-pallette-500 dark:text-slate-500 translate-x-1/2 bg-transparent dark:bg-transparent dark:hover:bg-blue-100 hover:bg-pallette-200 p-2";
+    "absolute bottom-1 right-6 z-30 text-pallette-500 dark:text-slate-500 translate-x-1/2 bg-transparent dark:bg-transparent hover:bg-pallette-200 p-2";
   const columnClassName =
     "bg-transparent hover:bg-pallette-300 dark:bg-transparent p-2 ml-2";
 
