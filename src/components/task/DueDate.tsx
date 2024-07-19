@@ -48,11 +48,11 @@ function DueDate() {
         >
           <div className="min-w-[180px] max-w-[180px] cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             {dueDateState ? (
-              <p className="text-base text-white dark:text-rose-950">
+              <p className="text-base text-white dark:text-rose-950 hover:opacity-60">
                 {dueDateState ? format(dueDateState, "MMMM d, yyyy") : ""}
               </p>
             ) : (
-              <p className="text-base text-white dark:text-rose-950">
+              <p className="text-base text-white dark:text-rose-950 hover:opacity-60">
                 Click to edit...
               </p>
             )}

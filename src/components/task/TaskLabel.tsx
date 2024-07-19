@@ -33,7 +33,7 @@ function TaskLabel() {
   const { label } = task;
 
   const labelToColor = sortedLabels.find((l) => l.label === label)?.color;
-  const labelIconClassName = clsx("text-sm", `text-${labelToColor}-500`);
+  const labelIconClassName = clsx("text-sm hover:opacity-60", `text-${labelToColor}-500`);
 
   return (
     <>
@@ -46,34 +46,35 @@ function TaskLabel() {
       </Label>
       {isEditingLabel ? (
         <>
-          <div ref={labelRef}>
-            <Select
-              value={label}
-              onValueChange={(newValue) => updateLabel(newValue)}
+          <Select
+            value={label}
+            onValueChange={(newValue) => updateLabel(newValue)}
+          >
+            <SelectTrigger
+              ref={labelRef}
+              className="h-12 w-[180px] border-pallette-600 bg-pallette-100 font-semibold capitalize text-pallette-600 dark:bg-blue-100 dark:text-rose-950"
             >
-              <SelectTrigger className="h-12 w-[180px] border-pallette-600 bg-pallette-100 font-semibold capitalize text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
-                <SelectValue placeholder="Select a label" />
-              </SelectTrigger>
-              <SelectContent
-                onCloseAutoFocus={() => handleBlur(setIsEditingLabel)}
-              >
-                <SelectGroup className="bg-pallette-100 font-semibold text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
-                  <SelectLabel>Label</SelectLabel>
-                  {sortedLabels.map((l) => {
-                    return (
-                      <SelectItem
-                        className="capitalize"
-                        key={l.label}
-                        value={l.label}
-                      >
-                        {l.label}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+              <SelectValue placeholder="Select a label" />
+            </SelectTrigger>
+            <SelectContent
+              onCloseAutoFocus={() => handleBlur(setIsEditingLabel)}
+            >
+              <SelectGroup className="bg-pallette-100 font-semibold text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
+                <SelectLabel>Label</SelectLabel>
+                {sortedLabels.map((l) => {
+                  return (
+                    <SelectItem
+                      className="capitalize"
+                      key={l.label}
+                      value={l.label}
+                    >
+                      {l.label}
+                    </SelectItem>
+                  );
+                })}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </>
       ) : (
         <section
@@ -87,7 +88,7 @@ function TaskLabel() {
             <div className="flex items-center gap-2 text-base">
               {label !== "" ? (
                 <>
-                  <p className="capitalize text-pallette-100 dark:text-rose-950">
+                  <p className="capitalize text-pallette-100 dark:text-rose-950 hover:opacity-60">
                     {label}
                   </p>
                   <PiCircleDuotone className={labelIconClassName} />

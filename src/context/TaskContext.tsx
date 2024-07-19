@@ -33,6 +33,7 @@ const defaultContextValue: TaskContextType = {
     dueDate: new Date(),
     createdDate: new Date(),
   },
+  //States
   isPopoverOpen: false,
   isEditingTitle: false,
   setIsEditingTitle: () => {},
@@ -50,11 +51,16 @@ const defaultContextValue: TaskContextType = {
   setDueDateState: () => {},
   mouseIsOver: false,
   setMouseIsOver: () => {},
+
+  //Refs
   titleRef: { current: null },
+  priorityRef: { current: null },
   descriptionRef: { current: null },
   assigneeRef: { current: null },
   labelRef: { current: null },
   dueDateRef: { current: null },
+
+  //Handlers
   handleToggleIsEditing: () => {},
   handleBlur: () => {},
   handleFieldChange: () => {},
@@ -101,11 +107,12 @@ function TaskProvider({
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
+  const priorityRef = useRef<HTMLButtonElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const assigneeRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLButtonElement>(null);
   const dueDateRef = useRef<HTMLButtonElement>(null);
-  
+
   const prevTaskRef = useRef(task);
   console.log("prevTaskRef", prevTaskRef);
   const isInitialRender = useRef(true);
@@ -113,9 +120,12 @@ function TaskProvider({
 
   //Focus on input
   useEffect(() => {
-    if (isEditingTitle) {
+    if (isEditingTitle && titleRef.current) {
       console.log("titleRef", titleRef);
       titleRef.current?.focus();
+    } else if (isEditingPriority && priorityRef.current) {
+      console.log("priorityRef", priorityRef);
+      priorityRef.current.focus();
     } else if (isEditingDescription && descriptionRef.current) {
       console.log("descriptionRef", descriptionRef);
       descriptionRef.current.focus();
@@ -131,13 +141,12 @@ function TaskProvider({
     }
   }, [
     isEditingTitle,
+    isEditingPriority,
     isEditingDescription,
     isEditingAssignee,
     isEditingDueDate,
     isEditingLabel,
   ]);
-
-
 
   useEffect(() => {
     // Skip the initial mounting effect
@@ -267,6 +276,7 @@ function TaskProvider({
         mouseIsOver,
         setMouseIsOver,
         titleRef,
+        priorityRef,
         descriptionRef,
         assigneeRef,
         labelRef,

@@ -51,13 +51,13 @@ function Description() {
           className="flex flex-col gap-1 text-lg"
           title="Description"
         >
-          <div className="max-h-[250px] min-w-[300px] max-w-[300px] cursor-pointer overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 p-4 text-justify dark:bg-blue-100 dark:text-rose-950">
+          <div className="max-h-[200px] min-w-[300px] max-w-[300px] cursor-pointer overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 px-2.5 py-2  dark:bg-blue-100 dark:text-rose-950">
             {description ? (
-              <p className="text-lg text-white dark:text-rose-950">
+              <p className="text-lg leading-loose text-white dark:text-rose-950 hover:opacity-60">
                 {description}
               </p>
             ) : (
-              <p className="text-base text-white dark:text-rose-950">
+              <p className="text-base text-white dark:text-rose-950 hover:opacity-60">
                 Click to edit...
               </p>
             )}
