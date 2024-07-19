@@ -12,7 +12,7 @@ import { format } from "date-fns";
 
 function DueDate() {
   const {
-    task,
+
     isEditingDueDate,
     dueDateState,
     dueDateRef,
@@ -20,7 +20,6 @@ function DueDate() {
     setDueDateState,
     handleToggleIsEditing,
   } = useTask();
-  const { dueDate } = task;
   return (
     <>
       <Label
@@ -48,7 +47,7 @@ function DueDate() {
           className="flex flex-col gap-1 text-lg"
         >
           <div className="min-w-[180px] max-w-[180px] cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
-            {dueDate ? (
+            {dueDateState ? (
               <p className="text-base text-white dark:text-rose-950">
                 {dueDateState ? format(dueDateState, "MMMM d, yyyy") : ""}
               </p>
