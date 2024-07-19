@@ -109,7 +109,7 @@ function TaskCard() {
           onOpenChange={() => handleTogglePopover(id)}
         >
           {/* Trigger */}
-          <PopoverTrigger>
+          <PopoverTrigger title="Edit Task">
             <HiOutlinePencilSquare size={25} />
           </PopoverTrigger>
 
