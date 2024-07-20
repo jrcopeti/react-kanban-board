@@ -75,6 +75,9 @@ type KanbanContextType = {
   createTask: (columnId: Id) => void;
   updateTask: (task: Task) => void;
   deleteTask: (id: Id) => void;
+  updatePoints: (direction: "up" | "down", task: Task) => void;
+  updatePriority: (newPriority: string, task: Task) => void;
+  updateLabel: (newLabel: string, task: Task) => void;
 
   // Drag and Drop
   columnsIds: Id[];
@@ -87,10 +90,12 @@ type KanbanContextType = {
 };
 
 type ColumnContextType = {
+  //Values
   column: Column;
   totalPoints: number;
   tasksInColumn: Task[];
 
+  //States
   isEditing: boolean;
   popoverOpenStates: {
     [key: Id]: boolean;
@@ -98,7 +103,7 @@ type ColumnContextType = {
   setPopoverOpenStates: React.Dispatch<
     React.SetStateAction<{ [key: Id]: boolean }>
   >;
-
+  //Handlers
   handleClick: () => void;
   handleBlur: () => void;
   handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -126,6 +131,9 @@ type TaskContextType = {
   mouseIsOver: boolean;
   setMouseIsOver: Dispatch<SetStateAction<boolean>>;
 
+  //Update task.dueDate
+  updateDueDate: (date: Date | string) => void;
+
   //Refs
   titleRef: React.RefObject<HTMLInputElement>;
   priorityRef: React.RefObject<HTMLButtonElement>;
@@ -147,9 +155,6 @@ type TaskContextType = {
   handleMouseEnter: () => void;
   handleMouseLeave: () => void;
   handleTogglePopover: (taskId: Id) => void;
-  updatePoints: (direction: "up" | "down") => void;
-  updatePriority: (newPriority: string) => void;
-  updateLabel: (newLabel: string) => void;
 
   //Helpers
   labelToColor: string | undefined;

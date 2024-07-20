@@ -1,7 +1,7 @@
 import { formatDistanceToNow, isToday } from "date-fns";
 import { useTask } from "../../hooks/useTask";
 
-function DueDateStateInMouseIsOver() {
+function DueDateInCard() {
   const {
     dueDateState,
     task: { dueDate },
@@ -19,14 +19,16 @@ function DueDateStateInMouseIsOver() {
       <p className="text-left text-xs">
         {isToday(new Date(dueDateState)) ? (
           <>
-            <small className="dark:text-slate-500 mr-1.5 text-pallette-600">
+            <small className="mr-1.5 text-pallette-600 dark:text-slate-500">
               Due
             </small>
             Today
           </>
         ) : (
           <>
-            <small className='dark:text-slate-800 mr-2 text-pallette-600'>Due in</small>
+            <small className="mr-2 text-pallette-600 dark:text-slate-800">
+              Due in
+            </small>
             {formatDistanceToNow(new Date(dueDateState || new Date()))}
           </>
         )}
@@ -35,4 +37,4 @@ function DueDateStateInMouseIsOver() {
   );
 }
 
-export default DueDateStateInMouseIsOver;
+export default DueDateInCard;

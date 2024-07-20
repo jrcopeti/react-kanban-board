@@ -34,7 +34,7 @@ function Title() {
       ) : (
         <section
           title="Task Title"
-          className="cursor-pointer break-words py-1 text-center text-xl font-semibold text-pallette-500 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
+          className="max-w-[272px] -mb-1 cursor-pointer break-words py-1 text-center text-xl font-semibold text-pallette-500 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
           <h2>{title}</h2>

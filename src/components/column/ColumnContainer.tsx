@@ -47,7 +47,7 @@ function ColumnContainer() {
   const tasksIds = useMemo(() => {
     return tasksInColumn.map((task) => task.id);
   }, [tasksInColumn]);
-  console.log("tasksIds", tasksIds);
+
   const isAnyPopoverOpen = Object.values(popoverOpenStates).some(
     (state) => state,
   );
@@ -122,7 +122,7 @@ function ColumnContainer() {
               maxLength={16}
               autoFocus
               type="text"
-              className="w-full rounded border ml-2 border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:bg-slate-600 dark:text-blue-100"
+              className="ml-2 w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:bg-slate-600 dark:text-blue-100"
               onBlur={handleBlur}
               value={column.title}
               onChange={handleOnChange}
@@ -132,7 +132,7 @@ function ColumnContainer() {
             <p
               title="Column Title"
               onClick={handleClick}
-              className="cursor-pointer ml-2 p-2 text-xl font-semibold text-pallette-100 dark:text-blue-100"
+              className="ml-2 cursor-pointer p-2 text-xl font-semibold text-pallette-100 dark:text-blue-100"
             >
               {column.title}
             </p>
