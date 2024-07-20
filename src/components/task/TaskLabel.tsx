@@ -62,9 +62,12 @@ function TaskLabel() {
               <SelectValue placeholder="Select a label" />
             </SelectTrigger>
             <SelectContent
+            position="popper"
+            className='h-[200px]'
+
               onCloseAutoFocus={() => handleBlur(setIsEditingLabel)}
             >
-              <SelectGroup className="bg-pallette-100 font-semibold text-pallette-600 dark:bg-blue-100 dark:text-rose-950">
+              <SelectGroup className="bg-pallette-100 font-semibold text-pallette-600 dark:bg-blue-100 dark:text-rose-950 h-auto">
                 <SelectLabel>Label</SelectLabel>
                 {sortedLabels.map((l) => {
                   return (
