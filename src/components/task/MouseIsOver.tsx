@@ -1,4 +1,5 @@
 //Hooks
+import { MdOutlinePersonOutline, MdOutlineSubject } from "react-icons/md";
 import { useKanban } from "../../hooks/useKanban";
 import { useTask } from "../../hooks/useTask";
 
@@ -12,8 +13,8 @@ import clsx from "clsx";
 
 function MouseIsOver() {
   const { deleteTask } = useKanban();
-  const { mouseIsOver, task, labelToColor } = useTask();
-  const { label, title, id } = task;
+  const { mouseIsOver, task, labelToColor, isEditingTitle } = useTask();
+  const { label, title, id, assignee, description } = task;
 
   const labelClassName = clsx(
     "absolute left-3 bottom-11 h-1 text-sm capitalize ",
@@ -21,14 +22,33 @@ function MouseIsOver() {
   );
   return (
     <>
-      {mouseIsOver && (
+      {/* Created Date */}
+
+      <CreatedDate />
+      <DueDateInMouseIsOver />
+
+      {mouseIsOver &&  (
         <>
+          {/* Assignee */}
+          {assignee && !isEditingTitle && (
+            <div
+              title={assignee}
+              className="absolute right-2 top-7 h-1 cursor-pointer text-sm capitalize text-pallette-500 dark:text-slate-500"
+            >
+              {/* {assignee} */} <MdOutlinePersonOutline size={22} />
+            </div>
+          )}
+
+          {description && !isEditingTitle && (
+            <div
+              title={description}
+              className="absolute right-2 top-1 h-1 cursor-pointer text-sm capitalize text-pallette-500 dark:text-slate-500"
+            >
+              {/* {assignee} */} <MdOutlineSubject size={20} />
+            </div>
+          )}
+
           <DialogDelete handleDelete={deleteTask} id={id} task={title} />
-
-          {/* Created Date */}
-
-          <CreatedDate />
-          <DueDateInMouseIsOver />
 
           {/* Label */}
           <div className={labelClassName}>{label}</div>
