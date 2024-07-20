@@ -95,7 +95,7 @@ function TaskCard() {
       {/* Title */}
       <Title />
 
-      <section className="flex w-[290px] items-center justify-between px-4 py-3 text-xl font-semibold text-pallette-500">
+      <section className="flex w-[290px] flex-grow  items-center justify-between px-4 py-3 text-xl font-semibold text-pallette-500">
         {/* Points */}
         <Points />
 
@@ -115,7 +115,7 @@ function TaskCard() {
           >
             <HiOutlinePencilSquare
               size={25}
-              className="opacity-100 hover:text-pallette-100 hover:opacity-65 dark:hover:text-slate-500 hover:scale-125"
+              className="opacity-100 hover:text-pallette-100 hover:opacity-65 dark:hover:text-slate-500 hover:scale-125 transform transition-transform ease-in-out"
             />
           </PopoverTrigger>
 

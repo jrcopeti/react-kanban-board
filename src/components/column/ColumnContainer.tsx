@@ -113,7 +113,7 @@ function ColumnContainer() {
         <div className="flex gap-2">
           <div
             title="Total Points"
-            className="flex cursor-text items-center justify-center px-2 py-1 text-xl text-pallette-100 dark:text-blue-100"
+            className="flex min-w-10 cursor-text items-center justify-center px-2 py-1 text-xl text-pallette-100 dark:text-blue-100"
           >
             {totalPoints}
           </div>
@@ -122,7 +122,7 @@ function ColumnContainer() {
               maxLength={16}
               autoFocus
               type="text"
-              className="w-full rounded border border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:bg-slate-600 dark:text-blue-100"
+              className="w-full rounded border ml-2 border-pallette-600 px-2 py-2 text-xl font-semibold text-pallette-200 outline-none dark:bg-slate-600 dark:text-blue-100"
               onBlur={handleBlur}
               value={column.title}
               onChange={handleOnChange}
@@ -132,7 +132,7 @@ function ColumnContainer() {
             <p
               title="Column Title"
               onClick={handleClick}
-              className="cursor-pointer p-2 text-xl font-semibold text-pallette-100 dark:text-blue-100"
+              className="cursor-pointer ml-2 p-2 text-xl font-semibold text-pallette-100 dark:text-blue-100"
             >
               {column.title}
             </p>
