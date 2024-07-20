@@ -1,6 +1,6 @@
 KanDo is a Kanban board application that allows users to create, update, and delete tasks. Users can also move tasks between columns and change columns positions as well.
 
-Still working on the mobile version but the desktop version is fully functional. Check it out [here](https://kan-do.netlify.app/)
+Still working on the mobile version but the desktop version is fully functional. Check it out [here](https://kando.netlify.app/)
 
 ## Technologies
 - React
