@@ -9,14 +9,14 @@ function Points() {
       className="flex items-center justify-start gap-5 text-lg"
     >
       <button
-        className="text-2xl opacity-100 hover:scale-125 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
+        className="transform text-2xl opacity-100 transition-transform ease-in-out hover:scale-150 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
         onClick={() => updatePoints("down")}
       >
         -
       </button>
-      <p className="cursor-text">{points}</p>
+      <p className="cursor-text min-w-6 ">{points}</p>
       <button
-        className="text-2xl opacity-100 hover:scale-125 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
+        className="transform text-2xl -ml-2 opacity-100 transition-transform ease-in-out hover:scale-150 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
         onClick={() => updatePoints("up")}
       >
         +
