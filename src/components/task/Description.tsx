@@ -31,7 +31,7 @@ function Description() {
       {isEditingDescription ? (
         <>
           <Textarea
-            className="w-full bg-pallette-100 py-2 text-xl text-pallette-600 dark:bg-blue-100 dark:text-rose-950"
+            className="w-full   bg-pallette-100 py-2 text-xl text-pallette-600 dark:bg-blue-100 dark:text-rose-950"
             value={description}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleFieldChange("description", e.target.value)
@@ -51,13 +51,13 @@ function Description() {
           className="flex flex-col gap-1 text-lg"
           title="Description"
         >
-          <div className="max-h-[200px] min-w-[300px] max-w-[300px] cursor-pointer overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 px-2.5 py-2  dark:bg-blue-100 dark:text-rose-950">
+          <div className="max-h-[200px] min-h-20 min-w-[300px] max-w-[300px] cursor-pointer overflow-auto whitespace-normal rounded-md border border-pallette-600 bg-pallette-300 px-2.5 py-2  dark:bg-blue-100 dark:text-rose-950">
             {description ? (
               <p className="text-lg leading-loose text-white dark:text-rose-950 hover:opacity-60">
                 {description}
               </p>
             ) : (
-              <p className="text-base text-white dark:text-rose-950 hover:opacity-60">
+              <p className="text-base text-white dark:text-rose-950 hover:opacity-60 mt-0.5">
                 Click to edit...
               </p>
             )}

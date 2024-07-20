@@ -1,8 +1,8 @@
-import { labels } from "../../utils";
+import { generateId, labels } from "../../utils";
 
 const initialTasks = [
   {
-    id: 1,
+    id: generateId(),
     columnId: 1,
     title: "Design Landing Page",
     description: "Create a visually appealing landing page for the website.",
@@ -14,7 +14,7 @@ const initialTasks = [
     dueDate: "2023-09-30",
   },
   {
-    id: 2,
+    id: generateId(),
     columnId: 1,
     title: "Develop User Registration",
     description:
@@ -27,7 +27,7 @@ const initialTasks = [
     dueDate: "2023-10-10",
   },
   {
-    id: 3,
+    id: generateId(),
     columnId: 2,
     title: "Bug Fix: Login Issue",
     description: "Investigate and fix the login problem reported by users.",
@@ -39,7 +39,7 @@ const initialTasks = [
     dueDate: "2023-09-25",
   },
   {
-    id: 4,
+    id: generateId(),
     columnId: 2,
     title: "Release Version 1.0",
     description:
@@ -52,7 +52,7 @@ const initialTasks = [
     dueDate: "2023-10-05",
   },
   {
-    id: 5,
+    id: generateId(),
     columnId: 3,
     title: "Update Documentation",
     description:
@@ -65,7 +65,7 @@ const initialTasks = [
     dueDate: "2023-09-30",
   },
   {
-    id: 6,
+    id: generateId(),
     columnId: 3,
     title: "Plan Marketing Strategy",
     description:
@@ -78,8 +78,8 @@ const initialTasks = [
     dueDate: "2023-10-15",
   },
   {
-    id: 7,
-    columnId: 4,
+    id: generateId(),
+    columnId: 1,
     title: "Organize Team Meeting",
     description: "Schedule and organize the monthly team meeting.",
     assignee: "John Doe",
@@ -90,8 +90,8 @@ const initialTasks = [
     dueDate: "2023-09-25",
   },
   {
-    id: 8,
-    columnId: 4,
+    id: generateId(),
+    columnId: 2,
     title: "Research New Technologies",
     description:
       "Conduct research on new technologies for potential integration.",
@@ -103,8 +103,8 @@ const initialTasks = [
     dueDate: "2023-10-05",
   },
   {
-    id: 9,
-    columnId: 5,
+    id: generateId(),
+    columnId: 2,
     title: "Client Feedback Analysis",
     description: "Analyze client feedback and compile a report.",
     assignee: "Michael Brown",
@@ -115,8 +115,8 @@ const initialTasks = [
     dueDate: "2023-10-10",
   },
   {
-    id: 10,
-    columnId: 5,
+    id: generateId(),
+    columnId: 3,
     title: "Update Website Content",
     description:
       "Update the website content with the latest news and articles.",
@@ -133,8 +133,7 @@ const initialColumns = [
   { id: 1, title: "To Do" },
   { id: 2, title: "In Progress" },
   { id: 3, title: "Done" },
-  { id: 4, title: "On Hold" },
-  { id: 5, title: "Done" },
+
 ];
 
 export { initialTasks, initialColumns };

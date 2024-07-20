@@ -78,7 +78,7 @@ function TaskCard() {
   }
 
   const divClassNameWithLabel = clsx(
-    "relative h-[135px] cursor-grab touch-none bg-orange-100 dark:bg-blue-200 overflow-auto rounded-lg border-l-8 bg-gray-50 px-2 py-1 shadow-md",
+    "relative h-[135px] cursor-grab touch-none bg-orange-100 dark:bg-blue-200 overflow-hidden rounded-lg border-l-8 bg-gray-50 px-2 py-1 shadow-md",
     `border-${labelToColor}-500`,
   );
 
@@ -124,7 +124,7 @@ function TaskCard() {
           {/* Content */}
 
           <PopoverContent
-            className="flex max-h-[665px] min-h-[530px] w-[auto] min-w-[500px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-6"
+            className="flex max-h-[665px] min-h-[540px] w-[auto] min-w-[500px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-6"
             sideOffset={5}
             side="right"
           >

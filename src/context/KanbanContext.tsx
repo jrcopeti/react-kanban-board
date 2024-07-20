@@ -22,6 +22,7 @@ import { generateId, labels, taskPriorities, fib } from "../utils";
 
 // Types
 import type { Column, Id, Task, KanbanContextType } from "../types";
+import { initialColumns, initialTasks } from "../assets/data/tasks";
 
 const defaultContextValue: KanbanContextType = {
   // Columns
@@ -51,8 +52,10 @@ const defaultContextValue: KanbanContextType = {
 const KanbanContext = createContext(defaultContextValue);
 
 function KanbanProvider({ children }: { children: React.ReactNode }) {
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [columns, setColumns] = useState<Column[]>(initialColumns);
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  console.log("columns", columns);
+  console.log("tasks", tasks);
 
   const [randomLabelIndex, setRandomLabelIndex] = useState(0);
   const [randomPriorityIndex, setRandomPriorityIndex] = useState(0);
