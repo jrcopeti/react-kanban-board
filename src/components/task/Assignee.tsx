@@ -51,9 +51,9 @@ function Assignee() {
           onClick={() => {
             handleToggleIsEditing(setIsEditingAssignee);
           }}
-          className="flex flex-col gap-1 text-lg"
+          className="flex flex-col gap-1 text-lg "
         >
-          <div className="min-w-[300px] max-w-[300px] cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
+          <div className="min-w-[300px] max-w-[300px] min-h-12 cursor-pointer rounded-md border border-pallette-600 bg-pallette-300 p-3 dark:bg-blue-100 dark:text-rose-950">
             {assignee ? (
               <p className="text-lg text-white dark:text-rose-950 hover:opacity-60">
                 {assignee}

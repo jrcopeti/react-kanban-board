@@ -17,7 +17,7 @@ function MouseIsOver() {
   const { label, title, id, assignee, description } = task;
 
   const labelClassName = clsx(
-    "absolute left-3 bottom-11 h-1 text-sm capitalize ",
+    "absolute left-3 bottom-10 h-1 text-xs capitalize ",
     `text-${labelToColor}-500`,
   );
   return (
