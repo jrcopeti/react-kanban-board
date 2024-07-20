@@ -20,6 +20,7 @@ import {
   HiOutlineChevronDoubleUp,
   HiOutlineChevronDoubleDown,
 } from "react-icons/hi";
+import { useKanban } from "../../hooks/useKanban";
 
 function Priority() {
   const {
@@ -27,10 +28,12 @@ function Priority() {
     isEditingPriority,
     setIsEditingPriority,
     priorityRef,
-    updatePriority,
+
     handleBlur,
     handleToggleIsEditing,
   } = useTask();
+
+  const { updatePriority } = useKanban();
   const { priority } = task;
   return (
     <div className="cursor-pointer">
@@ -39,7 +42,7 @@ function Priority() {
         <>
           <Select
             value={priority}
-            onValueChange={(newValue) => updatePriority(newValue)}
+            onValueChange={(newValue) => updatePriority(newValue, task)}
           >
             <SelectTrigger
               ref={priorityRef}
@@ -66,7 +69,7 @@ function Priority() {
       ) : (
         <div
           title="Priority"
-          className="flex cursor-pointer flex-col items-center text-2xl"
+          className="flex min-w-[200px] cursor-pointer flex-col items-center text-2xl"
           onClick={() => handleToggleIsEditing(setIsEditingPriority)}
         >
           {priority === "low" && (

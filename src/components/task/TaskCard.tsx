@@ -95,7 +95,7 @@ function TaskCard() {
       {/* Title */}
       <Title />
 
-      <section className="flex w-[340px] flex-grow items-center justify-between px-4 py-3 text-xl font-semibold text-pallette-500">
+      <section className="flex w-[340px] flex-grow items-center justify-evenly px-4 py-3 text-xl font-semibold text-pallette-500">
         {/* Points */}
         <Points />
 
@@ -113,7 +113,7 @@ function TaskCard() {
           {/* Trigger */}
           <PopoverTrigger
             title="Edit Task"
-            className="rounded-md p-2 text-pallette-500 dark:text-slate-500"
+            className="rounded-md p-2 text-pallette-500 dark:text-slate-500 min-w-[300px]"
           >
             <HiOutlinePencilSquare
               size={25}

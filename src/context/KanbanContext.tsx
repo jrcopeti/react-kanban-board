@@ -20,9 +20,11 @@ import {
 // Utils
 import { generateId, labels, taskPriorities, fib } from "../utils";
 
+//Data
+import { initialColumns, initialTasks } from "../assets/data/tasks";
+
 // Types
 import type { Column, Id, Task, KanbanContextType } from "../types";
-import { initialColumns, initialTasks } from "../assets/data/tasks";
 
 const defaultContextValue: KanbanContextType = {
   // Columns
@@ -31,6 +33,7 @@ const defaultContextValue: KanbanContextType = {
   createNewColumn: () => {},
   updateColumn: () => {},
   deleteColumn: () => {},
+
   // Tasks
   tasks: [],
   setTasks: () => {},
@@ -38,6 +41,9 @@ const defaultContextValue: KanbanContextType = {
   createTask: () => {},
   updateTask: () => {},
   deleteTask: () => {},
+  updatePoints: () => {},
+  updatePriority: () => {},
+  updateLabel: () => {},
 
   // Drag and Drop
   columnsIds: [],
@@ -128,11 +134,29 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const updateTask = (task: Task) => {
-    const updatedTasks = tasks.map((t) => {
-      return t.id === task.id ? task : t;
+  const updateTask = (newTask: Task) => {
+    const updatedTasks = tasks.map((task) => {
+      return task.id === newTask.id ? newTask : task;
     });
     setTasks(updatedTasks);
+  };
+
+  const updatePoints = (direction: "up" | "down", task: Task) => {
+    const currentIndex = fib.indexOf(task.points ?? -1);
+    const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
+    const newPoints = fib[nextIndex];
+    if (newPoints) {
+      updateTask({ ...task, points: newPoints });
+    }
+  };
+
+  const updatePriority = (newPriority: string, task: Task) => {
+    updateTask({ ...task, priority: newPriority });
+  };
+
+  const updateLabel = (newLabel: string, task: Task) => {
+    console.log("updateLabel CALLED", newLabel);
+    updateTask({ ...task, label: newLabel });
   };
 
   const deleteTask = (id: Id) => {
@@ -290,221 +314,6 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // const onDragEnd = (event: DragEndEvent) => {
-  //   console.log("drag end started");
-  //   setActiveColumn(null);
-  //   setActiveTask(null);
-
-  //   const { active, over } = event;
-  //   if (!over) {
-  //     console.log("no over");
-  //     return;
-  //   }
-
-  //   const activeId = active.id;
-  //   const overId = over.id;
-
-  //   // Ensure we're handling columns
-  //   if (active.data.current?.type === 'column' && over.data.current?.type === 'column') {
-  //     const activeColumnIndex = getColumnPosition(activeId);
-  //     const overColumnIndex = getColumnPosition(overId);
-
-  //     if (activeColumnIndex !== overColumnIndex) {
-  //       setColumns((columns) => {
-  //         const updatedColumns = arrayMove(columns, activeColumnIndex, overColumnIndex);
-  //         console.log("array Move Columns", updatedColumns);
-  //         return updatedColumns;
-  //       });
-  //     }
-  //     return;
-  //   }
-
-  //   // Ensure we're handling tasks
-  //   if (active.data.current?.type === 'task' && over.data.current?.type === 'task') {
-  //     const activeIndex = getTaskPosition(activeId);
-  //     const overIndex = getTaskPosition(overId);
-  //     const activeTaskColumnId = tasks[activeIndex].columnId;
-  //     const overTaskColumnId = tasks[overIndex].columnId;
-
-  //     if (activeTaskColumnId !== overTaskColumnId) {
-  //       setTasks((tasks) => {
-  //         const updatedTasks = [...tasks];
-  //         updatedTasks[activeIndex].columnId = overTaskColumnId;
-
-  //         console.log("MARAJOARA", updatedTasks);
-
-  //         const movedTasks = arrayMove(updatedTasks, activeIndex, overIndex);
-  //         console.log("arrayMove tasks between columns", movedTasks);
-  //         return movedTasks;
-  //       });
-  //     } else {
-  //       setTasks((tasks) => {
-  //         const movedTasks = arrayMove(tasks, activeIndex, overIndex);
-  //         console.log("arrayMove tasks within the same column", movedTasks);
-  //         return movedTasks;
-  //       });
-  //     }
-  //     return;
-  //   }
-
-  //   // Handle dropping task on column directly
-  //   if (active.data.current?.type === 'task' && over.data.current?.type === 'column') {
-  //     setTasks((tasks) => {
-  //       const activeIndex = getTaskPosition(activeId);
-  //       const updatedTasks = [...tasks];
-  //       updatedTasks[activeIndex].columnId = overId;
-
-  //       console.log("move task to column", updatedTasks);
-  //       return updatedTasks;
-  //     });
-  //     return;
-  //   }
-  // };
-
-  // const onDragOver = (event: DragOverEvent) => {
-  //   console.log("drag over started");
-  //   const { active, over } = event;
-  //   if (!over) return;
-
-  //   const activeId = active.id;
-  //   const overId = over.id;
-  //   console.log("activeId", activeId);
-  //   console.log("overId", overId);
-
-  //   if (activeId === overId) {
-  //     console.log("same id");
-  //     return;
-  //   }
-
-  //   const isActiveTask = active.data.current?.type === 'task';
-  //   const isOverTask = over.data.current?.type === 'task';
-
-  //   if (!isActiveTask) return;
-
-  //   if (isActiveTask && isOverTask) {
-  //     setTasks((tasks) => {
-  //       const activeIndex = getTaskPosition(activeId);
-  //       const overIndex = getTaskPosition(overId);
-  //       const updatedTasks = [...tasks];
-  //       updatedTasks[activeIndex].columnId = updatedTasks[overIndex].columnId;
-
-  //       const movedTasks = arrayMove(updatedTasks, activeIndex, overIndex);
-  //       console.log("arrayMove tasks during drag over", movedTasks);
-  //       return movedTasks;
-  //     });
-  //   }
-
-  //   const isOverColumn = over.data.current?.type === 'column';
-
-  //   if (isActiveTask && isOverColumn) {
-  //     setTasks((tasks) => {
-  //       const activeIndex = getTaskPosition(activeId);
-  //       const updatedTasks = [...tasks];
-  //       updatedTasks[activeIndex].columnId = overId;
-
-  //       console.log("move task to column during drag over", updatedTasks);
-  //       return updatedTasks;
-  //     });
-  //   }
-  // };
-
-  // const onDragEnd = (event: DragEndEvent) => {
-  //   console.log("drag end started");
-  //   setActiveColumn(null);
-  //   setActiveTask(null);
-
-  //   const { active, over } = event;
-  //   if (!over) {
-  //     console.log("no over");
-  //     return;
-  //   }
-
-  //   const activeColumnId = active.id;
-  //   const overColumnId = over.id;
-  //   if (activeColumnId === overColumnId) {
-  //     console.log("same column");
-  //     return;
-  //   }
-
-  //   setColumns((columns) => {
-  //     const activeColumnIndex = getColumnPosition(activeColumnId);
-  //     const overColumnIndex = getColumnPosition(overColumnId);
-  //     console.log(
-  //       "array Move Columns",
-  //       arrayMove(columns, activeColumnIndex, overColumnIndex),
-  //     );
-  //     return arrayMove(columns, activeColumnIndex, overColumnIndex);
-  //   });
-  // };
-
-  // const onDragOver = (event: DragOverEvent) => {
-  //   console.log("drag over started");
-  //   const { active, over } = event;
-  //   if (!over) return;
-  //   const activeId = active.id;
-  //   console.log("activeId", activeId);
-  //   const overId = over.id;
-  //   console.log("overId", overId);
-
-  //   if (activeId === overId) {
-  //     console.log("same id");
-  //     return;
-  //   }
-
-  //   const isActiveTask = active.data.current?.type === "task";
-  //   console.log("isActiveTask", isActiveTask);
-  //   const isOverTask = over.data.current?.type === "task";
-  //   console.log("isOverTask", isOverTask);
-
-  //   if (!isActiveTask) return;
-
-  //   // Dropping a task over another task
-  //   if (isActiveTask && isOverTask) {
-  //     setTasks((tasks) => {
-  //       const activeIndex = getTaskPosition(active.id);
-  //       console.log("activeIndex", activeIndex);
-  //       const overIndex = getTaskPosition(over.id);
-  //       console.log("overIndex", overIndex);
-  //       const updatedTasks = [...tasks];
-  //       updatedTasks[activeIndex].columnId = updatedTasks[overIndex].columnId;
-  //       console.log(
-  //         "updatedTasks[activeIndex].columnId",
-  //         updatedTasks[activeIndex].columnId,
-  //       );
-  //       console.log(
-  //         "updatedTasks[overIndex].columnId",
-  //         updatedTasks[overIndex].columnId,
-  //       );
-
-  //       console.log(
-  //         "arrayMove updatedTasks",
-  //         arrayMove(updatedTasks, activeIndex, overIndex),
-  //       );
-
-  //       return arrayMove(updatedTasks, activeIndex, overIndex);
-  //     });
-  //   }
-
-  //   // Dropping a task over a column
-  //   const isOverColumn = over.data.current?.type === "column";
-
-  //   if (isActiveTask && isOverColumn) {
-  //     setTasks((tasks) => {
-  //       const activeIndex = getTaskPosition(active.id);
-  //       const updatedTasks = [...tasks];
-
-  //       updatedTasks[activeIndex].columnId = overId;
-
-  //       //creating a new array with the task in the new column
-  //       console.log(
-  //         "arrayMove(updatedTasks, activeIndex, activeIndex)",
-  //         arrayMove(updatedTasks, activeIndex, activeIndex),
-  //       );
-  //       return arrayMove(updatedTasks, activeIndex, activeIndex);
-  //     });
-  //   }
-  // };
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -532,6 +341,9 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
         createTask,
         updateTask,
         deleteTask,
+        updatePoints,
+        updatePriority,
+        updateLabel,
 
         // Drag and Drop
         columnsIds,

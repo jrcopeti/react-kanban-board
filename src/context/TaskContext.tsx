@@ -15,7 +15,7 @@ import { useColumn } from "../hooks/useColumn";
 import { useToast } from "../components/@/components/ui/use-toast";
 
 //Utils
-import { sortedLabels, fib } from "../utils";
+import { sortedLabels } from "../utils";
 
 //Types
 import type { Id, Task, TaskContextType } from "../types";
@@ -60,6 +60,9 @@ const defaultContextValue: TaskContextType = {
   labelRef: { current: null },
   dueDateRef: { current: null },
 
+  //Update task.dueDate
+  updateDueDate: () => {},
+
   //Handlers
   handleToggleIsEditing: () => {},
   handleBlur: () => {},
@@ -68,9 +71,7 @@ const defaultContextValue: TaskContextType = {
   handleMouseEnter: () => {},
   handleMouseLeave: () => {},
   handleTogglePopover: () => {},
-  updatePoints: () => {},
-  updatePriority: () => {},
-  updateLabel: () => {},
+
   labelToColor: "",
 };
 
@@ -103,7 +104,6 @@ function TaskProvider({
   const [dueDateState, setDueDateState] = useState<Date>(
     new Date(task.dueDate),
   );
-  console.log("dueDateState", dueDateState);
 
   //Refs
   const titleRef = useRef<HTMLInputElement>(null);
@@ -153,14 +153,14 @@ function TaskProvider({
     if (isInitialRender.current) {
       isInitialRender.current = false;
     } else {
-      // Check if relevant task details have changed, excluding due date since it's handled separately
       if (
         prevTaskRef.current.title !== task.title ||
         prevTaskRef.current.assignee !== task.assignee ||
         prevTaskRef.current.points !== task.points ||
         prevTaskRef.current.description !== task.description ||
         prevTaskRef.current.priority !== task.priority ||
-        prevTaskRef.current.label !== task.label
+        prevTaskRef.current.label !== task.label ||
+        prevTaskRef.current.dueDate !== task.dueDate
       ) {
         const debounce = setTimeout(() => {
           toast.toast({
@@ -178,34 +178,10 @@ function TaskProvider({
     prevTaskRef.current = task;
   }, [task, toast.toast]);
 
-  // Effect to update the task's due date when dueDateState changes
-  useEffect(() => {
-    if (!isInitialRender.current) {
-      console.log(
-        ".....................................................The due date has changed",
-      );
-      updateTask({ ...task, dueDate: new Date(dueDateState) });
-    }
-  }, [dueDateState]);
-
   const labelToColor = sortedLabels.find((l) => l.label === task.label)?.color;
 
-  const updatePoints = (direction: "up" | "down") => {
-    const currentIndex = fib.indexOf(task.points ?? -1);
-    const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
-    const newPoints = fib[nextIndex];
-    if (newPoints) {
-      updateTask({ ...task, points: newPoints });
-    }
-  };
-
-  const updatePriority = (newPriority: string) => {
-    updateTask({ ...task, priority: newPriority });
-  };
-
-  const updateLabel = (newLabel: string) => {
-    console.log("updateLabel CALLED", newLabel);
-    updateTask({ ...task, label: newLabel });
+  const updateDueDate = (selectedDate: Date | string) => {
+    updateTask({ ...task, dueDate: selectedDate }); // Update the task's due date
   };
 
   //Handlers
@@ -255,12 +231,13 @@ function TaskProvider({
     });
     setIsEditingPriority(false);
     setIsEditingLabel(false);
-
   };
   return (
     <TaskContext.Provider
       value={{
         task,
+
+        //States
         isPopoverOpen,
         isEditingTitle,
         setIsEditingTitle,
@@ -278,12 +255,19 @@ function TaskProvider({
         setDueDateState,
         mouseIsOver,
         setMouseIsOver,
+
+        //Refs
         titleRef,
         priorityRef,
         descriptionRef,
         assigneeRef,
         labelRef,
         dueDateRef,
+
+        //update task.dueDate
+        updateDueDate,
+
+        //Handlers
         handleToggleIsEditing,
         handleBlur,
         handleFieldChange,
@@ -291,9 +275,7 @@ function TaskProvider({
         handleMouseEnter,
         handleMouseLeave,
         handleTogglePopover,
-        updatePoints,
-        updatePriority,
-        updateLabel,
+
         labelToColor,
       }}
     >

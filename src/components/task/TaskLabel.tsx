@@ -18,22 +18,27 @@ import { PiCigaretteDuotone, PiCircleDuotone } from "react-icons/pi";
 //Utils
 import { sortedLabels } from "../../utils";
 import clsx from "clsx";
+import { useKanban } from "../../hooks/useKanban";
 
 function TaskLabel() {
   const {
     task,
     isEditingLabel,
     setIsEditingLabel,
-    updateLabel,
     handleBlur,
     handleToggleIsEditing,
     labelRef,
   } = useTask();
 
+  const { updateLabel } = useKanban();
+
   const { label } = task;
 
   const labelToColor = sortedLabels.find((l) => l.label === label)?.color;
-  const labelIconClassName = clsx("text-sm hover:opacity-60", `text-${labelToColor}-500`);
+  const labelIconClassName = clsx(
+    "text-sm hover:opacity-60",
+    `text-${labelToColor}-500`,
+  );
 
   return (
     <>
@@ -48,7 +53,7 @@ function TaskLabel() {
         <>
           <Select
             value={label}
-            onValueChange={(newValue) => updateLabel(newValue)}
+            onValueChange={(newValue) => updateLabel(newValue, task)}
           >
             <SelectTrigger
               ref={labelRef}
@@ -88,7 +93,7 @@ function TaskLabel() {
             <div className="flex items-center gap-2 text-base">
               {label !== "" ? (
                 <>
-                  <p className="capitalize text-pallette-100 dark:text-rose-950 hover:opacity-60">
+                  <p className="capitalize text-pallette-100 hover:opacity-60 dark:text-rose-950">
                     {label}
                   </p>
                   <PiCircleDuotone className={labelIconClassName} />
