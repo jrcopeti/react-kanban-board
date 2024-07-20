@@ -253,6 +253,9 @@ function TaskProvider({
         [taskId]: !prev[taskId],
       };
     });
+    setIsEditingPriority(false);
+    setIsEditingLabel(false);
+
   };
   return (
     <TaskContext.Provider

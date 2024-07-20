@@ -59,6 +59,9 @@ export default {
       "max-h-[890px]",
       "max-h-[100%]",
 
+      "text-rose-500 ",
+      "dark:text-rose-900",
+
       // Add other color classes that you are using
     ],
   },

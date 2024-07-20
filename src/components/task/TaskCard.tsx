@@ -95,7 +95,7 @@ function TaskCard() {
       {/* Title */}
       <Title />
 
-      <section className="flex w-[290px] flex-grow  items-center justify-between px-4 py-3 text-xl font-semibold text-pallette-500">
+      <section className="flex w-[340px] flex-grow items-center justify-between px-4 py-3 text-xl font-semibold text-pallette-500">
         {/* Points */}
         <Points />
 
@@ -106,16 +106,18 @@ function TaskCard() {
 
         <Popover
           open={isPopoverOpen}
-          onOpenChange={() => handleTogglePopover(id)}
+          onOpenChange={() => {
+            handleTogglePopover(id);
+          }}
         >
           {/* Trigger */}
           <PopoverTrigger
             title="Edit Task"
-            className="rounded-md  p-2 text-pallette-500  dark:text-slate-500  "
+            className="rounded-md p-2 text-pallette-500 dark:text-slate-500"
           >
             <HiOutlinePencilSquare
               size={25}
-              className="opacity-100 hover:text-pallette-100 hover:opacity-65 dark:hover:text-slate-500 hover:scale-125 transform transition-transform ease-in-out"
+              className="transform opacity-100 transition-transform ease-in-out hover:scale-125 hover:text-pallette-200 hover:opacity-65 dark:hover:text-slate-500"
             />
           </PopoverTrigger>
 
@@ -127,7 +129,9 @@ function TaskCard() {
             side="right"
           >
             <div className="flex max-w-[500px] flex-col items-start gap-4">
-            <h2 className='font-semibold text-2xl mb-2 text-center'>{task.title}</h2>
+              <h2 className="mb-2 text-center text-2xl font-semibold">
+                {task.title}
+              </h2>
               {/* Description */}
               <Description />
 
@@ -144,7 +148,9 @@ function TaskCard() {
         </Popover>
 
         {/* Delete Task */}
-        <MouseIsOver />
+        <div>
+          <MouseIsOver />
+        </div>
       </section>
     </div>
   );

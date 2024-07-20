@@ -16,7 +16,10 @@ import {
   SelectValue,
 } from "../@/components/ui/select";
 import { RiEqualLine } from "react-icons/ri";
-import { HiOutlineChevronDoubleUp, HiOutlineChevronDown } from "react-icons/hi";
+import {
+  HiOutlineChevronDoubleUp,
+  HiOutlineChevronDoubleDown,
+} from "react-icons/hi";
 
 function Priority() {
   const {
@@ -67,7 +70,10 @@ function Priority() {
           onClick={() => handleToggleIsEditing(setIsEditingPriority)}
         >
           {priority === "low" && (
-            <HiOutlineChevronDown color="green" className="hover:opacity-60" />
+            <HiOutlineChevronDoubleDown
+              color="green"
+              className="hover:opacity-60"
+            />
           )}
           {priority === "medium" && (
             <RiEqualLine color="orange" className="hover:opacity-60" />
