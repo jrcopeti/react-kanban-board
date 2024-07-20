@@ -32,7 +32,7 @@ function DialogDelete({
           className={isTask ? taskClassName : columnClassName}
         >
           <MdOutlineDeleteOutline
-            className="opacity-100 hover:text-pallette-100 hover:opacity-65 dark:hover:bg-blue-100 dark:hover:text-slate-500"
+            className="opacity-100 hover:text-pallette-100 hover:opacity-65 dark:hover:text-slate-500"
             size={20}
           />
         </Button>

@@ -60,8 +60,6 @@ const KanbanContext = createContext(defaultContextValue);
 function KanbanProvider({ children }: { children: React.ReactNode }) {
   const [columns, setColumns] = useState<Column[]>(initialColumns);
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
-  console.log("columns", columns);
-  console.log("tasks", tasks);
 
   const [randomLabelIndex, setRandomLabelIndex] = useState(0);
   const [randomPriorityIndex, setRandomPriorityIndex] = useState(0);
@@ -155,7 +153,6 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateLabel = (newLabel: string, task: Task) => {
-    console.log("updateLabel CALLED", newLabel);
     updateTask({ ...task, label: newLabel });
   };
 
@@ -191,7 +188,6 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
   };
 
   const onDragEnd = (event: DragEndEvent) => {
-    console.log("drag end started");
     setActiveColumn(null);
     setActiveTask(null);
 

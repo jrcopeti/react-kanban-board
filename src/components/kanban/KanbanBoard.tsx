@@ -34,8 +34,6 @@ function KanbanBoard() {
     sensors,
   } = useKanban();
 
-  console.log("columnsIds", columnsIds);
-
   return (
     <div className="flex min-h-full w-full touch-manipulation items-start overflow-x-auto overflow-y-hidden p-8">
       <DndContext

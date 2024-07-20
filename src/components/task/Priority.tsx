@@ -1,8 +1,6 @@
-//Utils
-import { taskPriorities } from "../../utils";
-
 //Hooks
 import { useTask } from "../../hooks/useTask";
+import { useKanban } from "../../hooks/useKanban";
 
 //UI
 import { Label } from "../@/components/ui/label";
@@ -20,7 +18,9 @@ import {
   HiOutlineChevronDoubleUp,
   HiOutlineChevronDoubleDown,
 } from "react-icons/hi";
-import { useKanban } from "../../hooks/useKanban";
+
+//Utils
+import { taskPriorities } from "../../utils";
 
 function Priority() {
   const {
@@ -46,7 +46,7 @@ function Priority() {
           >
             <SelectTrigger
               ref={priorityRef}
-              className="h-8 w-[100px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950"
+              className="h-8 min-w-[96px] border-pallette-600 bg-pallette-100 capitalize dark:bg-blue-100 dark:text-rose-950"
             >
               <SelectValue placeholder="Select a priority" />
             </SelectTrigger>
@@ -69,7 +69,7 @@ function Priority() {
       ) : (
         <div
           title="Priority"
-          className="flex min-w-[200px] cursor-pointer flex-col items-center text-2xl"
+          className="flex min-w-[96px] cursor-pointer flex-col items-center text-2xl"
           onClick={() => handleToggleIsEditing(setIsEditingPriority)}
         >
           {priority === "low" && (

@@ -9,7 +9,9 @@ import Description from "./Description";
 import Assignee from "./Assignee";
 import TaskLabel from "./TaskLabel";
 import DueDate from "./DueDate";
-import MouseIsOver from "./MouseIsOver";
+import AbsoluteIcons from "./AbsoluteIcons";
+import CreatedDate from "./CreatedDate";
+import DueDateInCard from "./DueDateInCard";
 
 //UI
 import {
@@ -33,6 +35,7 @@ function TaskCard() {
     //States
     isPopoverOpen,
     isEditingTitle,
+    mouseIsOver,
 
     //Handlers
     handleMouseEnter,
@@ -95,7 +98,7 @@ function TaskCard() {
       {/* Title */}
       <Title />
 
-      <section className="flex w-[340px] flex-grow items-center justify-evenly px-4 py-3 text-xl font-semibold text-pallette-500">
+      <section className="flex min-h-[70px] min-w-[340px] items-center justify-evenly px-4 py-3 text-xl font-semibold text-pallette-500">
         {/* Points */}
         <Points />
 
@@ -113,11 +116,11 @@ function TaskCard() {
           {/* Trigger */}
           <PopoverTrigger
             title="Edit Task"
-            className="rounded-md p-2 text-pallette-500 dark:text-slate-500 min-w-[300px]"
+            className="rounded-md p-2 text-pallette-500 dark:text-slate-500"
           >
             <HiOutlinePencilSquare
               size={25}
-              className="transform opacity-100 transition-transform ease-in-out hover:scale-125 hover:text-pallette-200 hover:opacity-65 dark:hover:text-slate-500"
+              className={`transform transition-transform ease-in-out hover:scale-125 hover:text-pallette-200 hover:opacity-65 dark:hover:text-slate-500 ${mouseIsOver ? "opacity-100" : "opacity-0"}`}
             />
           </PopoverTrigger>
 
@@ -125,7 +128,7 @@ function TaskCard() {
 
           <PopoverContent
             className="flex max-h-[665px] min-h-[540px] w-[auto] min-w-[500px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-6"
-            sideOffset={5}
+            sideOffset={50}
             side="right"
           >
             <div className="flex max-w-[500px] flex-col items-start gap-4">
@@ -147,9 +150,14 @@ function TaskCard() {
           </PopoverContent>
         </Popover>
 
+        <div>
+          <CreatedDate />
+          <DueDateInCard />
+        </div>
+
         {/* Delete Task */}
         <div>
-          <MouseIsOver />
+          <AbsoluteIcons />
         </div>
       </section>
     </div>

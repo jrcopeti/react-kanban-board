@@ -180,8 +180,9 @@ function TaskProvider({
 
   const labelToColor = sortedLabels.find((l) => l.label === task.label)?.color;
 
+  //update task.dueDate
   const updateDueDate = (selectedDate: Date | string) => {
-    updateTask({ ...task, dueDate: selectedDate }); // Update the task's due date
+    updateTask({ ...task, dueDate: selectedDate });
   };
 
   //Handlers
@@ -200,7 +201,6 @@ function TaskProvider({
     field: T,
     value: Task[T],
   ) => {
-    console.log("handleFieldChange  CALLED", field, value);
     updateTask({ ...task, [field]: value });
   };
 
@@ -264,7 +264,7 @@ function TaskProvider({
         labelRef,
         dueDateRef,
 
-        //update task.dueDate
+        //Update task.dueDate
         updateDueDate,
 
         //Handlers
@@ -276,6 +276,7 @@ function TaskProvider({
         handleMouseLeave,
         handleTogglePopover,
 
+        //Helpers
         labelToColor,
       }}
     >

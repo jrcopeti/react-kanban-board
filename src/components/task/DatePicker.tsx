@@ -14,11 +14,10 @@ import { DayPicker, SelectSingleEventHandler } from "react-day-picker";
 //Utils
 import { format } from "date-fns";
 import { cn } from "../@/lib/utils";
+import { useState } from "react";
 
 function DatePicker() {
   const {
-    task,
-
     isEditingDueDate,
     setIsEditingDueDate,
     dueDateState,
@@ -26,8 +25,6 @@ function DatePicker() {
     dueDateRef,
     updateDueDate,
   } = useTask();
-
-  console.log("dueDateState", dueDateState, "task.dueDate", task.dueDate);
 
   return (
     <Popover open={isEditingDueDate} onOpenChange={setIsEditingDueDate}>
@@ -38,13 +35,15 @@ function DatePicker() {
           title="Due Date"
           variant={"outline"}
           className={cn(
-            "h-12 w-[280px] justify-start bg-pallette-100 text-left font-normal hover:bg-pallette-100 focus:border-pallette-600 dark:bg-blue-100 dark:text-rose-950 dark:hover:bg-blue-100 dark:hover:text-rose-950",
+            "h-12 min-w-[200px] max-w-[200px] justify-start bg-pallette-100 text-left font-normal hover:bg-pallette-100 focus:border-pallette-600 dark:bg-blue-100 dark:text-rose-950 dark:hover:bg-blue-100 dark:hover:text-rose-950",
             !dueDateState && "text-muted-foreground focus:border-pallette-600",
+            isEditingDueDate &&
+              "border-2 border-pallette-600 focus:border-pallette-600",
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {dueDateState ? (
-            format(dueDateState, "PPP")
+            format(dueDateState, " dd, MMMM yyyy")
           ) : (
             <span>Pick a date</span>
           )}

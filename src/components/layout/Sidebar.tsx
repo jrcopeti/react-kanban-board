@@ -5,7 +5,6 @@ import ToggleTheme from "../ui/ToggleTheme";
 
 function Sidebar() {
   const { sidebarRef, isSidebarOpen } = useOpenSidebar();
-  console.log("routes", routes);
 
   return (
     <aside
