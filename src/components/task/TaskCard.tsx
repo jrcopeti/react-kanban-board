@@ -129,8 +129,8 @@ function TaskCard() {
           {/* Content */}
 
           <PopoverContent
-            className="flex max-h-[500px] w-auto translate-x-[95px] translate-y-[20px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-4 sm:max-h-[550px] lg:max-h-[665px] lg:min-h-[540px] lg:min-w-[500px] lg:p-6"
-            sideOffset={30}
+            className="flex max-h-[500px] w-auto translate-x-[95px] translate-y-[20px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-4 sm:max-h-[550px] lg:max-h-[665px] lg:min-h-[540px] lg:min-w-[500px] lg:translate-x-0 lg:translate-y-0 lg:p-6"
+            sideOffset={10}
             side="right"
           >
             <div className="flex max-w-[500px] flex-col items-start gap-4">
