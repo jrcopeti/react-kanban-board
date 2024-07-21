@@ -77,13 +77,13 @@ function TaskCard() {
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-pallette-600px-2 relative h-[150px] cursor-grab touch-none overflow-auto rounded-lg border-2 border-pallette-200 py-0.5 opacity-50 shadow-md"
+        className="bg-pallette-600px-2 relative h-[150px] cursor-grab touch-manipulation overflow-auto rounded-lg border-2 border-pallette-200 py-0.5 opacity-50 shadow-md"
       ></div>
     );
   }
 
   const divClassNameWithLabel = clsx(
-    "relative h-[135px] cursor-grab touch-none bg-orange-100 dark:bg-blue-200 overflow-hidden rounded-lg border-l-8 bg-gray-50 px-2 py-1 shadow-md",
+    "relative h-[135px] cursor-grab touch-manipulation bg-orange-100 dark:bg-blue-200 overflow-hidden rounded-lg border-l-8 bg-gray-50 px-2 py-1 shadow-md",
     `border-${labelToColor}-500`,
   );
 
@@ -151,10 +151,7 @@ function TaskCard() {
             </div>
             <PopoverClose asChild>
               <button className=" ">
-                <MdClose
-                  className="absolute text-2xl lg:text-4xl lg:translate-x-8 lg:-translate-y-2 -translate-x-3 -translate-y-3 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
-
-                />
+                <MdClose className="absolute -translate-x-3 -translate-y-3 text-2xl opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500 lg:-translate-y-2 lg:translate-x-8 lg:text-4xl" />
               </button>
             </PopoverClose>
           </PopoverContent>
