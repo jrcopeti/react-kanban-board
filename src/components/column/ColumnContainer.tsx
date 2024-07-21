@@ -149,7 +149,7 @@ function ColumnContainer() {
 
       {/* Content */}
 
-      <section className="flex flex-grow touch-none flex-col gap-4 p-4">
+      <section className="flex flex-grow manipulation flex-col gap-4 p-4">
         <SortableContext items={tasksIds}>
           {tasksInColumn.map((task) => (
             <TaskProvider
