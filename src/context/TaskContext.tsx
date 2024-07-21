@@ -116,8 +116,6 @@ function TaskProvider({
 
   const prevTaskRef = useRef(task);
 
-  const isInitialRender = useRef(true);
-
   //Focus on input
   useEffect(() => {
     if (isEditingTitle && titleRef.current) {
@@ -142,30 +140,26 @@ function TaskProvider({
     isEditingLabel,
   ]);
 
+  //Update toast only when some task field changes
   useEffect(() => {
-    // Skip the initial mounting effect
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-    } else {
-      if (
-        prevTaskRef.current.title !== task.title ||
-        prevTaskRef.current.assignee !== task.assignee ||
-        prevTaskRef.current.description !== task.description ||
-        prevTaskRef.current.priority !== task.priority ||
-        prevTaskRef.current.label !== task.label
-      ) {
-        const debounce = setTimeout(() => {
-          toast.toast({
-            title: `${task.title}`,
-            description: "Was updated successfully",
-          });
-        }, 2000);
+    if (
+      prevTaskRef.current.title !== task.title ||
+      prevTaskRef.current.assignee !== task.assignee ||
+      prevTaskRef.current.description !== task.description ||
+      prevTaskRef.current.label !== task.label
+    ) {
+      const debounce = setTimeout(() => {
+        toast.toast({
+          title: `${task.title}`,
+          description: "Was updated successfully",
+        });
+      }, 2000);
 
-        return () => {
-          clearTimeout(debounce);
-        };
-      }
+      return () => {
+        clearTimeout(debounce);
+      };
     }
+
     // Update ref to current task at the end and trigger effect only when task changes
     prevTaskRef.current = task;
   }, [task, toast.toast]);
