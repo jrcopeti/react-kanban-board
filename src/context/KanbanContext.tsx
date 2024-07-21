@@ -143,7 +143,7 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
     const currentIndex = fib.indexOf(task.points ?? -1);
     const nextIndex = direction === "up" ? currentIndex + 1 : currentIndex - 1;
     const newPoints = fib[nextIndex];
-    if (newPoints) {
+    if (newPoints !== undefined) {
       updateTask({ ...task, points: newPoints });
     }
   };
