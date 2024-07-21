@@ -134,7 +134,7 @@ function TaskCard() {
             side="right"
           >
             <div className="flex max-w-[500px] flex-col items-start gap-4">
-              <h2 className="mb-2 text-center text-2xl font-semibold">
+              <h2 className="my-2 text-center text-2xl font-semibold">
                 {task.title}
               </h2>
               {/* Description */}
@@ -152,8 +152,8 @@ function TaskCard() {
             <PopoverClose asChild>
               <button className=" ">
                 <MdClose
-                  className=" absolute right-8 top-5 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
-                  size={26}
+                  className="absolute text-2xl lg:text-4xl lg:translate-x-8 lg:-translate-y-2 -translate-x-3 -translate-y-3 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
+
                 />
               </button>
             </PopoverClose>
