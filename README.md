@@ -4,6 +4,7 @@ Still working on the mobile version but the desktop version is fully functional.
 
 ## Technologies
 
+- TypeScript
 - React
 - Context API
 - DND Kit for drag and drop functionality
