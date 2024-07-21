@@ -35,7 +35,10 @@ function Navbar() {
         <FiMenu size={40} className="cursor-pointer" />
       </button>
 
-      <div title="Page" className="ml-[140px] text-4xl capitalize">
+      <div
+        title="Page"
+        className="ml-[140px] hidden text-4xl capitalize lg:block"
+      >
         <h2>{pathname()}</h2>
       </div>
 

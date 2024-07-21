@@ -8,8 +8,8 @@ function Homepage() {
           Welcome
         </h1>
         <p className="mb-12 text-balance text-3xl font-semibold text-pallette-600 dark:text-blue-100 max-w-4xl">
-          At Kan Do, we turn chaos into clarity—navigating tasks with ease and
-          driving progress, one step at a time...
+          At KanDo, we turn chaos into clarity—navigating tasks with ease and
+          driving progress, one step at the time.
         </p>
         <Link to="/tasks">
           <button className="rounded-full bg-pallette-600 px-9 py-3 text-2xl font-semibold text-pallette-100 transition duration-200 hover:bg-pallette-500 dark:bg-blue-100 dark:text-rose-950 dark:hover:bg-slate-700">
