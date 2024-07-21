@@ -4,6 +4,10 @@ import { createPortal } from "react-dom";
 //Hooks
 import { useKanban } from "../../hooks/useKanban";
 
+//Providers
+import { ColumnProvider } from "../../context/ColumnContext";
+import { TaskProvider } from "../../context/TaskContext";
+
 //Components
 import ColumnContainer from "../column/ColumnContainer";
 import TaskCard from "../task/TaskCard";
@@ -15,8 +19,7 @@ import { FiPlusCircle } from "react-icons/fi";
 //Lib
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
-import { ColumnProvider } from "../../context/ColumnContext";
-import { TaskProvider } from "../../context/TaskContext";
+
 
 function KanbanBoard() {
   const {
@@ -35,7 +38,7 @@ function KanbanBoard() {
   } = useKanban();
 
   return (
-    <div className="flex min-h-full w-full touch-none items-start overflow-x-auto overflow-y-hidden p-8">
+    <div className="flex min-h-full w-full touch-manipulation items-start overflow-x-auto overflow-y-hidden px-0 py-1 lg:p-8">
       <DndContext
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
