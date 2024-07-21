@@ -20,6 +20,7 @@ import {
   PopoverTrigger,
 } from "../@/components/ui/popover";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 //Lib
 import { useSortable } from "@dnd-kit/sortable";
@@ -27,6 +28,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 //Utils
 import clsx from "clsx";
+import { MdClose } from "react-icons/md";
 
 function TaskCard() {
   const {
@@ -127,12 +129,11 @@ function TaskCard() {
           {/* Content */}
 
           <PopoverContent
-            className="flex w-auto translate-x-[95px] translate-y-[20px] max-h-[500px] sm:max-h-[550px] lg:max-h-[665px] lg:min-h-[540px] lg:min-w-[500px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-4 lg:p-6"
+            className="flex max-h-[500px] w-auto translate-x-[95px] translate-y-[20px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-4 sm:max-h-[550px] lg:max-h-[665px] lg:min-h-[540px] lg:min-w-[500px] lg:p-6"
             sideOffset={30}
             side="right"
-
           >
-            <div className="flex max-w-[500px] flex-col items-start gap-4 ">
+            <div className="flex max-w-[500px] flex-col items-start gap-4">
               <h2 className="mb-2 text-center text-2xl font-semibold">
                 {task.title}
               </h2>
@@ -148,6 +149,14 @@ function TaskCard() {
               {/* Due Date */}
               <DueDate />
             </div>
+            <PopoverClose asChild>
+              <button className=" ">
+                <MdClose
+                  className=" absolute right-8 top-5 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
+                  size={26}
+                />
+              </button>
+            </PopoverClose>
           </PopoverContent>
         </Popover>
 
