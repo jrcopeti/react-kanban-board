@@ -118,11 +118,11 @@ function TaskCard() {
           {/* Trigger */}
           <PopoverTrigger
             title="Edit Task"
-            className="rounded-md p-2 text-pallette-500 dark:text-slate-500"
+            className="mr-4 rounded-md p-2 text-pallette-500 dark:text-slate-500"
           >
             <HiOutlinePencilSquare
               size={25}
-              className={`transform transition-transform ease-in-out hover:scale-125 hover:text-pallette-200 hover:opacity-65 dark:hover:text-slate-500 ${mouseIsOver ? "opacity-100" : "opacity-0"}`}
+              className={`transform transition-transform ease-in-out hover:scale-125 hover:text-pallette-200 hover:opacity-65 dark:hover:text-slate-500 ${mouseIsOver ? "visible" : "invisible"}`}
             />
           </PopoverTrigger>
 
