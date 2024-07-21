@@ -45,8 +45,8 @@ function KanbanBoard() {
         onDragOver={onDragOver}
         sensors={sensors}
       >
-        <div className="flex items-start gap-2">
-          <div className="flex gap-4">
+        <div className="flex items-start gap-2 lg:ml-0">
+          <div className="flex gap-10 lg:gap-4">
             <SortableContext items={columnsIds}>
               {columns.map((col) => (
                 <ColumnProvider
