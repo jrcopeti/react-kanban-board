@@ -29,7 +29,6 @@ function DatePicker() {
     <Popover open={isEditingDueDate} onOpenChange={setIsEditingDueDate}>
       <PopoverTrigger asChild>
         <Button
-          autoFocus
           ref={dueDateRef}
           title="Due Date"
           variant={"outline"}

@@ -5,6 +5,7 @@ import { useTask } from "../../hooks/useTask";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import Input from "../@/components/ui/input";
 import { Label } from "../@/components/ui/label";
+import { useState } from "react";
 
 function Assignee() {
   const {
@@ -13,13 +14,12 @@ function Assignee() {
     assigneeRef,
     setIsEditingAssignee,
 
-    handleFieldChange,
-    handleBlur,
+    handleBlurWithUpdate,
     handleKeydown,
     handleToggleIsEditing,
   } = useTask();
 
-  const { assignee } = task;
+  const [assignee, setAssignee] = useState(task.assignee);
   return (
     <>
       <Label
@@ -37,8 +37,14 @@ function Assignee() {
             type="text"
             className="min-h-12 w-full bg-pallette-100 py-2 text-xl text-pallette-600 dark:bg-blue-100 dark:text-rose-950"
             value={assignee}
-            onChange={(e) => handleFieldChange("assignee", e.target.value)}
-            onBlur={() => handleBlur(setIsEditingAssignee)}
+            onChange={(e) => setAssignee(e.target.value)}
+            onBlur={(e) =>
+              handleBlurWithUpdate(
+                setIsEditingAssignee,
+                "assignee",
+                e.target.value,
+              )
+            }
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
               handleKeydown(e, setIsEditingAssignee)
             }

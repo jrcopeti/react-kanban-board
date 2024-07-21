@@ -35,3 +35,8 @@ npm run dev
 
 Pull requests are welcome.
 For major changes, please open an issue first to discuss what you would like to change.
+
+
+short description for github:
+KanDo is a Kanban board application that allows users to create, update, and delete tasks. Users can also move tasks between columns and change columns positions as well.
+```

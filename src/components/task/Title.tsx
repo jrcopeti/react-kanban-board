@@ -1,21 +1,24 @@
+import { useState } from "react";
 import { useTask } from "../../hooks/useTask";
 import Input from "../@/components/ui/input";
 
-function Title() {
+const Title = () => {
   const {
     task,
 
     isEditingTitle,
     titleRef,
 
-    handleBlur,
+    handleBlurWithUpdate,
     setIsEditingTitle,
-    handleFieldChange,
     handleKeydown,
     handleToggleIsEditing,
   } = useTask();
 
-  const { title } = task;
+  const [title, setTitle] = useState(task.title);
+
+  console.log("title ", task.title);
+
   return (
     <>
       {isEditingTitle ? (
@@ -23,9 +26,11 @@ function Title() {
           maxLength={23}
           type="text"
           className="h-9 w-72 py-3 text-xl dark:bg-blue-100 dark:text-rose-950"
-          onBlur={() => handleBlur(setIsEditingTitle)}
+          onBlur={(e) =>
+            handleBlurWithUpdate(setIsEditingTitle, "title", e.target.value)
+          }
           value={title}
-          onChange={(e) => handleFieldChange("title", e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
             handleKeydown(e, setIsEditingTitle)
           }
@@ -34,7 +39,7 @@ function Title() {
       ) : (
         <section
           title="Task Title"
-          className="max-w-[272px] -mb-1 cursor-pointer break-words py-1 text-center text-xl font-semibold text-pallette-500 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
+          className="-mb-1 max-w-[272px] cursor-pointer break-words py-1 text-center text-xl font-semibold text-pallette-500 opacity-100 hover:text-pallette-400 hover:opacity-65 dark:hover:text-slate-500"
           onClick={() => handleToggleIsEditing(setIsEditingTitle)}
         >
           <h2>{title}</h2>
@@ -42,6 +47,6 @@ function Title() {
       )}
     </>
   );
-}
+};
 
 export default Title;

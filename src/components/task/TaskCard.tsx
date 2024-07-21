@@ -130,6 +130,7 @@ function TaskCard() {
             className="flex max-h-[665px] min-h-[540px] w-[auto] min-w-[500px] items-start justify-center overflow-auto rounded-md border border-pallette-600 bg-pallette-100 p-6"
             sideOffset={50}
             side="right"
+            
           >
             <div className="flex max-w-[500px] flex-col items-start gap-4">
               <h2 className="mb-2 text-center text-2xl font-semibold">

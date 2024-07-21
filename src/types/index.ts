@@ -146,7 +146,13 @@ type TaskContextType = {
   handleToggleIsEditing: (
     setIsEditing: Dispatch<SetStateAction<boolean>>,
   ) => void;
-  handleBlur: (setIsEditing: (isActive: boolean) => void) => void;
+  handleBlurWithUpdate<T extends keyof Task>(
+    this: void,
+    setIsEditing: Dispatch<SetStateAction<boolean>>,
+    field: T,
+    value: Task[T],
+  ): void;
+  handleBlur: (setIsEditing: Dispatch<SetStateAction<boolean>>) => void;
   handleFieldChange: <T extends keyof Task>(field: T, value: Task[T]) => void;
   handleKeydown: <T extends HTMLElement>(
     e: React.KeyboardEvent<T>,

@@ -28,7 +28,7 @@ const labels = sortedLabels.map((label) => label.label);
 
 const randomLabelIndex = Math.floor(Math.random() * 15);
 
-const fib = [1, 2, 3, 5, 8, 13];
+const fib = [0, 1, 2, 3, 5, 8, 13];
 
 const labelOptions = [
   ...sortedLabels.map((label) => ({

@@ -66,6 +66,7 @@ const defaultContextValue: TaskContextType = {
   //Handlers
   handleToggleIsEditing: () => {},
   handleBlur: () => {},
+  handleBlurWithUpdate: () => {},
   handleFieldChange: () => {},
   handleKeydown: () => {},
   handleMouseEnter: () => {},
@@ -156,11 +157,9 @@ function TaskProvider({
       if (
         prevTaskRef.current.title !== task.title ||
         prevTaskRef.current.assignee !== task.assignee ||
-        prevTaskRef.current.points !== task.points ||
         prevTaskRef.current.description !== task.description ||
         prevTaskRef.current.priority !== task.priority ||
-        prevTaskRef.current.label !== task.label ||
-        prevTaskRef.current.dueDate !== task.dueDate
+        prevTaskRef.current.label !== task.label
       ) {
         const debounce = setTimeout(() => {
           toast.toast({
@@ -193,7 +192,20 @@ function TaskProvider({
     setMouseIsOver(false);
   };
 
-  const handleBlur = (setIsEditing: (value: boolean) => void) => {
+  const handleBlurWithUpdate: <T extends keyof Task>(
+    setIsEditing: Dispatch<SetStateAction<boolean>>,
+    field: T,
+    value: Task[T],
+  ) => void = (setIsEditing, field, value) => {
+    setIsEditing(false);
+    if (task[field] !== value) {
+      updateTask({ ...task, [field]: value });
+    }
+  };
+
+  const handleBlur = (
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>,
+  ): void => {
     setIsEditing(false);
   };
 
@@ -206,10 +218,12 @@ function TaskProvider({
 
   const handleKeydown = <T extends HTMLElement>(
     e: React.KeyboardEvent<T>,
-
     setIsEditing: (isActive: boolean) => void,
   ) => {
     if (e.key === "Enter") {
+      setIsEditing(false);
+      (e.target as HTMLElement).blur();
+    } else if (e.key === "Escape") {
       setIsEditing(false);
     }
   };
@@ -275,6 +289,7 @@ function TaskProvider({
         handleMouseEnter,
         handleMouseLeave,
         handleTogglePopover,
+        handleBlurWithUpdate,
 
         //Helpers
         labelToColor,
