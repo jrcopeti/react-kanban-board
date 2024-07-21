@@ -24,7 +24,7 @@ function DueDateInCard() {
       <p className="text-left text-xs">
         {isToday(new Date(dueDateState)) ? (
           <>
-            <small className="mr-1.5 text-pallette-600 dark:text-slate-500">
+            <small className="mr-1.5 text-pallette-600 dark:text-slate-800">
               Due
             </small>
             Today
