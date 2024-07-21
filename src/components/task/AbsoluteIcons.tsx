@@ -10,8 +10,7 @@ import DialogDelete from "../ui/DialogDelete";
 import clsx from "clsx";
 function AbsoluteIcons() {
   const { deleteTask } = useKanban();
-  const { task, mouseIsOver, labelToColor, isEditingTitle, isEditingPriority } =
-    useTask();
+  const { task, mouseIsOver, labelToColor, isEditingTitle } = useTask();
   const { label, title, id, assignee, description } = task;
 
   const labelClassName = clsx(
