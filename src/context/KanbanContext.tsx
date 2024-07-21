@@ -317,7 +317,11 @@ function KanbanProvider({ children }: { children: React.ReactNode }) {
       },
     }),
     useSensor(TouchSensor),
-    useSensor(MouseSensor),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 50,
+      },
+    }),
   );
 
   return (

@@ -115,29 +115,22 @@ function TaskProvider({
   const dueDateRef = useRef<HTMLButtonElement>(null);
 
   const prevTaskRef = useRef(task);
-  console.log("prevTaskRef", prevTaskRef);
+
   const isInitialRender = useRef(true);
-  console.log("isInitialRender", isInitialRender);
 
   //Focus on input
   useEffect(() => {
     if (isEditingTitle && titleRef.current) {
-      console.log("titleRef", titleRef);
       titleRef.current?.focus();
     } else if (isEditingPriority && priorityRef.current) {
-      console.log("priorityRef", priorityRef);
       priorityRef.current.focus();
     } else if (isEditingDescription && descriptionRef.current) {
-      console.log("descriptionRef", descriptionRef);
       descriptionRef.current.focus();
     } else if (isEditingAssignee && assigneeRef.current) {
-      console.log("assigneeRef", assigneeRef);
       assigneeRef.current.focus();
     } else if (isEditingDueDate && dueDateRef.current) {
-      console.log("dueDateRef", dueDateRef);
       dueDateRef.current.focus();
     } else if (isEditingLabel && labelRef.current) {
-      console.log("labelRef", labelRef);
       labelRef.current.focus();
     }
   }, [
@@ -173,7 +166,7 @@ function TaskProvider({
         };
       }
     }
-    // Update ref to current task at the end of the effect
+    // Update ref to current task at the end and trigger effect only when task changes
     prevTaskRef.current = task;
   }, [task, toast.toast]);
 

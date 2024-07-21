@@ -17,8 +17,6 @@ const Title = () => {
 
   const [title, setTitle] = useState(task.title);
 
-  console.log("title ", task.title);
-
   return (
     <>
       {isEditingTitle ? (

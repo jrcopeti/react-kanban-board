@@ -107,7 +107,7 @@ function ColumnContainer() {
       style={style}
       {...attributes}
       {...listeners}
-      className="z-40 flex h-full max-h-full w-[350px] cursor-grab flex-col overflow-auto rounded-md bg-pallette-100 dark:bg-blue-100"
+      className="z-40 flex h-full max-h-full w-[350px] cursor-grab touch-none flex-col overflow-auto rounded-md bg-pallette-100 dark:bg-blue-100"
     >
       <section className="flex h-[60px] items-center justify-between rounded-lg border-4 border-pallette-100 bg-pallette-500 p-3 text-xl font-semibold text-pallette-100 dark:border-blue-100 dark:bg-slate-700 dark:text-blue-100">
         <div className="flex gap-2">
@@ -149,7 +149,7 @@ function ColumnContainer() {
 
       {/* Content */}
 
-      <section className="flex flex-grow touch-manipulation flex-col gap-4 p-4">
+      <section className="flex flex-grow touch-none flex-col gap-4 p-4">
         <SortableContext items={tasksIds}>
           {tasksInColumn.map((task) => (
             <TaskProvider
